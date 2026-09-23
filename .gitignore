@@ -1,0 +1,7 @@
+*.img
+*.bin
+*.log
+*.key
+*.pem
+cookies.txt
+evidence/
