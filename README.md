@@ -43,6 +43,11 @@ every minute from the canonical `/data/sbat6-ssh-overlay.tgz`. It also explains
 why changing only the live overlay is not persistent and gives a safe,
 atomic update and verification procedure.
 
+[`docs/BOOT_AND_CONNECTIVITY_FAILURES.md`](docs/BOOT_AND_CONNECTIVITY_FAILURES.md)
+collects the confirmed causes of reboot loops, apparent boot hangs, management
+loss, and configuration rollback. It separates proven reset causes from
+connectivity failures that only resemble a frozen or rebooting device.
+
 ## Not included
 
 Credentials, device-specific backups, SSH private keys, cookies, LAN configuration, and authenticated RCE code are intentionally excluded.
