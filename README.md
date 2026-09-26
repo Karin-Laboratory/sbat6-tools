@@ -35,6 +35,14 @@ logs, and credentials are not included.
 
 [`docs/NETWORK_DEBRIDGE_WIFI_STA.md`](docs/NETWORK_DEBRIDGE_WIFI_STA.md) documents a verified, safety-first method to establish a Wi-Fi STA management path and then remove the Linux LAN bridge/VLAN devices in favor of raw `eth0`. The document intentionally uses placeholders and documentation-only addresses; it contains no credentials, keys, device addresses, or RCE implementation.
 
+[`docs/PERSISTENT_OVERLAY_RESTORE.md`](docs/PERSISTENT_OVERLAY_RESTORE.md)
+documents the exact next-boot restore path used on the laboratory unit: the
+vendor `S001restore` service consumes `/data/sysupgrade.tgz` once during boot,
+while a locally installed root cron entry recreates that next-boot archive
+every minute from the canonical `/data/sbat6-ssh-overlay.tgz`. It also explains
+why changing only the live overlay is not persistent and gives a safe,
+atomic update and verification procedure.
+
 ## Not included
 
 Credentials, device-specific backups, SSH private keys, cookies, LAN configuration, and authenticated RCE code are intentionally excluded.
