@@ -13,6 +13,10 @@ Recovery and diagnostics helpers for user-owned SoftBank Air Terminal 6 research
 
 `scripts/rebuild-b-from-live-a.sh` rebuilds the inactive B slot from a currently booted, known-good A slot. It is deliberately device-local and must be run as root on the terminal. It does not select B or reboot; validate the evidence and use the vendor slot-control interface separately.
 
+## Network reconstruction notes
+
+[`docs/NETWORK_DEBRIDGE_WIFI_STA.md`](docs/NETWORK_DEBRIDGE_WIFI_STA.md) documents a verified, safety-first method to establish a Wi-Fi STA management path and then remove the Linux LAN bridge/VLAN devices in favor of raw `eth0`. The document intentionally uses placeholders and documentation-only addresses; it contains no credentials, keys, device addresses, or RCE implementation.
+
 ## Not included
 
 Credentials, device-specific backups, SSH private keys, cookies, LAN configuration, and authenticated RCE code are intentionally excluded.
