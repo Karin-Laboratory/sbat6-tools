@@ -18,6 +18,11 @@ extracted SBAT6 root filesystems. It records init services, ELF executables,
 package ownership, hashes, and strings related to reboot, rollback, watchdog,
 upgrade, and recovery behavior.
 
+`scripts/t6a-wifi5-sta-async.sh` is the verified non-blocking replacement for
+the local 5 GHz management-STA init script. It delegates association and DHCP
+work to a background worker so vendor boot completion is not held against the
+120-second `procd` deadline.
+
 ## Static audit snapshot
 
 [`audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md`](audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md)
