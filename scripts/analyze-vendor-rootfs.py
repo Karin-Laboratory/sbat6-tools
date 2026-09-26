@@ -75,7 +75,9 @@ def commands(text):
 
 def write_dict_tsv(path, rows, fields):
     with path.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fields, delimiter="\t")
+        writer = csv.DictWriter(
+            stream, fieldnames=fields, delimiter="\t", lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(rows)
 
@@ -155,7 +157,7 @@ def analyze(trees, output_dir):
                         ["strings", "-a", "-n", "5", str(path)], capture_output=True, check=False
                     ).stdout
                     hits = sorted({
-                        item.decode("utf-8", "replace")[:500]
+                        item.decode("utf-8", "replace")[:500].rstrip()
                         for item in raw_strings.splitlines() if POWER_RE.search(item)
                     })
                 except OSError:
@@ -183,7 +185,7 @@ def analyze(trees, output_dir):
         "sha256", "power_string_count", "file",
     ))
     with (output_dir / "power_evidence.tsv").open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.writer(stream, delimiter="\t")
+        writer = csv.writer(stream, delimiter="\t", lineterminator="\n")
         writer.writerow(("slot", "path", "line", "kind", "evidence"))
         writer.writerows(evidence)
     print(f"services={len(services)} executables={len(binaries)} evidence={len(evidence)}")

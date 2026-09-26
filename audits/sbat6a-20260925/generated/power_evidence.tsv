@@ -169,21 +169,21 @@ a	/sbin/aee_aed		ELF-string	2s_reboot
 a	/sbin/aee_aed		ELF-string	2sec_reboot_abnormal
 a	/sbin/aee_aed		ELF-string	Exception Class: 2s Reboot
 a	/sbin/aee_aed		ELF-string	Exception Class: Hardware Reboot
-a	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot 
-a	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA 
-a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN 
-a	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot 
+a	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot
+a	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN
+a	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot
 a	/sbin/aee_aed		ELF-string	HW_REBOOT
 a	/sbin/aee_aed		ELF-string	HW_REBOOT(DEBUG)
 a	/sbin/aee_aed		ELF-string	HW_REBOOT(ERRFLAG)
@@ -197,7 +197,7 @@ a	/sbin/aee_aed		ELF-string	HW_REBOOT(UDISCAN)
 a	/sbin/aee_aed		ELF-string	SYS_REBOOT_REASON
 a	/sbin/aee_aed		ELF-string	THERMAL_REBOOT
 a	/sbin/aee_aed		ELF-string	UNKNOWN REBOOT
-a	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal) 
+a	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal)
 a	/sbin/aee_aed		ELF-string	aed_reboot_session
 a	/sbin/aee_aed		ELF-string	reboot_reason = %d(0x%x)
 a	/sbin/init		ELF-string	- watchdog -
@@ -293,7 +293,7 @@ a	/usr/bin/bs20		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
 a	/usr/bin/bs20		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
 a	/usr/bin/bs20		ELF-string	force_roam_rssi_th
 a	/usr/bin/bs20		ELF-string	is_CAC_Success_by_bw
-a	/usr/bin/ccci_fsd		ELF-string	Shutdown 
+a	/usr/bin/ccci_fsd		ELF-string	Shutdown
 a	/usr/bin/ccci_mdinit		ELF-string	aee_off_fast_reboot_enable
 a	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %s not exist, using default value
 a	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %u
@@ -679,7 +679,7 @@ a	/usr/bin/meta_tst		ELF-string	[Meta][FT][DEBUG] Query modem reboot result %d t
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] command is %s
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] enter rebootToRecovery
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] open misc partition fail, errno = %d
-a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off 
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online status= %d
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition failed, errno = %d
 a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition success
@@ -692,8 +692,8 @@ a	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff
 a	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff_with_cause
 a	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[DEBUG]: %s %d mnl2agps_mnl_reboot
 a	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[ERROR]: %s %d agps_reboot is NULL
-a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s 
-a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s 
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s
 a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d agps_reboot
 a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d hal_reboot, fd:[%d], used:%d
 a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d mpvt_reboot
@@ -753,7 +753,7 @@ a	/usr/bin/mtk_agpsd		ELF-string	mnl_reboot is NULL
 a	/usr/bin/mtk_agpsd		ELF-string	tls_shutdown(sock_id=%d)
 a	/usr/bin/mtk_agpsd		ELF-string	write  agps_reboot
 a	/usr/bin/mtk_monitor_hang		ELF-string	%s:%s kick:%d watchdog:%d
-a	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d 
+a	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d
 a	/usr/bin/mtk_monitor_hang		ELF-string	%s:Notify monitor hang to enter reboot state:%d
 a	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_init
 a	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_timeout_cb
@@ -1210,21 +1210,21 @@ b	/sbin/aee_aed		ELF-string	2s_reboot
 b	/sbin/aee_aed		ELF-string	2sec_reboot_abnormal
 b	/sbin/aee_aed		ELF-string	Exception Class: 2s Reboot
 b	/sbin/aee_aed		ELF-string	Exception Class: Hardware Reboot
-b	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot 
-b	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA 
-b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN 
-b	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot 
+b	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot
+b	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN
+b	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot
 b	/sbin/aee_aed		ELF-string	HW_REBOOT
 b	/sbin/aee_aed		ELF-string	HW_REBOOT(DEBUG)
 b	/sbin/aee_aed		ELF-string	HW_REBOOT(ERRFLAG)
@@ -1238,7 +1238,7 @@ b	/sbin/aee_aed		ELF-string	HW_REBOOT(UDISCAN)
 b	/sbin/aee_aed		ELF-string	SYS_REBOOT_REASON
 b	/sbin/aee_aed		ELF-string	THERMAL_REBOOT
 b	/sbin/aee_aed		ELF-string	UNKNOWN REBOOT
-b	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal) 
+b	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal)
 b	/sbin/aee_aed		ELF-string	aed_reboot_session
 b	/sbin/aee_aed		ELF-string	reboot_reason = %d(0x%x)
 b	/sbin/init		ELF-string	- watchdog -
@@ -1334,7 +1334,7 @@ b	/usr/bin/bs20		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
 b	/usr/bin/bs20		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
 b	/usr/bin/bs20		ELF-string	force_roam_rssi_th
 b	/usr/bin/bs20		ELF-string	is_CAC_Success_by_bw
-b	/usr/bin/ccci_fsd		ELF-string	Shutdown 
+b	/usr/bin/ccci_fsd		ELF-string	Shutdown
 b	/usr/bin/ccci_mdinit		ELF-string	aee_off_fast_reboot_enable
 b	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %s not exist, using default value
 b	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %u
@@ -1724,7 +1724,7 @@ b	/usr/bin/meta_tst		ELF-string	[Meta][FT][DEBUG] Query modem reboot result %d t
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] command is %s
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] enter rebootToRecovery
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] open misc partition fail, errno = %d
-b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off 
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online status= %d
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition failed, errno = %d
 b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition success
@@ -1737,8 +1737,8 @@ b	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff
 b	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff_with_cause
 b	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[DEBUG]: %s %d mnl2agps_mnl_reboot
 b	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[ERROR]: %s %d agps_reboot is NULL
-b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s 
-b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s 
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s
 b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d agps_reboot
 b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d hal_reboot, fd:[%d], used:%d
 b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d mpvt_reboot
@@ -1798,7 +1798,7 @@ b	/usr/bin/mtk_agpsd		ELF-string	mnl_reboot is NULL
 b	/usr/bin/mtk_agpsd		ELF-string	tls_shutdown(sock_id=%d)
 b	/usr/bin/mtk_agpsd		ELF-string	write  agps_reboot
 b	/usr/bin/mtk_monitor_hang		ELF-string	%s:%s kick:%d watchdog:%d
-b	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d 
+b	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d
 b	/usr/bin/mtk_monitor_hang		ELF-string	%s:Notify monitor hang to enter reboot state:%d
 b	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_init
 b	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_timeout_cb
