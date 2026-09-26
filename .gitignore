@@ -5,3 +5,9 @@
 *.pem
 cookies.txt
 evidence/
+
+# Local extraction and regeneration workspaces
+rootfs-a/
+rootfs-b/
+analysis-output/
+__pycache__/

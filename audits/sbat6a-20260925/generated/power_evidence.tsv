@@ -1,0 +1,2087 @@
+slot	path	line	kind	evidence
+a	/etc/init.d/0mount_all	31	script	recovery_flash_data() {
+a	/etc/init.d/0mount_all	64	script	recovery_flash_data
+a	/etc/init.d/1restore	6	script	CONFIG_FILE_TAR=/data/sysupgrade.tgz
+a	/etc/init.d/1restore	7	script	KNOS_BOOT_REASON=/data/knos/knos-boot-reason
+a	/etc/init.d/1restore	11	script	boot_reason=$(cat $KNOS_BOOT_REASON | awk -F '|' '{print $3}')
+a	/etc/init.d/1restore	16	script	case $boot_reason in
+a	/etc/init.d/1restore	29	script	touch /data/knos/knos-recovery-overlay
+a	/etc/init.d/auto_adapt	109	script	set_state shutdown
+a	/etc/init.d/ddns	16	script	"sleep 1	# give time to shutdown"
+a	/etc/init.d/done	7	script	rm -f /sysupgrade.tgz && sync
+a	/etc/init.d/dropbear	225	script	shutdown() {
+a	/etc/init.d/kn_fotad	8	script	PROG=/usr/bin/kn_fotad
+a	/etc/init.d/kn_fotad	11	script	"uci_load_validate fota config ""$1"" ""$2"" \"
+a	/etc/init.d/kn_fotad	34	script	"config_load ""fota"""
+a	/etc/init.d/kn_fotad	39	script	"procd_add_reload_trigger ""fota"""
+a	/etc/init.d/knos_config	54	script	FOTA_config='fota'
+a	/etc/init.d/knos_config	59	script	include /lib/upgrade
+a	/etc/init.d/knos_config	67	script	current_slot=$(get_current_slot)
+a	/etc/init.d/knos_config	68	script	"echo ""Current slot : $current_slot"" >> $FILE_CONFIG_LOG"
+a	/etc/init.d/knos_config	69	script	case $current_slot in
+a	/etc/init.d/knos_config	460	script	#: Fota
+a	/etc/init.d/knos_config	464	script	uci set $KNOS_config.fota.def_provision_server=$tftp_addr
+a	/etc/init.d/knos_config	750	script	change_fota()
+a	/etc/init.d/knos_config	752	script	"echo -e ""Start change_fota"" >> $FILE_CONFIG_LOG"
+a	/etc/init.d/knos_config	754	script	server=$(uci -q get $KNOS_config.fota.def_provision_server)
+a	/etc/init.d/knos_config	755	script	uci set $FOTA_config.provision.server=$server
+a	/etc/init.d/knos_config	757	script	server=$(uci -q get $KNOS_config.fota.def_fota_server)
+a	/etc/init.d/knos_config	758	script	uci set $FOTA_config.upgrade.server=$server
+a	/etc/init.d/knos_config	759	script	uci commit $FOTA_config
+a	/etc/init.d/knos_config	767	script	server=$(uci -q get $KNOS_config.fota.def_provision_server)
+a	/etc/init.d/knos_config	980	script	uci set $KNOS_config.knsh.needReboot='0'
+a	/etc/init.d/knos_config	986	script	uci set $FOTA_config.status.running='0'
+a	/etc/init.d/knos_config	987	script	uci set $FOTA_config.status.next=''
+a	/etc/init.d/knos_config	988	script	uci commit $FOTA_config
+a	/etc/init.d/knos_config	990	script	#: reboot 동작시 초기화 진행
+a	/etc/init.d/knos_config	991	script	uci set monitor.reboot.running='0'
+a	/etc/init.d/knos_config	992	script	uci set monitor.reboot.stime=''
+a	/etc/init.d/knos_config	993	script	uci set monitor.reboot.etime=''
+a	/etc/init.d/knos_config	994	script	uci set monitor.reboot.next=''
+a	/etc/init.d/knos_config	1014	script	uci set $KNSTS_config.status.upgrade_status=0
+a	/etc/init.d/knos_config	1015	script	uci set $KNSTS_config.status.upgrade_host=0
+a	/etc/init.d/knos_config	1016	script	uci set $KNSTS_config.status.upgrade_version=0
+a	/etc/init.d/knos_config	1017	script	uci set $KNSTS_config.status.upgrade_result=0
+a	/etc/init.d/knos_config	1018	script	uci set $KNSTS_config.status.upgrade_time=0
+a	/etc/init.d/knos_config	1038	script	uci set $KNSTS_config.ipc.kn_fotad='0'
+a	/etc/init.d/knos_config	1048	script	nvramedit set knsts.status.upgrade_status=0
+a	/etc/init.d/knos_config	1049	script	nvramedit set knsts.status.upgrade_host=0
+a	/etc/init.d/knos_config	1050	script	nvramedit set knsts.status.upgrade_version=0
+a	/etc/init.d/knos_config	1051	script	nvramedit set knsts.status.upgrade_result=0
+a	/etc/init.d/knos_config	1052	script	nvramedit set knsts.status.upgrade_time=0
+a	/etc/init.d/knos_config	1193	script	[ -s $PATH_CONFIG/$FOTA_config ] && change_fota
+a	/etc/init.d/mipc_submonitor.init	28	script	set_state shutdown
+a	/etc/init.d/mtk_hang_detect	8	script	"ubus call system watchdog '{""magicclose"": true}'"
+a	/etc/init.d/mtk_hang_detect	9	script	"ubus call system watchdog '{""stop"": true}'"
+a	/etc/init.d/mtk_hang_detect	19	script	"ubus call system watchdog '{""magicclose"": false}'"
+a	/etc/init.d/mtk_hang_detect	20	script	"ubus call system watchdog '{""stop"": false}'"
+a	/etc/init.d/network	159	script	shutdown() {
+a	/etc/init.d/ql_ippt	31	script	set_state shutdown
+a	/etc/init.d/ql_netd	25	script	set_state shutdown
+a	/etc/init.d/ql_ril_service	25	script	set_state shutdown
+a	/etc/init.d/scd	16	script	local modem_reboot_ap
+a	/etc/init.d/scd	20	script	config_get modem_reboot_ap features modem_reboot_ap
+a	/etc/init.d/scd	22	script	"echo ""start scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap"""
+a	/etc/init.d/scd	24	script	procd_set_param command /usr/bin/scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap
+a	/etc/init.d/slt2_test	7	script	[ -e /sys/bus/platform/drivers/slt_reboot/report ] && {
+a	/etc/init.d/slt2_test	29	script	"echo ""SLT boot_completed"" > /sys/bus/platform/drivers/slt_reboot/report"
+a	/etc/init.d/slt2_test	43	script	[ -e /sys/bus/platform/drivers/slt_reboot/report ] && {
+a	/etc/init.d/switch_otg_daemon	26	script	set_state shutdown
+a	/etc/init.d/zmtk_boot_done	6	script	include /lib/upgrade
+a	/etc/init.d/zmtk_boot_done	9	script	retry_a=$(get_bootctrl $BOOTCTRL_OFFSET_TRY_A 1)
+a	/etc/init.d/zmtk_boot_done	10	script	retry_b=$(get_bootctrl $BOOTCTRL_OFFSET_TRY_B 1)
+a	/etc/init.d/zmtk_boot_done	12	script	check_bootctrl() {
+a	/etc/init.d/zmtk_boot_done	13	script	local bootctrl=$(get_bootctrl $BOOTCTRL_OFFSET 32)
+a	/etc/init.d/zmtk_boot_done	15	script	"echo ""FLASH_TYPE=$FLASH_TYPE, bootctrl=$bootctrl, is_ab_partition=$is_ab_partition"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	20	script	local current_slot=$(get_current_slot)
+a	/etc/init.d/zmtk_boot_done	21	script	"echo ""current_slot=$current_slot"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	22	script	"if [ ""$current_slot"" = ""_a"" ]; then"
+a	/etc/init.d/zmtk_boot_done	23	script	local success_a=$(get_bootctrl $BOOTCTRL_OFFSET_SUCCESS_A 1)
+a	/etc/init.d/zmtk_boot_done	24	script	if [ $((0x${success_a})) -ne $((0x01)) ]; then
+a	/etc/init.d/zmtk_boot_done	25	script	if [ $((0x${retry_a})) -ne $((0x00)) ];then
+a	/etc/init.d/zmtk_boot_done	26	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	27	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+a	/etc/init.d/zmtk_boot_done	29	script	local up_a=$(get_bootctrl $BOOTCTRL_OFFSET_UP_A 1)
+a	/etc/init.d/zmtk_boot_done	33	script	"echo ""No preloader in sysupgrade"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	40	script	"echo ""Sync mmcblk0boot0 to mmcblk0boot1"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	41	script	# enable program mmcblk0boot1 partition
+a	/etc/init.d/zmtk_boot_done	42	script	echo 0 > /sys/block/mmcblk0boot1/force_ro
+a	/etc/init.d/zmtk_boot_done	44	script	# disable program mmcblk0boot1 partition
+a	/etc/init.d/zmtk_boot_done	45	script	echo 1 > /sys/block/mmcblk0boot1/force_ro
+a	/etc/init.d/zmtk_boot_done	51	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	52	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+a	/etc/init.d/zmtk_boot_done	54	script	local up_b=$(get_bootctrl $BOOTCTRL_OFFSET_UP_B 1)
+a	/etc/init.d/zmtk_boot_done	56	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 1 01
+a	/etc/init.d/zmtk_boot_done	57	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_B \\x01
+a	/etc/init.d/zmtk_boot_done	59	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 1 00
+a	/etc/init.d/zmtk_boot_done	60	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_B \\x00
+a	/etc/init.d/zmtk_boot_done	62	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 0 00
+a	/etc/init.d/zmtk_boot_done	65	script	#set_bootctrl $BOOTCTRL_OFFSET_SUCCESS_A \\x01
+a	/etc/init.d/zmtk_boot_done	67	script	"elif [ ""$current_slot"" = ""_b"" ]; then"
+a	/etc/init.d/zmtk_boot_done	68	script	local success_b=$(get_bootctrl $BOOTCTRL_OFFSET_SUCCESS_B 1)
+a	/etc/init.d/zmtk_boot_done	69	script	if [ $((0x${success_b})) -ne $((0x01)) ]; then
+a	/etc/init.d/zmtk_boot_done	70	script	if [ $((0x${retry_b})) -ne $((0x00)) ];then
+a	/etc/init.d/zmtk_boot_done	71	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	72	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+a	/etc/init.d/zmtk_boot_done	75	script	local up_b=$(get_bootctrl $BOOTCTRL_OFFSET_UP_B 1)
+a	/etc/init.d/zmtk_boot_done	79	script	"echo ""No preloader in sysupgrade"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	86	script	"echo ""Sync mmcblk0boot1 to mmcblk0boot0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	87	script	# enable program mmcblk0boot0 partition
+a	/etc/init.d/zmtk_boot_done	88	script	echo 0 > /sys/block/mmcblk0boot0/force_ro
+a	/etc/init.d/zmtk_boot_done	90	script	# disable program mmcblk0boot0 partition
+a	/etc/init.d/zmtk_boot_done	91	script	echo 1 > /sys/block/mmcblk0boot0/force_ro
+a	/etc/init.d/zmtk_boot_done	97	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	98	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+a	/etc/init.d/zmtk_boot_done	101	script	local up_a=$(get_bootctrl $BOOTCTRL_OFFSET_UP_A 1)
+a	/etc/init.d/zmtk_boot_done	103	script	set_bootctrl_string 0 00 0 00 0 00 1 01 0 00 0 00 1 01 0 00
+a	/etc/init.d/zmtk_boot_done	104	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_A \\x01
+a	/etc/init.d/zmtk_boot_done	106	script	set_bootctrl_string 0 00 0 00 0 00 1 00 0 00 0 00 1 01 0 00
+a	/etc/init.d/zmtk_boot_done	107	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_A \\x00
+a	/etc/init.d/zmtk_boot_done	109	script	set_bootctrl_string 0 00 0 00 0 00 0 00 0 00 0 00 1 01 0 00
+a	/etc/init.d/zmtk_boot_done	112	script	#set_bootctrl $BOOTCTRL_OFFSET_SUCCESS_B \\x01
+a	/etc/init.d/zmtk_boot_done	115	script	"echo ""current_slot error: $current_slot"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	129	script	check_bootctrl
+a	/etc/init.d/zmtk_boot_done	134	script	"echo "" [QL_AB] retry_a:$retry_a,retry_b:$retry_b "" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	135	script	"echo "" [QL_AB] current_slot=$current_slot"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	137	script	"if [ ""$current_slot"" = ""_a"" ]; then"
+a	/etc/init.d/zmtk_boot_done	138	script	if [ $((0x${retry_a})) -ne $((0x00)) ];then
+a	/etc/init.d/zmtk_boot_done	139	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	140	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+a	/etc/init.d/zmtk_boot_done	143	script	if [ $((0x${retry_b})) -gt $((0x03)) ];then
+a	/etc/init.d/zmtk_boot_done	146	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	147	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+a	/etc/init.d/zmtk_boot_done	150	script	"elif [ ""$current_slot"" = ""_b"" ]; then"
+a	/etc/init.d/zmtk_boot_done	151	script	if [ $((0x${retry_b})) -ne $((0x00)) ];then
+a	/etc/init.d/zmtk_boot_done	152	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	153	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+a	/etc/init.d/zmtk_boot_done	156	script	if [ $((0x${retry_a})) -gt $((0x03)) ];then
+a	/etc/init.d/zmtk_boot_done	159	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+a	/etc/init.d/zmtk_boot_done	160	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+a	/etc/init.d/zmtk_boot_done	163	script	"echo ""current_slot error: $current_slot"" > /dev/kmsg"
+a	/etc/init.d/zzknos_boot_done	6	script	include /lib/upgrade
+a	/etc/init.d/zzknos_boot_done	9	script	FD_KNOS_BOOT_REASON='/data/knos/knos-boot-reason'
+a	/etc/init.d/zzknos_boot_done	16	script	local bootctrl=$(get_bootctrl $BOOTCTRL_OFFSET 32)
+a	/etc/init.d/zzknos_boot_done	18	script	local current_slot=$(get_current_slot)
+a	/etc/init.d/zzknos_boot_done	32	script	"if [ $current_slot = ""_a"" ]; then"
+a	/etc/init.d/zzknos_boot_done	79	script	"echo ""FLASH_TYPE=$FLASH_TYPE, bootctrl=$bootctrl, is_ab_partition=$is_ab_partition,current_slot=$current_slot"" > /var/run/boot_info"
+a	/etc/init.d/zzknos_boot_done	112	script	CONFIG_FILE_TAR=/data/sysupgrade.tgz
+a	/bin/busybox		ELF-string	Reboot the system
+a	/bin/busybox		ELF-string	poweroff
+a	/bin/busybox		ELF-string	reboot
+a	/bin/busybox		ELF-string	reboottime
+a	/bin/opkg		ELF-string	"	upgrade <pkgs>		Upgrade packages"
+a	/bin/opkg		ELF-string	PKG_UPGRADE
+a	/bin/opkg		ELF-string	opkg_upgrade_pkg
+a	/bin/opkg		ELF-string	postrm_upgrade_old_pkg
+a	/bin/opkg		ELF-string	prepare_upgrade_list
+a	/bin/opkg		ELF-string	prerm_upgrade_old_pkg
+a	/bin/opkg		ELF-string	upgrade
+a	/bin/opkg		ELF-string	upgrade %s
+a	/sbin/adbd_usb		ELF-string	entered remote_socket_shutdown RS(%d) CLOSE fd=%d peer->fd=%d
+a	/sbin/adbd_usb		ELF-string	reboot:
+a	/sbin/adbd_usb		ELF-string	recovery
+a	/sbin/adbd_usb		ELF-string	remote_socket_shutdown
+a	/sbin/adbd_usb		ELF-string	setting connection_state to CS_RECOVERY
+a	/sbin/adbd_usb		ELF-string	shutdown
+a	/sbin/adbd_usb		ELF-string	system/bin/install-recovery.sh
+a	/sbin/aee_aed		ELF-string	/proc/aed/reboot-reason
+a	/sbin/aee_aed		ELF-string	2s_reboot
+a	/sbin/aee_aed		ELF-string	2sec_reboot_abnormal
+a	/sbin/aee_aed		ELF-string	Exception Class: 2s Reboot
+a	/sbin/aee_aed		ELF-string	Exception Class: Hardware Reboot
+a	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot 
+a	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA 
+a	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN 
+a	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot 
+a	/sbin/aee_aed		ELF-string	HW_REBOOT
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(DEBUG)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(ERRFLAG)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(HRE)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(MD_THERMAL)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(SECURITY)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(SPM)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(SSPM)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(TIA)
+a	/sbin/aee_aed		ELF-string	HW_REBOOT(UDISCAN)
+a	/sbin/aee_aed		ELF-string	SYS_REBOOT_REASON
+a	/sbin/aee_aed		ELF-string	THERMAL_REBOOT
+a	/sbin/aee_aed		ELF-string	UNKNOWN REBOOT
+a	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal) 
+a	/sbin/aee_aed		ELF-string	aed_reboot_session
+a	/sbin/aee_aed		ELF-string	reboot_reason = %d(0x%x)
+a	/sbin/init		ELF-string	- watchdog -
+a	/sbin/init		ELF-string	/dev/watchdog
+a	/sbin/init		ELF-string	/sbin/upgraded
+a	/sbin/init		ELF-string	/tmp/sysupgrade
+a	/sbin/init		ELF-string	Failed to chroot for upgraded exec.
+a	/sbin/init		ELF-string	Failed to exec upgraded.
+a	/sbin/init		ELF-string	Opened watchdog with timeout %ds
+a	/sbin/init		ELF-string	Watchdog handover: fd=%s
+a	/sbin/init		ELF-string	reboot
+a	/sbin/jffs2reset		ELF-string	reboot
+a	/sbin/logd		ELF-string	ubus_shutdown
+a	/sbin/mmc		ELF-string	Please reboot to complete firmware installation on %s
+a	/sbin/mmc		ELF-string	Usage: mmc bootpart enable <partition_number> <send_ack> </path/to/mmcblkX>
+a	/sbin/mmc		ELF-string	bootpart enable
+a	/sbin/mount_root		ELF-string	SHUTDOWN
+a	/sbin/mtd		ELF-string	        -r                      reboot after successful command
+a	/sbin/mtd		ELF-string	        -t <partition>          write TP-Link recovery-flag to <partition> (for write)
+a	/sbin/mtd		ELF-string	/sbin/reboot
+a	/sbin/mtd		ELF-string	Could not clear TP-Link recovery flag to %s: %i
+a	/sbin/mtd		ELF-string	Could not write TP-Link recovery flag to %s: %i
+a	/sbin/mtd		ELF-string	Example: To write linux.trx to mtd4 labeled as linux and reboot afterwards
+a	/sbin/mtd		ELF-string	Rebooting ...
+a	/sbin/mtd		ELF-string	Removing recovery flag from %s
+a	/sbin/mtd		ELF-string	Writing recovery flag to %s
+a	/sbin/mtk_dut		ELF-string	shutdown
+a	/sbin/mtk_dut		ELF-string	videorecovery
+a	/sbin/procd		ELF-string	- [QUEC_PROCD_INIT] REARCH MAXIMUM TIMEOUT!!!ERROR!!!REBOOT NOW!!! -
+a	/sbin/procd		ELF-string	- reboot -
+a	/sbin/procd		ELF-string	- shutdown -
+a	/sbin/procd		ELF-string	- watchdog -
+a	/sbin/procd		ELF-string	/dev/watchdog
+a	/sbin/procd		ELF-string	/sbin/upgraded
+a	/sbin/procd		ELF-string	Failed to chroot for upgraded exec.
+a	/sbin/procd		ELF-string	Failed to exec upgraded.
+a	/sbin/procd		ELF-string	Opened watchdog with timeout %ds
+a	/sbin/procd		ELF-string	Rebooting as procd has crashed
+a	/sbin/procd		ELF-string	Set watchdog frequency: %ds
+a	/sbin/procd		ELF-string	Set watchdog timeout: %ds
+a	/sbin/procd		ELF-string	Started instance %s::%s watchdog timer : timeout = %d
+a	/sbin/procd		ELF-string	UPGRADE_BACKUP
+a	/sbin/procd		ELF-string	UPGRADE_OPT_
+a	/sbin/procd		ELF-string	WDT failed to close watchdog: %m
+a	/sbin/procd		ELF-string	Watchdog handover: fd=%s
+a	/sbin/procd		ELF-string	instance %s::%s watchdog timer expired
+a	/sbin/procd		ELF-string	invalid watchdog timeout (%d) given, using default (30)
+a	/sbin/procd		ELF-string	poweroff
+a	/sbin/procd		ELF-string	reboot
+a	/sbin/procd		ELF-string	setting watchdog mode (%d)
+a	/sbin/procd		ELF-string	setting watchdog timeout (%d)
+a	/sbin/procd		ELF-string	shutdown
+a	/sbin/procd		ELF-string	sysupgrade
+a	/sbin/procd		ELF-string	unknown watchdog mode (%d) given, using default (0)
+a	/sbin/rpcd		ELF-string	rollback
+a	/sbin/upgraded		ELF-string	- watchdog -
+a	/sbin/upgraded		ELF-string	/dev/watchdog
+a	/sbin/upgraded		ELF-string	/lib/upgrade/stage2
+a	/sbin/upgraded		ELF-string	Failed to exec sysupgrade
+a	/sbin/upgraded		ELF-string	Failed to fork sysupgrade
+a	/sbin/upgraded		ELF-string	Watchdog handover: fd=%s
+a	/sbin/upgraded		ELF-string	reboot
+a	/sbin/upgraded		ELF-string	sysupgrade aborted with return code: %d
+a	/sbin/upgraded		ELF-string	sysupgrade stage 2 failed, invalid command line
+a	/sbin/wfa_ca		ELF-string	shutdown
+a	/sbin/wfa_ca		ELF-string	videorecovery
+a	/sbin/wfa_dut		ELF-string	shutdown
+a	/usr/bin/AFC		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+a	/usr/bin/atci_service		ELF-string	/sbin/poweroff
+a	/usr/bin/atci_service		ELF-string	/sbin/poweroff -d %d
+a	/usr/bin/atci_service		ELF-string	/sbin/poweroff -f
+a	/usr/bin/atci_service		ELF-string	/sbin/poweroff -n
+a	/usr/bin/atci_service		ELF-string	AT%POWEROFF
+a	/usr/bin/atci_service		ELF-string	Usage: poweroff [DELAY|n|f]
+a	/usr/bin/atci_service		ELF-string	poweroff failed
+a	/usr/bin/atci_service		ELF-string	poweroff successed
+a	/usr/bin/atci_service		ELF-string	svc power reboot
+a	/usr/bin/atci_service		ELF-string	system_poweroff_handler
+a	/usr/bin/atcid		ELF-string	AT%POWEROFF
+a	/usr/bin/atcid		ELF-string	AT%REBOOT
+a	/usr/bin/atcid		ELF-string	AT+QBOOTCTRL
+a	/usr/bin/atcid		ELF-string	AT+QFOTADL
+a	/usr/bin/atcid		ELF-string	AT+QFOTAUPG
+a	/usr/bin/atcid		ELF-string	[%s]%s():%d The peer has performed an orderly shutdown
+a	/usr/bin/atcid		ELF-string	[%s]%s():%d The peer has performed an orderly shutdown, isATCmdInject %d
+a	/usr/bin/atcid		ELF-string	pas_reboot_handler
+a	/usr/bin/atcid		ELF-string	quectel_at_qbootctrl_hdlr
+a	/usr/bin/atcid		ELF-string	quectel_at_upgrade_version_handler
+a	/usr/bin/atcid		ELF-string	reboot -d 3
+a	/usr/bin/atcid		ELF-string	shutdown
+a	/usr/bin/bs20		ELF-string	 force_roam_rssi_th=%d
+a	/usr/bin/bs20		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
+a	/usr/bin/bs20		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
+a	/usr/bin/bs20		ELF-string	force_roam_rssi_th
+a	/usr/bin/bs20		ELF-string	is_CAC_Success_by_bw
+a	/usr/bin/ccci_fsd		ELF-string	Shutdown 
+a	/usr/bin/ccci_mdinit		ELF-string	aee_off_fast_reboot_enable
+a	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %s not exist, using default value
+a	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %u
+a	/usr/bin/ccci_mdinit		ELF-string	set md runtime data: aee_off_fast_reboot_enable=%u
+a	/usr/bin/connsyslogD		ELF-string	shutdown
+a	/usr/bin/curl		ELF-string	Use HTTP 2 without HTTP/1.1 Upgrade
+a	/usr/bin/dconfig		ELF-string	&watchdog { apwdt_en = <0>; };
+a	/usr/bin/dconfig		ELF-string	&watchdog { apwdt_en = <1>; };
+a	/usr/bin/dconfig		ELF-string	&watchdog { rstmode = <0>; };
+a	/usr/bin/dconfig		ELF-string	&watchdog { rstmode = <1>; };
+a	/usr/bin/dconfig		ELF-string	Disable AP Watchdog
+a	/usr/bin/dconfig		ELF-string	Disable wdt cold reboot
+a	/usr/bin/dconfig		ELF-string	Enable AP Watchdog
+a	/usr/bin/dconfig		ELF-string	Enable wdt cold reboot
+a	/usr/bin/emdlogger1		ELF-string	%s:EMDLogger: colgin SIGTERM need exit for reboot
+a	/usr/bin/emdlogger1		ELF-string	%s:No need upgradeCustomizeConfig for old version:%d
+a	/usr/bin/emdlogger1		ELF-string	%s:Upgrade for lastest version %d
+a	/usr/bin/emdlogger1		ELF-string	%s:Upgrade from old version 0 to version 1
+a	/usr/bin/emdlogger1		ELF-string	%s:Upgrade ignore old version %d
+a	/usr/bin/emdlogger1		ELF-string	%s:shutdown: m_nClientFd errno = %d
+a	/usr/bin/emdlogger1		ELF-string	%s:shutdown: m_nSockFd errno = %d
+a	/usr/bin/emdlogger1		ELF-string	MDL_OP_GET_MD_SILENT_REBOOT_MODE
+a	/usr/bin/emdlogger1		ELF-string	MDL_OP_SET_MD_SILENT_REBOOT_MODE
+a	/usr/bin/emdlogger1		ELF-string	getMdSilentRebootMode
+a	/usr/bin/emdlogger1		ELF-string	setMdSilentRebootMode
+a	/usr/bin/emdlogger1		ELF-string	shutdown
+a	/usr/bin/emdlogger1		ELF-string	upgradeCustomizeConfig
+a	/usr/bin/kn_fotad		ELF-string	/data/sysupgrade.tgz
+a	/usr/bin/kn_fotad		ELF-string	/sbin/upgrade-script -c
+a	/usr/bin/kn_fotad		ELF-string	/usr/bin/upgrade -l -i %s
+a	/usr/bin/kn_fotad		ELF-string	/var/knos/fota_profile
+a	/usr/bin/kn_fotad		ELF-string	/var/run/knos/kn_fotad
+a	/usr/bin/kn_fotad		ELF-string	Change fota mode, %d to %d
+a	/usr/bin/kn_fotad		ELF-string	Change fota server, %s to %s
+a	/usr/bin/kn_fotad		ELF-string	REASON_RST_UPGRADE
+a	/usr/bin/kn_fotad		ELF-string	Start tmr_mon_fota, Add timer : itv=%d
+a	/usr/bin/kn_fotad		ELF-string	Step 2 - Upgrade
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in backup mode
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in image HTTP transfer, Re-try after %d sec
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in image TFTP transfer, Re-try after %d sec
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in info file HTTP transfer, Re-try after %d sec
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in info file TFTP transfer, Re-try after %d sec
+a	/usr/bin/kn_fotad		ELF-string	[fota] Failed in network unavailable
+a	/usr/bin/kn_fotad		ELF-string	[fota] Reload config
+a	/usr/bin/kn_fotad		ELF-string	[fota] Result, ret=%d, restart=%0x
+a	/usr/bin/kn_fotad		ELF-string	[fota] Same version
+a	/usr/bin/kn_fotad		ELF-string	[fota] Start downloading image file (%s), Try %d
+a	/usr/bin/kn_fotad		ELF-string	[fota] Start downloading info file (%s), Try %d
+a	/usr/bin/kn_fotad		ELF-string	[fota] Start mode %d
+a	/usr/bin/kn_fotad		ELF-string	[fota] Success in image HTTP transfer
+a	/usr/bin/kn_fotad		ELF-string	[fota] Success in image TFTP transfer
+a	/usr/bin/kn_fotad		ELF-string	[fota] Success in info file HTTP transfer
+a	/usr/bin/kn_fotad		ELF-string	[fota] Success in info file TFTP transfer
+a	/usr/bin/kn_fotad		ELF-string	[fota] Upgrade Info: %s %s %u
+a	/usr/bin/kn_fotad		ELF-string	[fota] fota will start in %d sec.
+a	/usr/bin/kn_fotad		ELF-string	deinit_mon_fota
+a	/usr/bin/kn_fotad		ELF-string	do_mon_fota
+a	/usr/bin/kn_fotad		ELF-string	fota mode : %d
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[%d]
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].host=%s
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].result=%s
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].status=%s
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].time=%s
+a	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].version=%s
+a	/usr/bin/kn_fotad		ELF-string	fota.config.debug_syslog
+a	/usr/bin/kn_fotad		ELF-string	fota.config.history
+a	/usr/bin/kn_fotad		ELF-string	fota.config.mode
+a	/usr/bin/kn_fotad		ELF-string	fota.http.interval
+a	/usr/bin/kn_fotad		ELF-string	fota.http.retry
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.cycle
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.enabled
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.enabled=%d
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.interval
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.profile
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.retry
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.retry=%d
+a	/usr/bin/kn_fotad		ELF-string	fota.provision.server
+a	/usr/bin/kn_fotad		ELF-string	fota.status.next
+a	/usr/bin/kn_fotad		ELF-string	fota.status.next=%u
+a	/usr/bin/kn_fotad		ELF-string	fota.status.next=0
+a	/usr/bin/kn_fotad		ELF-string	fota.status.running
+a	/usr/bin/kn_fotad		ELF-string	fota.status.running=1
+a	/usr/bin/kn_fotad		ELF-string	fota.tftp.interval
+a	/usr/bin/kn_fotad		ELF-string	fota.tftp.retry
+a	/usr/bin/kn_fotad		ELF-string	fota.upgrade.enable_time
+a	/usr/bin/kn_fotad		ELF-string	fota.upgrade.server
+a	/usr/bin/kn_fotad		ELF-string	fota_set_mode
+a	/usr/bin/kn_fotad		ELF-string	init_mon_fota
+a	/usr/bin/kn_fotad		ELF-string	ipc_sig,reboot,active,%d,%d
+a	/usr/bin/kn_fotad		ELF-string	"iptables -t filter -D input_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+a	/usr/bin/kn_fotad		ELF-string	"iptables -t filter -I input_rule 2 -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+a	/usr/bin/kn_fotad		ELF-string	kn_fotad.log
+a	/usr/bin/kn_fotad		ELF-string	knos.fota.def_fota_server
+a	/usr/bin/kn_fotad		ELF-string	knsh fota mode set  %s
+a	/usr/bin/kn_fotad		ELF-string	knsh fota server set %s
+a	/usr/bin/kn_fotad		ELF-string	knsh random reboot time set %d %d
+a	/usr/bin/kn_fotad		ELF-string	knsh set upgrade_cycle %s
+a	/usr/bin/kn_fotad		ELF-string	knsh set upgrade_enable_time %s
+a	/usr/bin/kn_fotad		ELF-string	knsts.modeswitch.signal_to_fota=1
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host=%s
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host=0
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=0
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in different image size
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in image %s transfer
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in info file %s transfer
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in info file format error
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in network unavailable
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Same version
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Start downloading image file
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Start downloading info file
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=0
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=1
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=2
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time=%u
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time=0
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version=%s
+a	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version=0
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_Bluetooth_flag
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_GPS_syslog_flag
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement_expire
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement_time
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_reset_timer
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_rsrp_process_rate_thr
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_rsrp_process_thr
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_selection
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp_ca
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp_rsrp_search
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_sinr
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_sinr_process_rate_thr
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_sinr_process_thr
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_tac
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_tftp_server
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput_range
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput_time
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_count
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_expire
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_range
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_time
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_fota_mode
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_fota_server
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_initial_search
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_mask_NRFDD
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_5g
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_backup
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_common
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_lte
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_network_detect
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_network_detect_domain
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_qoe_ontraffic_th
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_qoe_sample_timer
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_random_reboot_etime
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_random_reboot_stime
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_regular_syslog_interval
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_set_provision
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_syslog_mesh_send
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_syslog_server
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_telnet_acl
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_option
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_retry
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_server
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_server_option
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tr069
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_upgrade_cycle
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_upgrade_enable_time
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_usb_supply
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_144channeluse
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_auto_channel_optimization
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_beacon
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_bs
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_dtim
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_fragment
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_mesh
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_mesh_11r
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_ssid1to2
+a	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_zerowaitdfs
+a	/usr/bin/kn_fotad		ELF-string	monitor.reboot.etime
+a	/usr/bin/kn_fotad		ELF-string	monitor.reboot.stime
+a	/usr/bin/kn_fotad		ELF-string	ms_RebootCountThreshold
+a	/usr/bin/kn_fotad		ELF-string	ms_reboot_counter
+a	/usr/bin/kn_fotad		ELF-string	process_upgrade
+a	/usr/bin/kn_fotad		ELF-string	random_reboot_time_set_end_time
+a	/usr/bin/kn_fotad		ELF-string	random_reboot_time_set_start_time
+a	/usr/bin/kn_fotad		ELF-string	tmr_mon_fota
+a	/usr/bin/kn_fotad		ELF-string	tmr_mon_fota_start
+a	/usr/bin/kn_fotad		ELF-string	uci delete fota.@history[0] && uci commit fota
+a	/usr/bin/kn_fotad		ELF-string	uci revert fota
+a	/usr/bin/kn_fotad		ELF-string	upgrade result : ret=%d
+a	/usr/bin/kn_fotad		ELF-string	upgrade serve : %s
+a	/usr/bin/kn_fotad		ELF-string	upgrade_cycle
+a	/usr/bin/kn_fotad		ELF-string	upgrade_enable_time
+a	/usr/bin/kn_htchkd		ELF-string	/etc/init.d/kn_fotad
+a	/usr/bin/kn_htchkd		ELF-string	/var/run/knos/kn_fotad
+a	/usr/bin/kn_htchkd		ELF-string	Clear caches, upgrade=%d, needReboot=%x
+a	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_CPU
+a	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_MODEM
+a	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_RAM
+a	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_WIFI
+a	/usr/bin/kn_htchkd		ELF-string	Recovery due to DNS detection failure is enabled.
+a	/usr/bin/kn_htchkd		ELF-string	[htchkd] Rebooting the system in 3sec due to 'CPU'.
+a	/usr/bin/kn_htchkd		ELF-string	[htchkd] Rebooting the system in 3sec due to 'meomry'.
+a	/usr/bin/kn_htchkd		ELF-string	knos.knsh.needReboot
+a	/usr/bin/kn_htchkd		ELF-string	knsts.status.upgrade_status
+a	/usr/bin/kn_htchkd		ELF-string	monitor.network.recovery
+a	/usr/bin/kn_htchkd		ELF-string	monitor.wireless.reboot
+a	/usr/bin/kn_htchkd		ELF-string	monitor.wireless.recovery
+a	/usr/bin/kn_led_controller		ELF-string	LED, Status Upgrade Done
+a	/usr/bin/kn_led_controller		ELF-string	LED, Status Upgrade Start
+a	/usr/bin/kn_led_controller		ELF-string	LED_SCENARIO_UPGRADE_DONE
+a	/usr/bin/kn_led_controller		ELF-string	LED_SCENARIO_UPGRADE_START
+a	/usr/bin/kn_led_controller		ELF-string	knsts.status.led_status=Upgrade
+a	/usr/bin/kn_led_controller		ELF-string	upgrade-start
+a	/usr/bin/kn_led_controller		ELF-string	upgrade-stop
+a	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:Reboot %d
+a	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:reboot_counter=<%d>,<%d>
+a	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:reboot_wait_time=<%d>
+a	/usr/bin/kn_modeswitchd		ELF-string	System Reboot %d
+a	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.interval
+a	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.profile
+a	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.retry
+a	/usr/bin/kn_modeswitchd		ELF-string	"iptables -t filter -D input_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+a	/usr/bin/kn_modeswitchd		ELF-string	"iptables -t filter -I input_rule 2 -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+a	/usr/bin/kn_modeswitchd		ELF-string	knsts.modeswitch.signal_to_fota
+a	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_RebootCountThreshold
+a	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter
+a	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter=%d
+a	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter=0
+a	/usr/bin/kn_syslogd		ELF-string	/data/knos/knos-boot-reason
+a	/usr/bin/kn_syslogd		ELF-string	/data/knos/knos-recovery-overlay
+a	/usr/bin/kn_syslogd		ELF-string	A recovery operation for the overlay area occurred during the system startup process.
+a	/usr/bin/kn_syslogd		ELF-string	REASON_RST_UPGRADE
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_CPU
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_ETH
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_FLASH
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_LTE
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_MODEM
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_RAM
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_USB
+a	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_WIFI
+a	/usr/bin/kn_syslogd		ELF-string	Reboot reason: %s
+a	/usr/bin/kn_syslogd		ELF-string	System Reboot %d
+a	/usr/bin/kn_syslogd		ELF-string	System Watchdog %d
+a	/usr/bin/kn_syslogd		ELF-string	fota.provision.enabled
+a	/usr/bin/kn_syslogd		ELF-string	fota.provision.server
+a	/usr/bin/kn_sysmond		ELF-string	Clear random-reboot
+a	/usr/bin/kn_sysmond		ELF-string	RANDOM-REBOOT
+a	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_CPU
+a	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_ETH
+a	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_USB
+a	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_WIFI
+a	/usr/bin/kn_sysmond		ELF-string	Random reboot : %d/%d/%d %d:%d:%d
+a	/usr/bin/kn_sysmond		ELF-string	Set random-reboot : %d/%d/%d %d:%d:%d
+a	/usr/bin/kn_sysmond		ELF-string	System F-Reboot : %s
+a	/usr/bin/kn_sysmond		ELF-string	System Reboot : %s
+a	/usr/bin/kn_sysmond		ELF-string	do_mon_random_reboot
+a	/usr/bin/kn_sysmond		ELF-string	init_mon_random_reboot
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.etime=
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next=%lu
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next=0
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.running
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.running=0
+a	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.stime=
+a	/usr/bin/kn_sysmond		ELF-string	thread_random_reboot_level
+a	/usr/bin/knsh		ELF-string	%supgrade -a -r -t %s -i %s > /dev/null &
+a	/usr/bin/knsh		ELF-string	%supgrade -a -r -w %s -i %s > /dev/null &
+a	/usr/bin/knsh		ELF-string	/sbin/reboot
+a	/usr/bin/knsh		ELF-string	/var/run/knos/kn_fotad
+a	/usr/bin/knsh		ELF-string	/var/tmp/image_upgrade.sh
+a	/usr/bin/knsh		ELF-string	CPE reboot at %dh
+a	/usr/bin/knsh		ELF-string	CPE reboot at random time. (between %d~%dh)
+a	/usr/bin/knsh		ELF-string	Clear reboot time.
+a	/usr/bin/knsh		ELF-string	Do manual upgrade
+a	/usr/bin/knsh		ELF-string	FOTA information
+a	/usr/bin/knsh		ELF-string	Immediate reboot when except the following.
+a	/usr/bin/knsh		ELF-string	Random reboot
+a	/usr/bin/knsh		ELF-string	Select wlan channel without reboot.
+a	/usr/bin/knsh		ELF-string	Set (start/and) time for reboot
+a	/usr/bin/knsh		ELF-string	Show / Set retry times of auto-upgrade.
+a	/usr/bin/knsh		ELF-string	Show Upgrade history
+a	/usr/bin/knsh		ELF-string	Show upgrade_cycle
+a	/usr/bin/knsh		ELF-string	Show upgrade_enable_time
+a	/usr/bin/knsh		ELF-string	TFTP + HTTP(FOTA)
+a	/usr/bin/knsh		ELF-string	The system is going down for reboot NOW!
+a	/usr/bin/knsh		ELF-string	The system is going down for reboot in %d sec!
+a	/usr/bin/knsh		ELF-string	The system is going down for reboot now!
+a	/usr/bin/knsh		ELF-string	Upgrade
+a	/usr/bin/knsh		ELF-string	fota history <show|clear>
+a	/usr/bin/knsh		ELF-string	fota mode clear
+a	/usr/bin/knsh		ELF-string	fota mode set <0..3>
+a	/usr/bin/knsh		ELF-string	fota mode show
+a	/usr/bin/knsh		ELF-string	fota provision cycle <show|clear|set> [<1..65535>]
+a	/usr/bin/knsh		ELF-string	fota provision mode <show|clear|set> [<0|1>]
+a	/usr/bin/knsh		ELF-string	fota provision retry <show|set> [<1..99>]
+a	/usr/bin/knsh		ELF-string	fota provision server <show|clear|set> [<ip>]
+a	/usr/bin/knsh		ELF-string	fota server clear
+a	/usr/bin/knsh		ELF-string	fota server set ip <ip|fqdn>
+a	/usr/bin/knsh		ELF-string	fota server show
+a	/usr/bin/knsh		ELF-string	fota.@history[%d]
+a	/usr/bin/knsh		ELF-string	fota.@history[%d].host
+a	/usr/bin/knsh		ELF-string	fota.@history[%d].result
+a	/usr/bin/knsh		ELF-string	fota.@history[%d].status
+a	/usr/bin/knsh		ELF-string	fota.@history[%d].time
+a	/usr/bin/knsh		ELF-string	fota.@history[%d].version
+a	/usr/bin/knsh		ELF-string	fota.config.history
+a	/usr/bin/knsh		ELF-string	fota.config.mode
+a	/usr/bin/knsh		ELF-string	fota.config.mode=%d
+a	/usr/bin/knsh		ELF-string	fota.mirror.server
+a	/usr/bin/knsh		ELF-string	fota.mirror.server=
+a	/usr/bin/knsh		ELF-string	fota.mirror.server=%s
+a	/usr/bin/knsh		ELF-string	fota.provision.cycle
+a	/usr/bin/knsh		ELF-string	fota.provision.cycle=%d
+a	/usr/bin/knsh		ELF-string	fota.provision.enabled
+a	/usr/bin/knsh		ELF-string	fota.provision.enabled=%d
+a	/usr/bin/knsh		ELF-string	fota.provision.retry
+a	/usr/bin/knsh		ELF-string	fota.provision.retry=%d
+a	/usr/bin/knsh		ELF-string	fota.provision.server
+a	/usr/bin/knsh		ELF-string	fota.provision.server=%s
+a	/usr/bin/knsh		ELF-string	fota.upgrade.enable_time
+a	/usr/bin/knsh		ELF-string	fota.upgrade.enable_time=%s
+a	/usr/bin/knsh		ELF-string	fota.upgrade.server
+a	/usr/bin/knsh		ELF-string	fota.upgrade.server=%s
+a	/usr/bin/knsh		ELF-string	ipc_sig,reboot,active,%d,%d
+a	/usr/bin/knsh		ELF-string	ipc_sig,reboot,clear
+a	/usr/bin/knsh		ELF-string	knos.fota.def_fota_server
+a	/usr/bin/knsh		ELF-string	knos.fota.def_provision_server
+a	/usr/bin/knsh		ELF-string	knos.knsh.needReboot
+a	/usr/bin/knsh		ELF-string	knos.knsh.needReboot=%d
+a	/usr/bin/knsh		ELF-string	knsts.modeswitch.signal_to_fota=0
+a	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_RebootCountThreshold
+a	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_RebootCountThreshold=%s
+a	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_reboot_counter
+a	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_reboot_counter=%s
+a	/usr/bin/knsh		ELF-string	monitor.reboot.etime
+a	/usr/bin/knsh		ELF-string	monitor.reboot.etime=
+a	/usr/bin/knsh		ELF-string	monitor.reboot.etime=%d
+a	/usr/bin/knsh		ELF-string	monitor.reboot.next=0
+a	/usr/bin/knsh		ELF-string	monitor.reboot.running
+a	/usr/bin/knsh		ELF-string	monitor.reboot.running=0
+a	/usr/bin/knsh		ELF-string	monitor.reboot.running=1
+a	/usr/bin/knsh		ELF-string	monitor.reboot.stime
+a	/usr/bin/knsh		ELF-string	monitor.reboot.stime=
+a	/usr/bin/knsh		ELF-string	monitor.reboot.stime=%d
+a	/usr/bin/knsh		ELF-string	ms_RebootCountThreshold:%s
+a	/usr/bin/knsh		ELF-string	ms_reboot_counter:%s
+a	/usr/bin/knsh		ELF-string	random reboot clear
+a	/usr/bin/knsh		ELF-string	random reboot get
+a	/usr/bin/knsh		ELF-string	random reboot time set <start time> <end time>
+a	/usr/bin/knsh		ELF-string	reboot -d 3
+a	/usr/bin/knsh		ELF-string	select_bootpart %s
+a	/usr/bin/knsh		ELF-string	set upgrade_cycle <1..65535>
+a	/usr/bin/knsh		ELF-string	set upgrade_enable_time <000000-235959>
+a	/usr/bin/knsh		ELF-string	show upgrade_cycle
+a	/usr/bin/knsh		ELF-string	show upgrade_enable_time
+a	/usr/bin/knsh		ELF-string	upgrade history
+a	/usr/bin/lbs_em		ELF-string	4:  Host Reboot Notify
+a	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_client_connect() failed
+a	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+a	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_receiver_decode() Agps2DebugInterface_agpsUpdateReboot_handler() is NULL
+a	/usr/bin/lbs_em		ELF-string	Host Reboot Notify Sent
+a	/usr/bin/mapd		ELF-string	 force_roam_rssi_th=%d
+a	/usr/bin/mapd		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
+a	/usr/bin/mapd		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
+a	/usr/bin/mapd		ELF-string	force_roam_rssi_th
+a	/usr/bin/mapd		ELF-string	is_CAC_Success_by_bw
+a	/usr/bin/meta_tst		ELF-string	11FtModReboot
+a	/usr/bin/meta_tst		ELF-string	13FtModPowerOff
+a	/usr/bin/meta_tst		ELF-string	AT+REBOOTMD
+a	/usr/bin/meta_tst		ELF-string	[Meta] Enter rebootModem
+a	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_PowerOff
+a	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_Reboot
+a	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_SHUTDOWN_OP_WAITUSB = yes
+a	/usr/bin/meta_tst		ELF-string	[Meta][FT] reboot by delay = %d
+a	/usr/bin/meta_tst		ELF-string	[Meta][FT][DEBUG] Query modem reboot result %d times
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] command is %s
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] enter rebootToRecovery
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] open misc partition fail, errno = %d
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off 
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online status= %d
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition failed, errno = %d
+a	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition success
+a	/usr/bin/meta_tst		ELF-string	boot-recovery
+a	/usr/bin/meta_tst		ELF-string	reboot
+a	/usr/bin/mipc_submonitor		ELF-string	./etc/auto_recovery.sh
+a	/usr/bin/mipc_submonitor		ELF-string	reboot
+a	/usr/bin/mipc_submonitor		ELF-string	reboot -f
+a	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff
+a	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff_with_cause
+a	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[DEBUG]: %s %d mnl2agps_mnl_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[ERROR]: %s %d agps_reboot is NULL
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s 
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s 
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d agps_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d hal_reboot, fd:[%d], used:%d
+a	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d mpvt_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld MPVT[DEBUG]: %s %d mpvt_mnl_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld MPVT[ERROR]: %s %d mpvt2mnl_hdlr() mpvt_gnss_reboot is NULL
+a	/usr/bin/mnld		ELF-string	%ld %ld MPVT[ERROR]: %s %d mpvt_scp_reboot() mpvt_scp_reboot is NULL
+a	/usr/bin/mnld		ELF-string	%ld %ld agps[DEBUG]: %s %d write  agps_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld agps[ERROR]: %s %d mnl_reboot is NULL
+a	/usr/bin/mnld		ELF-string	%ld %ld mnl2hal[DEBUG]: %s %d mnl2hal_mnld_reboot
+a	/usr/bin/mnld		ELF-string	%ld %ld mnl2hal[ERROR]: %s %d hal2mnl_hdlr() hal_reboot is NULL
+a	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot
+a	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot() mtk_socket_client_connect() failed
+a	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+a	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_receiver_decode() Mnld2DebugInterface_mnldUpdateReboot_handler() is NULL
+a	/usr/bin/mnld		ELF-string	AGPS_REBOOT
+a	/usr/bin/mnld		ELF-string	MNL_REBOOT
+a	/usr/bin/mnld		ELF-string	Mnld2DebugInterface_mnldUpdateReboot
+a	/usr/bin/mnld		ELF-string	agps2mnl_agps_reboot
+a	/usr/bin/mnld		ELF-string	agps_reboot
+a	/usr/bin/mnld		ELF-string	hal_reboot
+a	/usr/bin/mnld		ELF-string	mnl2agps_mnl_reboot
+a	/usr/bin/mnld		ELF-string	mnl2hal_mnld_reboot
+a	/usr/bin/mnld		ELF-string	mnl2mpvt_reboot
+a	/usr/bin/mnld		ELF-string	mpvt_mnl_reboot
+a	/usr/bin/mnld		ELF-string	mpvt_reboot
+a	/usr/bin/mnld		ELF-string	retry_alarm_timeout_handler
+a	/usr/bin/mnld		ELF-string	shutdown
+a	/usr/bin/mrdump_tool		ELF-string	%s: failed to reboot into LK for partition resize.
+a	/usr/bin/mrdump_tool		ELF-string	/system/bin/reboot
+a	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_mdt_with_md_reboot_test =============
+a	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_modem_reboot_ind_test [%d] =============
+a	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_nilr_mnl_reboot_test [%d] =============
+a	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_nilr_with_md_reboot_test [%d] =============
+a	/usr/bin/mtk_agpsd		ELF-string	 ============= up_ni_supl_2_mnl_reboot_test =============
+a	/usr/bin/mtk_agpsd		ELF-string	AGPS_REBOOT
+a	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_client_connect() failed
+a	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+a	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_receiver_decode() Agps2DebugInterface_agpsUpdateReboot_handler() is NULL
+a	/usr/bin/mtk_agpsd		ELF-string	MD is reboot and GPS is started, send a mock GPS CLOSE IND to AGPSD to terminate this CP session
+a	/usr/bin/mtk_agpsd		ELF-string	MNL  read mnl_reboot
+a	/usr/bin/mtk_agpsd		ELF-string	MNL_REBOOT
+a	/usr/bin/mtk_agpsd		ELF-string	MODEM_REBOOT_IND
+a	/usr/bin/mtk_agpsd		ELF-string	NULL pointer to sec_ssl_shutdown()
+a	/usr/bin/mtk_agpsd		ELF-string	NULL ssl->conn in sec_ssl_shutdown()
+a	/usr/bin/mtk_agpsd		ELF-string	SSL_shutdown
+a	/usr/bin/mtk_agpsd		ELF-string	SSL_shutdown() error: 0x%x
+a	/usr/bin/mtk_agpsd		ELF-string	TLS_ERR_SHUTDOWNED
+a	/usr/bin/mtk_agpsd		ELF-string	[MD_%d] read  md_modem_reboot_ind_hdlr
+a	/usr/bin/mtk_agpsd		ELF-string	[MNL] read  mnl_reboot
+a	/usr/bin/mtk_agpsd		ELF-string	agps2_mgr_close_gps_req when mnl_reboot ==> trigger a fake close_gps_done
+a	/usr/bin/mtk_agpsd		ELF-string	agps_reboot is NULL
+a	/usr/bin/mtk_agpsd		ELF-string	callbacks->slp_reboot() is NULL
+a	/usr/bin/mtk_agpsd		ELF-string	close_gps_done  do not send GPS close rsp to MD due to MD is already reboot
+a	/usr/bin/mtk_agpsd		ELF-string	do_socket_shutdown  failure [%s] fd=%d
+a	/usr/bin/mtk_agpsd		ELF-string	mnl2agps_mnl_reboot
+a	/usr/bin/mtk_agpsd		ELF-string	mnl_reboot is NULL
+a	/usr/bin/mtk_agpsd		ELF-string	tls_shutdown(sock_id=%d)
+a	/usr/bin/mtk_agpsd		ELF-string	write  agps_reboot
+a	/usr/bin/mtk_monitor_hang		ELF-string	%s:%s kick:%d watchdog:%d
+a	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d 
+a	/usr/bin/mtk_monitor_hang		ELF-string	%s:Notify monitor hang to enter reboot state:%d
+a	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_init
+a	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_timeout_cb
+a	/usr/bin/nvram_daemon		ELF-string	FileOp_RecoveryData
+a	/usr/bin/openssl		ELF-string	SSL_CTX_set_quiet_shutdown
+a	/usr/bin/openssl		ELF-string	SSL_set_shutdown
+a	/usr/bin/openssl		ELF-string	SSL_shutdown
+a	/usr/bin/openssl		ELF-string	shutdown
+a	/usr/bin/openssl		ELF-string	shutdown accept socket
+a	/usr/bin/php8-cgi		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-cgi		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-cgi		ELF-string	PHP Request Shutdown
+a	/usr/bin/php8-cgi		ELF-string	PHP Shutdown
+a	/usr/bin/php8-cgi		ELF-string	Upgrade Required
+a	/usr/bin/php8-cgi		ELF-string	append_user_shutdown_function
+a	/usr/bin/php8-cgi		ELF-string	php_call_shutdown_functions
+a	/usr/bin/php8-cgi		ELF-string	php_during_module_shutdown
+a	/usr/bin/php8-cgi		ELF-string	php_free_shutdown_functions
+a	/usr/bin/php8-cgi		ELF-string	php_libxml_shutdown
+a	/usr/bin/php8-cgi		ELF-string	php_module_shutdown
+a	/usr/bin/php8-cgi		ELF-string	php_module_shutdown_wrapper
+a	/usr/bin/php8-cgi		ELF-string	php_output_shutdown
+a	/usr/bin/php8-cgi		ELF-string	php_request_shutdown
+a	/usr/bin/php8-cgi		ELF-string	php_stream_xport_shutdown
+a	/usr/bin/php8-cgi		ELF-string	register_shutdown_function
+a	/usr/bin/php8-cgi		ELF-string	register_user_shutdown_function
+a	/usr/bin/php8-cgi		ELF-string	remove_user_shutdown_function
+a	/usr/bin/php8-cgi		ELF-string	sapi_shutdown
+a	/usr/bin/php8-cgi		ELF-string	shutdown_memory_manager
+a	/usr/bin/php8-cgi		ELF-string	stream_socket_shutdown
+a	/usr/bin/php8-cgi		ELF-string	virtual_cwd_shutdown
+a	/usr/bin/php8-cgi		ELF-string	zend_ini_global_shutdown
+a	/usr/bin/php8-cgi		ELF-string	zend_ini_shutdown
+a	/usr/bin/php8-cgi		ELF-string	zend_mm_shutdown
+a	/usr/bin/php8-cgi		ELF-string	zend_observer_shutdown
+a	/usr/bin/php8-cgi		ELF-string	zend_post_shutdown_cb
+a	/usr/bin/php8-cgi		ELF-string	zend_shutdown_executor_values
+a	/usr/bin/php8-cgi		ELF-string	zend_shutdown_fpu
+a	/usr/bin/php8-cgi		ELF-string	zend_shutdown_strtod
+a	/usr/bin/php8-cgi		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+a	/usr/bin/php8-cli		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-cli		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-cli		ELF-string	PHP Request Shutdown
+a	/usr/bin/php8-cli		ELF-string	PHP Shutdown
+a	/usr/bin/php8-cli		ELF-string	Upgrade Required
+a	/usr/bin/php8-cli		ELF-string	append_user_shutdown_function
+a	/usr/bin/php8-cli		ELF-string	php_call_shutdown_functions
+a	/usr/bin/php8-cli		ELF-string	php_during_module_shutdown
+a	/usr/bin/php8-cli		ELF-string	php_free_shutdown_functions
+a	/usr/bin/php8-cli		ELF-string	php_libxml_shutdown
+a	/usr/bin/php8-cli		ELF-string	php_module_shutdown
+a	/usr/bin/php8-cli		ELF-string	php_module_shutdown_wrapper
+a	/usr/bin/php8-cli		ELF-string	php_output_shutdown
+a	/usr/bin/php8-cli		ELF-string	php_request_shutdown
+a	/usr/bin/php8-cli		ELF-string	php_stream_xport_shutdown
+a	/usr/bin/php8-cli		ELF-string	register_shutdown_function
+a	/usr/bin/php8-cli		ELF-string	register_user_shutdown_function
+a	/usr/bin/php8-cli		ELF-string	remove_user_shutdown_function
+a	/usr/bin/php8-cli		ELF-string	sapi_shutdown
+a	/usr/bin/php8-cli		ELF-string	shutdown_memory_manager
+a	/usr/bin/php8-cli		ELF-string	stream_socket_shutdown
+a	/usr/bin/php8-cli		ELF-string	upgrade
+a	/usr/bin/php8-cli		ELF-string	virtual_cwd_shutdown
+a	/usr/bin/php8-cli		ELF-string	zend_ini_global_shutdown
+a	/usr/bin/php8-cli		ELF-string	zend_ini_shutdown
+a	/usr/bin/php8-cli		ELF-string	zend_mm_shutdown
+a	/usr/bin/php8-cli		ELF-string	zend_observer_shutdown
+a	/usr/bin/php8-cli		ELF-string	zend_post_shutdown_cb
+a	/usr/bin/php8-cli		ELF-string	zend_shutdown_executor_values
+a	/usr/bin/php8-cli		ELF-string	zend_shutdown_fpu
+a	/usr/bin/php8-cli		ELF-string	zend_shutdown_strtod
+a	/usr/bin/php8-cli		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+a	/usr/bin/php8-fpm		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-fpm		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+a	/usr/bin/php8-fpm		ELF-string	PHP Request Shutdown
+a	/usr/bin/php8-fpm		ELF-string	PHP Shutdown
+a	/usr/bin/php8-fpm		ELF-string	Upgrade Required
+a	/usr/bin/php8-fpm		ELF-string	append_user_shutdown_function
+a	/usr/bin/php8-fpm		ELF-string	php_call_shutdown_functions
+a	/usr/bin/php8-fpm		ELF-string	php_during_module_shutdown
+a	/usr/bin/php8-fpm		ELF-string	php_free_shutdown_functions
+a	/usr/bin/php8-fpm		ELF-string	php_libxml_shutdown
+a	/usr/bin/php8-fpm		ELF-string	php_module_shutdown
+a	/usr/bin/php8-fpm		ELF-string	php_module_shutdown_wrapper
+a	/usr/bin/php8-fpm		ELF-string	php_output_shutdown
+a	/usr/bin/php8-fpm		ELF-string	php_request_shutdown
+a	/usr/bin/php8-fpm		ELF-string	php_stream_xport_shutdown
+a	/usr/bin/php8-fpm		ELF-string	register_shutdown_function
+a	/usr/bin/php8-fpm		ELF-string	register_user_shutdown_function
+a	/usr/bin/php8-fpm		ELF-string	remove_user_shutdown_function
+a	/usr/bin/php8-fpm		ELF-string	sapi_shutdown
+a	/usr/bin/php8-fpm		ELF-string	shutdown_memory_manager
+a	/usr/bin/php8-fpm		ELF-string	stream_socket_shutdown
+a	/usr/bin/php8-fpm		ELF-string	virtual_cwd_shutdown
+a	/usr/bin/php8-fpm		ELF-string	zend_ini_global_shutdown
+a	/usr/bin/php8-fpm		ELF-string	zend_ini_shutdown
+a	/usr/bin/php8-fpm		ELF-string	zend_mm_shutdown
+a	/usr/bin/php8-fpm		ELF-string	zend_observer_shutdown
+a	/usr/bin/php8-fpm		ELF-string	zend_post_shutdown_cb
+a	/usr/bin/php8-fpm		ELF-string	zend_shutdown_executor_values
+a	/usr/bin/php8-fpm		ELF-string	zend_shutdown_fpu
+a	/usr/bin/php8-fpm		ELF-string	zend_shutdown_strtod
+a	/usr/bin/php8-fpm		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+a	/usr/bin/scd		ELF-string	MIPC_SYS_REBOOT_CMD Registered
+a	/usr/bin/scd		ELF-string	[SCD %s] Modem reboot AP function disabled
+a	/usr/bin/scd		ELF-string	[SCD %s] NORMAL REBOOT CMD
+a	/usr/bin/scd		ELF-string	[SCD %s] POWEROFF CMD
+a	/usr/bin/scd		ELF-string	[SCD %s] PRESHUTDOWN CMD
+a	/usr/bin/scd		ELF-string	md_reboot_ap: %s
+a	/usr/bin/scd		ELF-string	poweroff
+a	/usr/bin/scd		ELF-string	reboot
+a	/usr/bin/scd		ELF-string	reboot_cmd_cb
+a	/usr/bin/strace		ELF-string	1<<(INET_DIAG_SHUTDOWN-1)
+a	/usr/bin/strace		ELF-string	???_SHUTDOWN
+a	/usr/bin/strace		ELF-string	ESHUTDOWN
+a	/usr/bin/strace		ELF-string	IFLA_EVENT_REBOOT
+a	/usr/bin/strace		ELF-string	INET_DIAG_SHUTDOWN
+a	/usr/bin/strace		ELF-string	KERN_NMI_WATCHDOG
+a	/usr/bin/strace		ELF-string	KERN_SPARC_REBOOT
+a	/usr/bin/strace		ELF-string	KVM_CAP_PPC_BOOKE_WATCHDOG
+a	/usr/bin/strace		ELF-string	KVM_EXIT_SHUTDOWN
+a	/usr/bin/strace		ELF-string	KVM_EXIT_WATCHDOG
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_???
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_CAD_OFF
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_CAD_ON
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_HALT
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_KEXEC
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_POWER_OFF
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_RESTART
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_RESTART2
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_SW_SUSPEND
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC1
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2A
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2B
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2C
+a	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC_???
+a	/usr/bin/strace		ELF-string	RCV_SHUTDOWN
+a	/usr/bin/strace		ELF-string	RPROC_GET_SHUTDOWN_ON_RELEASE
+a	/usr/bin/strace		ELF-string	RPROC_SET_SHUTDOWN_ON_RELEASE
+a	/usr/bin/strace		ELF-string	RXRPC_UPGRADEABLE_SERVICE
+a	/usr/bin/strace		ELF-string	SEND_SHUTDOWN
+a	/usr/bin/strace		ELF-string	SMC_DIAG_SHUTDOWN
+a	/usr/bin/strace		ELF-string	SYS_SHUTDOWN
+a	/usr/bin/strace		ELF-string	UNIX_DIAG_SHUTDOWN
+a	/usr/bin/strace		ELF-string	diag_shutdown
+a	/usr/bin/strace		ELF-string	reboot
+a	/usr/bin/thermal_core		ELF-string	/sys/kernel/lvts/lvts_reboot
+a	/usr/bin/thermal_core		ELF-string	Failed to disable HW reboot
+a	/usr/bin/thermal_core		ELF-string	md_sw_shutdown_cooler
+a	/usr/bin/thermal_core		ELF-string	soc_hw_reboot
+a	/usr/bin/upgrade		ELF-string	       -f [server ip]      remote download(ftp) and upgrade
+a	/usr/bin/upgrade		ELF-string	       -l                  local file upgrade
+a	/usr/bin/upgrade		ELF-string	       -r                  restart after upgrade
+a	/usr/bin/upgrade		ELF-string	       -t [server ip]      remote download(tftp) and upgrade
+a	/usr/bin/upgrade		ELF-string	       -w [server ip]      remote download(http) and upgrade
+a	/usr/bin/upgrade		ELF-string	       upgrade -l -i image.bin
+a	/usr/bin/upgrade		ELF-string	       upgrade -r -f 192.168.0.1 -u user -p pass -i image.bin
+a	/usr/bin/upgrade		ELF-string	       upgrade -r -w 192.168.0.1 -i image.bin
+a	/usr/bin/upgrade		ELF-string	       upgrade -rt 192.168.0.1 -i image.bin
+a	/usr/bin/upgrade		ELF-string	 Start upgrade
+a	/usr/bin/upgrade		ELF-string	REASON_RST_UPGRADE
+a	/usr/bin/upgrade		ELF-string	Upgrade Tools v%s (%s)
+a	/usr/bin/upgrade		ELF-string	Usage: upgrade [options]
+a	/usr/bin/upgrade		ELF-string	fota.@history[%d].status
+a	/usr/bin/upgrade		ELF-string	fota.@history[-1].host=%s
+a	/usr/bin/upgrade		ELF-string	fota.@history[-1].result=%s
+a	/usr/bin/upgrade		ELF-string	fota.@history[-1].status=%s
+a	/usr/bin/upgrade		ELF-string	fota.@history[-1].time=%s
+a	/usr/bin/upgrade		ELF-string	fota.@history[-1].version=%s
+a	/usr/bin/upgrade		ELF-string	fota.config.history
+a	/usr/bin/upgrade		ELF-string	"iptables -t filter -D input_rule -s %s/32 -m tcp -p tcp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+a	/usr/bin/upgrade		ELF-string	"iptables -t filter -D input_rule -s %s/32 -m udp -p udp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+a	/usr/bin/upgrade		ELF-string	"iptables -t filter -I input_rule -s %s/32 -m tcp -p tcp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+a	/usr/bin/upgrade		ELF-string	"iptables -t filter -I input_rule -s %s/32 -m udp -p udp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_file=%s
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_host
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in check CRC
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image FTP transfer
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image HTTP transfer
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image Local transfer
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image TFTP transfer
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image Unknown transfer
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image write
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in wrong board id
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Passed
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Start downloading image file
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_status
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_status=2
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_time
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_time=%u
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_version
+a	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_version=%s
+a	/usr/bin/upgrade		ELF-string	sync && sync && upgrade-script -u %s
+a	/usr/bin/upgrade		ELF-string	uci delete fota.@history[0] && uci commit fota
+a	/usr/bin/upgrade		ELF-string	upgrade
+a	/usr/bin/upgrade		ELF-string	upgrade-script -c
+a	/usr/bin/upgrade		ELF-string	upgrade-start
+a	/usr/bin/upgrade		ELF-string	upgrade-stop
+a	/usr/bin/vnstat		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+a	/usr/bin/vnstat		ELF-string	ROLLBACK
+a	/usr/bin/vnstat		ELF-string	Transaction rollback failed (%d): %s
+a	/usr/bin/vnstat		ELF-string	db: rollback transaction
+a	/usr/bin/vnstati		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+a	/usr/bin/vnstati		ELF-string	ROLLBACK
+a	/usr/bin/vnstati		ELF-string	Transaction rollback failed (%d): %s
+a	/usr/bin/vnstati		ELF-string	db: rollback transaction
+a	/usr/bin/wapp		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+a	/usr/bin/wapp		ELF-string	set how long before bss shutdown (tsf) (runtime)
+a	/usr/sbin/collectd		ELF-string	Error: one or more plugin shutdown callbacks failed.
+a	/usr/sbin/collectd		ELF-string	plugin_register_shutdown
+a	/usr/sbin/collectd		ELF-string	plugin_shutdown_all
+a	/usr/sbin/collectd		ELF-string	plugin_unregister_shutdown
+a	/usr/sbin/conntrack		ELF-string	SHUTDOWN_ACK_SENT
+a	/usr/sbin/conntrack		ELF-string	SHUTDOWN_RECD
+a	/usr/sbin/conntrack		ELF-string	SHUTDOWN_SENT
+a	/usr/sbin/dnsmasq		ELF-string	shutdown
+a	/usr/sbin/dropbear		ELF-string	shutdown
+a	/usr/sbin/e2fsck		ELF-string	%s: ***** REBOOT SYSTEM *****
+a	/usr/sbin/e2fsck		ELF-string	%s: won't do journal recovery while read-only
+a	/usr/sbin/e2fsck		ELF-string	@S needs_recovery flag is clear, but @j has data.
+a	/usr/sbin/e2fsck		ELF-string	@S needs_recovery flag is set, but no @j is present.
+a	/usr/sbin/e2fsck		ELF-string	JBD2: Out of memory during recovery.
+a	/usr/sbin/e2fsck		ELF-string	JBD2: recovery pass %d ended at transaction %u, expected %u
+a	/usr/sbin/e2fsck		ELF-string	Recovery flag not set in backup @S, so running @j anyway.
+a	/usr/sbin/e2fsck		ELF-string	Warning: skipping journal recovery because doing a read-only filesystem check.
+a	/usr/sbin/e2fsck		ELF-string	journal_skip_recovery
+a	/usr/sbin/e2fsck		ELF-string	recovery.c
+a	/usr/sbin/easycwmpd		ELF-string	FactoryReset
+a	/usr/sbin/easycwmpd		ELF-string	M Reboot
+a	/usr/sbin/easycwmpd		ELF-string	cwmp:FactoryResetResponse
+a	/usr/sbin/easycwmpd		ELF-string	cwmp:RebootResponse
+a	/usr/sbin/easycwmpd		ELF-string	end session: factory reset
+a	/usr/sbin/easycwmpd		ELF-string	end session: reboot
+a	/usr/sbin/easycwmpd		ELF-string	factory_reset
+a	/usr/sbin/easycwmpd		ELF-string	reboot
+a	/usr/sbin/easycwmpd		ELF-string	send FactoryResetResponse to the ACS
+a	/usr/sbin/easycwmpd		ELF-string	send RebootResponse to the ACS
+a	/usr/sbin/hostapd_cli		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+a	/usr/sbin/iw		ELF-string	unknown source (upgrade this utility)
+a	/usr/sbin/lighttpd		ELF-string	 -i <secs>  graceful shutdown after <secs> of inactivity
+a	/usr/sbin/lighttpd		ELF-string	426 Upgrade Required
+a	/usr/sbin/lighttpd		ELF-string	Connection: Upgrade
+a	/usr/sbin/lighttpd		ELF-string	Upgrade
+a	/usr/sbin/lighttpd		ELF-string	Upgrade: h2c
+a	/usr/sbin/lighttpd		ELF-string	[note] graceful shutdown started
+a	/usr/sbin/lighttpd		ELF-string	[note] idle timeout %ds exceeded, initiating graceful shutdown
+a	/usr/sbin/lighttpd		ELF-string	connection_graceful_shutdown_maint
+a	/usr/sbin/lighttpd		ELF-string	h2_check_con_upgrade_h2c
+a	/usr/sbin/lighttpd		ELF-string	http_response_upgrade_read_body_unknown
+a	/usr/sbin/lighttpd		ELF-string	server.graceful-shutdown-timeout
+a	/usr/sbin/lighttpd		ELF-string	shutdown
+a	/usr/sbin/lighttpd		ELF-string	shutdown for fd %d
+a	/usr/sbin/lighttpd		ELF-string	upgrade
+a	/usr/sbin/lighttpd		ELF-string	upgrade-insecure-requests
+a	/usr/sbin/miniupnpd		ELF-string	sendto(udp_shutdown=%d): %m
+a	/usr/sbin/mke2fs		ELF-string	"	a modified partition being busy and in use.  You may need to reboot"
+a	/usr/sbin/tcpdump		ELF-string	%s  Restart  Time: %ums, Recovery Time: %ums
+a	/usr/sbin/tcpdump		ELF-string	:Stop-Local-Shutdown
+a	/usr/sbin/tcpdump		ELF-string	Admin Reboot
+a	/usr/sbin/tcpdump		ELF-string	Admin Shutdown
+a	/usr/sbin/tcpdump		ELF-string	Administratively Shutdown
+a	/usr/sbin/tcpdump		ELF-string	NAS Reboot
+a	/usr/sbin/tcpdump		ELF-string	Recovery Label
+a	/usr/sbin/tcpdump		ELF-string	SHUTDOWN
+a	/usr/sbin/tcpdump		ELF-string	SHUTDOWN ACK
+a	/usr/sbin/tcpdump		ELF-string	SHUTDOWN COMPLETE
+a	/usr/sbin/tcpdump		ELF-string	Shutdown port
+a	/usr/sbin/tcpdump		ELF-string	Software Reload/Upgrade
+a	/usr/sbin/tcpdump		ELF-string	shutdown-all
+a	/usr/sbin/vnstatd		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+a	/usr/sbin/vnstatd		ELF-string	ROLLBACK
+a	/usr/sbin/vnstatd		ELF-string	Transaction rollback failed (%d): %s
+a	/usr/sbin/vnstatd		ELF-string	db: rollback transaction
+a	/usr/sbin/wpa_cli		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+a	/usr/sbin/wpad		ELF-string	SSL_CTX_set_quiet_shutdown
+a	/usr/sbin/wpad		ELF-string	SSL_set_quiet_shutdown
+a	/usr/sbin/wpad		ELF-string	SSL_shutdown
+a	/usr/sbin/wpad		ELF-string	WPS: Upgrade auth_type WPAPSK -> WPA3PSK
+a	/usr/sbin/wpad		ELF-string	WPS: Upgrade auth_type WPAPSK -> WPAPSK+WPA2PSK
+a	/usr/sbin/wpad		ELF-string	WPS: Upgrade encr_type TKIP -> TKIP+AES
+a	/usr/sbin/wpad		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+a	/usr/sbin/wpad		ELF-string	retry_auth=1
+a	/usr/sbin/xtables-legacy-multi		ELF-string	Perhaps ip6tables or your kernel needs to be upgraded.
+a	/usr/sbin/xtables-legacy-multi		ELF-string	Perhaps iptables or your kernel needs to be upgraded.
+b	/etc/init.d/0mount_all	31	script	recovery_flash_data() {
+b	/etc/init.d/0mount_all	64	script	recovery_flash_data
+b	/etc/init.d/1restore	6	script	CONFIG_FILE_TAR=/data/sysupgrade.tgz
+b	/etc/init.d/1restore	7	script	KNOS_BOOT_REASON=/data/knos/knos-boot-reason
+b	/etc/init.d/1restore	11	script	boot_reason=$(cat $KNOS_BOOT_REASON | awk -F '|' '{print $3}')
+b	/etc/init.d/1restore	16	script	case $boot_reason in
+b	/etc/init.d/1restore	29	script	touch /data/knos/knos-recovery-overlay
+b	/etc/init.d/auto_adapt	109	script	set_state shutdown
+b	/etc/init.d/ddns	16	script	"sleep 1	# give time to shutdown"
+b	/etc/init.d/done	7	script	rm -f /sysupgrade.tgz && sync
+b	/etc/init.d/dropbear	225	script	shutdown() {
+b	/etc/init.d/kn_fotad	8	script	PROG=/usr/bin/kn_fotad
+b	/etc/init.d/kn_fotad	11	script	"uci_load_validate fota config ""$1"" ""$2"" \"
+b	/etc/init.d/kn_fotad	34	script	"config_load ""fota"""
+b	/etc/init.d/kn_fotad	39	script	"procd_add_reload_trigger ""fota"""
+b	/etc/init.d/knos_config	55	script	FOTA_config='fota'
+b	/etc/init.d/knos_config	60	script	include /lib/upgrade
+b	/etc/init.d/knos_config	68	script	current_slot=$(get_current_slot)
+b	/etc/init.d/knos_config	69	script	"echo ""Current slot : $current_slot"" >> $FILE_CONFIG_LOG"
+b	/etc/init.d/knos_config	70	script	case $current_slot in
+b	/etc/init.d/knos_config	495	script	#: Fota
+b	/etc/init.d/knos_config	499	script	uci set $KNOS_config.fota.def_provision_server=$tftp_addr
+b	/etc/init.d/knos_config	785	script	change_fota()
+b	/etc/init.d/knos_config	787	script	"echo -e ""Start change_fota"" >> $FILE_CONFIG_LOG"
+b	/etc/init.d/knos_config	789	script	server=$(uci -q get $KNOS_config.fota.def_provision_server)
+b	/etc/init.d/knos_config	790	script	uci set $FOTA_config.provision.server=$server
+b	/etc/init.d/knos_config	792	script	server=$(uci -q get $KNOS_config.fota.def_fota_server)
+b	/etc/init.d/knos_config	793	script	uci set $FOTA_config.upgrade.server=$server
+b	/etc/init.d/knos_config	794	script	uci commit $FOTA_config
+b	/etc/init.d/knos_config	802	script	server=$(uci -q get $KNOS_config.fota.def_provision_server)
+b	/etc/init.d/knos_config	1015	script	uci set $KNOS_config.knsh.needReboot='0'
+b	/etc/init.d/knos_config	1021	script	uci set $FOTA_config.status.running='0'
+b	/etc/init.d/knos_config	1022	script	uci set $FOTA_config.status.next=''
+b	/etc/init.d/knos_config	1023	script	uci commit $FOTA_config
+b	/etc/init.d/knos_config	1025	script	#: reboot 동작시 초기화 진행
+b	/etc/init.d/knos_config	1026	script	uci set monitor.reboot.running='0'
+b	/etc/init.d/knos_config	1027	script	uci set monitor.reboot.stime=''
+b	/etc/init.d/knos_config	1028	script	uci set monitor.reboot.etime=''
+b	/etc/init.d/knos_config	1029	script	uci set monitor.reboot.next=''
+b	/etc/init.d/knos_config	1049	script	uci set $KNSTS_config.status.upgrade_status=0
+b	/etc/init.d/knos_config	1050	script	uci set $KNSTS_config.status.upgrade_host=0
+b	/etc/init.d/knos_config	1051	script	uci set $KNSTS_config.status.upgrade_version=0
+b	/etc/init.d/knos_config	1052	script	uci set $KNSTS_config.status.upgrade_result=0
+b	/etc/init.d/knos_config	1053	script	uci set $KNSTS_config.status.upgrade_time=0
+b	/etc/init.d/knos_config	1073	script	uci set $KNSTS_config.ipc.kn_fotad='0'
+b	/etc/init.d/knos_config	1083	script	nvramedit set knsts.status.upgrade_status=0
+b	/etc/init.d/knos_config	1084	script	nvramedit set knsts.status.upgrade_host=0
+b	/etc/init.d/knos_config	1085	script	nvramedit set knsts.status.upgrade_version=0
+b	/etc/init.d/knos_config	1086	script	nvramedit set knsts.status.upgrade_result=0
+b	/etc/init.d/knos_config	1087	script	nvramedit set knsts.status.upgrade_time=0
+b	/etc/init.d/knos_config	1248	script	[ -s $PATH_CONFIG/$FOTA_config ] && change_fota
+b	/etc/init.d/mipc_submonitor.init	28	script	set_state shutdown
+b	/etc/init.d/mtk_hang_detect	8	script	"ubus call system watchdog '{""magicclose"": true}'"
+b	/etc/init.d/mtk_hang_detect	9	script	"ubus call system watchdog '{""stop"": true}'"
+b	/etc/init.d/mtk_hang_detect	19	script	"ubus call system watchdog '{""magicclose"": false}'"
+b	/etc/init.d/mtk_hang_detect	20	script	"ubus call system watchdog '{""stop"": false}'"
+b	/etc/init.d/network	159	script	shutdown() {
+b	/etc/init.d/ql_ippt	31	script	set_state shutdown
+b	/etc/init.d/ql_netd	25	script	set_state shutdown
+b	/etc/init.d/ql_ril_service	25	script	set_state shutdown
+b	/etc/init.d/scd	16	script	local modem_reboot_ap
+b	/etc/init.d/scd	20	script	config_get modem_reboot_ap features modem_reboot_ap
+b	/etc/init.d/scd	22	script	"echo ""start scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap"""
+b	/etc/init.d/scd	24	script	procd_set_param command /usr/bin/scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap
+b	/etc/init.d/slt2_test	7	script	[ -e /sys/bus/platform/drivers/slt_reboot/report ] && {
+b	/etc/init.d/slt2_test	29	script	"echo ""SLT boot_completed"" > /sys/bus/platform/drivers/slt_reboot/report"
+b	/etc/init.d/slt2_test	43	script	[ -e /sys/bus/platform/drivers/slt_reboot/report ] && {
+b	/etc/init.d/switch_otg_daemon	26	script	set_state shutdown
+b	/etc/init.d/zmtk_boot_done	6	script	include /lib/upgrade
+b	/etc/init.d/zmtk_boot_done	9	script	retry_a=$(get_bootctrl $BOOTCTRL_OFFSET_TRY_A 1)
+b	/etc/init.d/zmtk_boot_done	10	script	retry_b=$(get_bootctrl $BOOTCTRL_OFFSET_TRY_B 1)
+b	/etc/init.d/zmtk_boot_done	12	script	check_bootctrl() {
+b	/etc/init.d/zmtk_boot_done	13	script	local bootctrl=$(get_bootctrl $BOOTCTRL_OFFSET 32)
+b	/etc/init.d/zmtk_boot_done	15	script	"echo ""FLASH_TYPE=$FLASH_TYPE, bootctrl=$bootctrl, is_ab_partition=$is_ab_partition"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	20	script	local current_slot=$(get_current_slot)
+b	/etc/init.d/zmtk_boot_done	21	script	"echo ""current_slot=$current_slot"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	22	script	"if [ ""$current_slot"" = ""_a"" ]; then"
+b	/etc/init.d/zmtk_boot_done	23	script	local success_a=$(get_bootctrl $BOOTCTRL_OFFSET_SUCCESS_A 1)
+b	/etc/init.d/zmtk_boot_done	24	script	if [ $((0x${success_a})) -ne $((0x01)) ]; then
+b	/etc/init.d/zmtk_boot_done	25	script	if [ $((0x${retry_a})) -ne $((0x00)) ];then
+b	/etc/init.d/zmtk_boot_done	26	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	27	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+b	/etc/init.d/zmtk_boot_done	29	script	local up_a=$(get_bootctrl $BOOTCTRL_OFFSET_UP_A 1)
+b	/etc/init.d/zmtk_boot_done	33	script	"echo ""No preloader in sysupgrade"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	40	script	"echo ""Sync mmcblk0boot0 to mmcblk0boot1"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	41	script	# enable program mmcblk0boot1 partition
+b	/etc/init.d/zmtk_boot_done	42	script	echo 0 > /sys/block/mmcblk0boot1/force_ro
+b	/etc/init.d/zmtk_boot_done	44	script	# disable program mmcblk0boot1 partition
+b	/etc/init.d/zmtk_boot_done	45	script	echo 1 > /sys/block/mmcblk0boot1/force_ro
+b	/etc/init.d/zmtk_boot_done	51	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	52	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+b	/etc/init.d/zmtk_boot_done	54	script	local up_b=$(get_bootctrl $BOOTCTRL_OFFSET_UP_B 1)
+b	/etc/init.d/zmtk_boot_done	56	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 1 01
+b	/etc/init.d/zmtk_boot_done	57	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_B \\x01
+b	/etc/init.d/zmtk_boot_done	59	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 1 00
+b	/etc/init.d/zmtk_boot_done	60	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_B \\x00
+b	/etc/init.d/zmtk_boot_done	62	script	set_bootctrl_string 0 00 0 00 1 01 0 00 0 00 0 00 0 00 0 00
+b	/etc/init.d/zmtk_boot_done	65	script	#set_bootctrl $BOOTCTRL_OFFSET_SUCCESS_A \\x01
+b	/etc/init.d/zmtk_boot_done	67	script	"elif [ ""$current_slot"" = ""_b"" ]; then"
+b	/etc/init.d/zmtk_boot_done	68	script	local success_b=$(get_bootctrl $BOOTCTRL_OFFSET_SUCCESS_B 1)
+b	/etc/init.d/zmtk_boot_done	69	script	if [ $((0x${success_b})) -ne $((0x01)) ]; then
+b	/etc/init.d/zmtk_boot_done	70	script	if [ $((0x${retry_b})) -ne $((0x00)) ];then
+b	/etc/init.d/zmtk_boot_done	71	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	72	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+b	/etc/init.d/zmtk_boot_done	75	script	local up_b=$(get_bootctrl $BOOTCTRL_OFFSET_UP_B 1)
+b	/etc/init.d/zmtk_boot_done	79	script	"echo ""No preloader in sysupgrade"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	86	script	"echo ""Sync mmcblk0boot1 to mmcblk0boot0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	87	script	# enable program mmcblk0boot0 partition
+b	/etc/init.d/zmtk_boot_done	88	script	echo 0 > /sys/block/mmcblk0boot0/force_ro
+b	/etc/init.d/zmtk_boot_done	90	script	# disable program mmcblk0boot0 partition
+b	/etc/init.d/zmtk_boot_done	91	script	echo 1 > /sys/block/mmcblk0boot0/force_ro
+b	/etc/init.d/zmtk_boot_done	97	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	98	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+b	/etc/init.d/zmtk_boot_done	101	script	local up_a=$(get_bootctrl $BOOTCTRL_OFFSET_UP_A 1)
+b	/etc/init.d/zmtk_boot_done	103	script	set_bootctrl_string 0 00 0 00 0 00 1 01 0 00 0 00 1 01 0 00
+b	/etc/init.d/zmtk_boot_done	104	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_A \\x01
+b	/etc/init.d/zmtk_boot_done	106	script	set_bootctrl_string 0 00 0 00 0 00 1 00 0 00 0 00 1 01 0 00
+b	/etc/init.d/zmtk_boot_done	107	script	#set_bootctrl $BOOTCTRL_OFFSET_UP_A \\x00
+b	/etc/init.d/zmtk_boot_done	109	script	set_bootctrl_string 0 00 0 00 0 00 0 00 0 00 0 00 1 01 0 00
+b	/etc/init.d/zmtk_boot_done	112	script	#set_bootctrl $BOOTCTRL_OFFSET_SUCCESS_B \\x01
+b	/etc/init.d/zmtk_boot_done	115	script	"echo ""current_slot error: $current_slot"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	129	script	check_bootctrl
+b	/etc/init.d/zmtk_boot_done	134	script	"echo "" [QL_AB] retry_a:$retry_a,retry_b:$retry_b "" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	135	script	"echo "" [QL_AB] current_slot=$current_slot"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	137	script	"if [ ""$current_slot"" = ""_a"" ]; then"
+b	/etc/init.d/zmtk_boot_done	138	script	if [ $((0x${retry_a})) -ne $((0x00)) ];then
+b	/etc/init.d/zmtk_boot_done	139	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	140	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+b	/etc/init.d/zmtk_boot_done	143	script	if [ $((0x${retry_b})) -gt $((0x03)) ];then
+b	/etc/init.d/zmtk_boot_done	146	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	147	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+b	/etc/init.d/zmtk_boot_done	150	script	"elif [ ""$current_slot"" = ""_b"" ]; then"
+b	/etc/init.d/zmtk_boot_done	151	script	if [ $((0x${retry_b})) -ne $((0x00)) ];then
+b	/etc/init.d/zmtk_boot_done	152	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_B to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	153	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_B \\x00
+b	/etc/init.d/zmtk_boot_done	156	script	if [ $((0x${retry_a})) -gt $((0x03)) ];then
+b	/etc/init.d/zmtk_boot_done	159	script	"echo ""[QL_AB] update BOOTCTRL_OFFSET_TRY_A to 0"" > /dev/kmsg"
+b	/etc/init.d/zmtk_boot_done	160	script	set_bootctrl $BOOTCTRL_OFFSET_TRY_A \\x00
+b	/etc/init.d/zmtk_boot_done	163	script	"echo ""current_slot error: $current_slot"" > /dev/kmsg"
+b	/etc/init.d/zzknos_boot_done	6	script	include /lib/upgrade
+b	/etc/init.d/zzknos_boot_done	9	script	FD_KNOS_BOOT_REASON='/data/knos/knos-boot-reason'
+b	/etc/init.d/zzknos_boot_done	16	script	local bootctrl=$(get_bootctrl $BOOTCTRL_OFFSET 32)
+b	/etc/init.d/zzknos_boot_done	18	script	local current_slot=$(get_current_slot)
+b	/etc/init.d/zzknos_boot_done	32	script	"if [ $current_slot = ""_a"" ]; then"
+b	/etc/init.d/zzknos_boot_done	79	script	"echo ""FLASH_TYPE=$FLASH_TYPE, bootctrl=$bootctrl, is_ab_partition=$is_ab_partition,current_slot=$current_slot"" > /var/run/boot_info"
+b	/etc/init.d/zzknos_boot_done	112	script	CONFIG_FILE_TAR=/data/sysupgrade.tgz
+b	/bin/busybox		ELF-string	Reboot the system
+b	/bin/busybox		ELF-string	poweroff
+b	/bin/busybox		ELF-string	reboot
+b	/bin/busybox		ELF-string	reboottime
+b	/bin/opkg		ELF-string	"	upgrade <pkgs>		Upgrade packages"
+b	/bin/opkg		ELF-string	PKG_UPGRADE
+b	/bin/opkg		ELF-string	opkg_upgrade_pkg
+b	/bin/opkg		ELF-string	postrm_upgrade_old_pkg
+b	/bin/opkg		ELF-string	prepare_upgrade_list
+b	/bin/opkg		ELF-string	prerm_upgrade_old_pkg
+b	/bin/opkg		ELF-string	upgrade
+b	/bin/opkg		ELF-string	upgrade %s
+b	/sbin/adbd_usb		ELF-string	entered remote_socket_shutdown RS(%d) CLOSE fd=%d peer->fd=%d
+b	/sbin/adbd_usb		ELF-string	reboot:
+b	/sbin/adbd_usb		ELF-string	recovery
+b	/sbin/adbd_usb		ELF-string	remote_socket_shutdown
+b	/sbin/adbd_usb		ELF-string	setting connection_state to CS_RECOVERY
+b	/sbin/adbd_usb		ELF-string	shutdown
+b	/sbin/adbd_usb		ELF-string	system/bin/install-recovery.sh
+b	/sbin/aee_aed		ELF-string	/proc/aed/reboot-reason
+b	/sbin/aee_aed		ELF-string	2s_reboot
+b	/sbin/aee_aed		ELF-string	2sec_reboot_abnormal
+b	/sbin/aee_aed		ELF-string	Exception Class: 2s Reboot
+b	/sbin/aee_aed		ELF-string	Exception Class: Hardware Reboot
+b	/sbin/aee_aed		ELF-string	Exception Type:  WDT timeout and Hardware reboot 
+b	/sbin/aee_aed		ELF-string	Exception Type: 2s Reboot 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ATF_CRASH 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by DEBUG 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by ERRFLAG 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by HRE 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by LK_CRASH 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by MD_THERMAL 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SECURITY 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SPM WDT 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by SSPM RESET 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by TIA 
+b	/sbin/aee_aed		ELF-string	Exception Type: Hardware Reboot by UDISCAN 
+b	/sbin/aee_aed		ELF-string	Exception Type: Thermal Reboot 
+b	/sbin/aee_aed		ELF-string	HW_REBOOT
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(DEBUG)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(ERRFLAG)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(HRE)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(MD_THERMAL)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(SECURITY)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(SPM)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(SSPM)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(TIA)
+b	/sbin/aee_aed		ELF-string	HW_REBOOT(UDISCAN)
+b	/sbin/aee_aed		ELF-string	SYS_REBOOT_REASON
+b	/sbin/aee_aed		ELF-string	THERMAL_REBOOT
+b	/sbin/aee_aed		ELF-string	UNKNOWN REBOOT
+b	/sbin/aee_aed		ELF-string	Unknown reboot(abnormal) 
+b	/sbin/aee_aed		ELF-string	aed_reboot_session
+b	/sbin/aee_aed		ELF-string	reboot_reason = %d(0x%x)
+b	/sbin/init		ELF-string	- watchdog -
+b	/sbin/init		ELF-string	/dev/watchdog
+b	/sbin/init		ELF-string	/sbin/upgraded
+b	/sbin/init		ELF-string	/tmp/sysupgrade
+b	/sbin/init		ELF-string	Failed to chroot for upgraded exec.
+b	/sbin/init		ELF-string	Failed to exec upgraded.
+b	/sbin/init		ELF-string	Opened watchdog with timeout %ds
+b	/sbin/init		ELF-string	Watchdog handover: fd=%s
+b	/sbin/init		ELF-string	reboot
+b	/sbin/jffs2reset		ELF-string	reboot
+b	/sbin/logd		ELF-string	ubus_shutdown
+b	/sbin/mmc		ELF-string	Please reboot to complete firmware installation on %s
+b	/sbin/mmc		ELF-string	Usage: mmc bootpart enable <partition_number> <send_ack> </path/to/mmcblkX>
+b	/sbin/mmc		ELF-string	bootpart enable
+b	/sbin/mount_root		ELF-string	SHUTDOWN
+b	/sbin/mtd		ELF-string	        -r                      reboot after successful command
+b	/sbin/mtd		ELF-string	        -t <partition>          write TP-Link recovery-flag to <partition> (for write)
+b	/sbin/mtd		ELF-string	/sbin/reboot
+b	/sbin/mtd		ELF-string	Could not clear TP-Link recovery flag to %s: %i
+b	/sbin/mtd		ELF-string	Could not write TP-Link recovery flag to %s: %i
+b	/sbin/mtd		ELF-string	Example: To write linux.trx to mtd4 labeled as linux and reboot afterwards
+b	/sbin/mtd		ELF-string	Rebooting ...
+b	/sbin/mtd		ELF-string	Removing recovery flag from %s
+b	/sbin/mtd		ELF-string	Writing recovery flag to %s
+b	/sbin/mtk_dut		ELF-string	shutdown
+b	/sbin/mtk_dut		ELF-string	videorecovery
+b	/sbin/procd		ELF-string	- [QUEC_PROCD_INIT] REARCH MAXIMUM TIMEOUT!!!ERROR!!!REBOOT NOW!!! -
+b	/sbin/procd		ELF-string	- reboot -
+b	/sbin/procd		ELF-string	- shutdown -
+b	/sbin/procd		ELF-string	- watchdog -
+b	/sbin/procd		ELF-string	/dev/watchdog
+b	/sbin/procd		ELF-string	/sbin/upgraded
+b	/sbin/procd		ELF-string	Failed to chroot for upgraded exec.
+b	/sbin/procd		ELF-string	Failed to exec upgraded.
+b	/sbin/procd		ELF-string	Opened watchdog with timeout %ds
+b	/sbin/procd		ELF-string	Rebooting as procd has crashed
+b	/sbin/procd		ELF-string	Set watchdog frequency: %ds
+b	/sbin/procd		ELF-string	Set watchdog timeout: %ds
+b	/sbin/procd		ELF-string	Started instance %s::%s watchdog timer : timeout = %d
+b	/sbin/procd		ELF-string	UPGRADE_BACKUP
+b	/sbin/procd		ELF-string	UPGRADE_OPT_
+b	/sbin/procd		ELF-string	WDT failed to close watchdog: %m
+b	/sbin/procd		ELF-string	Watchdog handover: fd=%s
+b	/sbin/procd		ELF-string	instance %s::%s watchdog timer expired
+b	/sbin/procd		ELF-string	invalid watchdog timeout (%d) given, using default (30)
+b	/sbin/procd		ELF-string	poweroff
+b	/sbin/procd		ELF-string	reboot
+b	/sbin/procd		ELF-string	setting watchdog mode (%d)
+b	/sbin/procd		ELF-string	setting watchdog timeout (%d)
+b	/sbin/procd		ELF-string	shutdown
+b	/sbin/procd		ELF-string	sysupgrade
+b	/sbin/procd		ELF-string	unknown watchdog mode (%d) given, using default (0)
+b	/sbin/rpcd		ELF-string	rollback
+b	/sbin/upgraded		ELF-string	- watchdog -
+b	/sbin/upgraded		ELF-string	/dev/watchdog
+b	/sbin/upgraded		ELF-string	/lib/upgrade/stage2
+b	/sbin/upgraded		ELF-string	Failed to exec sysupgrade
+b	/sbin/upgraded		ELF-string	Failed to fork sysupgrade
+b	/sbin/upgraded		ELF-string	Watchdog handover: fd=%s
+b	/sbin/upgraded		ELF-string	reboot
+b	/sbin/upgraded		ELF-string	sysupgrade aborted with return code: %d
+b	/sbin/upgraded		ELF-string	sysupgrade stage 2 failed, invalid command line
+b	/sbin/wfa_ca		ELF-string	shutdown
+b	/sbin/wfa_ca		ELF-string	videorecovery
+b	/sbin/wfa_dut		ELF-string	shutdown
+b	/usr/bin/AFC		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+b	/usr/bin/atci_service		ELF-string	/sbin/poweroff
+b	/usr/bin/atci_service		ELF-string	/sbin/poweroff -d %d
+b	/usr/bin/atci_service		ELF-string	/sbin/poweroff -f
+b	/usr/bin/atci_service		ELF-string	/sbin/poweroff -n
+b	/usr/bin/atci_service		ELF-string	AT%POWEROFF
+b	/usr/bin/atci_service		ELF-string	Usage: poweroff [DELAY|n|f]
+b	/usr/bin/atci_service		ELF-string	poweroff failed
+b	/usr/bin/atci_service		ELF-string	poweroff successed
+b	/usr/bin/atci_service		ELF-string	svc power reboot
+b	/usr/bin/atci_service		ELF-string	system_poweroff_handler
+b	/usr/bin/atcid		ELF-string	AT%POWEROFF
+b	/usr/bin/atcid		ELF-string	AT%REBOOT
+b	/usr/bin/atcid		ELF-string	AT+QBOOTCTRL
+b	/usr/bin/atcid		ELF-string	AT+QFOTADL
+b	/usr/bin/atcid		ELF-string	AT+QFOTAUPG
+b	/usr/bin/atcid		ELF-string	[%s]%s():%d The peer has performed an orderly shutdown
+b	/usr/bin/atcid		ELF-string	[%s]%s():%d The peer has performed an orderly shutdown, isATCmdInject %d
+b	/usr/bin/atcid		ELF-string	pas_reboot_handler
+b	/usr/bin/atcid		ELF-string	quectel_at_qbootctrl_hdlr
+b	/usr/bin/atcid		ELF-string	quectel_at_upgrade_version_handler
+b	/usr/bin/atcid		ELF-string	reboot -d 3
+b	/usr/bin/atcid		ELF-string	shutdown
+b	/usr/bin/bs20		ELF-string	 force_roam_rssi_th=%d
+b	/usr/bin/bs20		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
+b	/usr/bin/bs20		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
+b	/usr/bin/bs20		ELF-string	force_roam_rssi_th
+b	/usr/bin/bs20		ELF-string	is_CAC_Success_by_bw
+b	/usr/bin/ccci_fsd		ELF-string	Shutdown 
+b	/usr/bin/ccci_mdinit		ELF-string	aee_off_fast_reboot_enable
+b	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %s not exist, using default value
+b	/usr/bin/ccci_mdinit		ELF-string	get_aee_off_fast_reboot_enable: %u
+b	/usr/bin/ccci_mdinit		ELF-string	set md runtime data: aee_off_fast_reboot_enable=%u
+b	/usr/bin/connsyslogD		ELF-string	shutdown
+b	/usr/bin/curl		ELF-string	Use HTTP 2 without HTTP/1.1 Upgrade
+b	/usr/bin/dconfig		ELF-string	&watchdog { apwdt_en = <0>; };
+b	/usr/bin/dconfig		ELF-string	&watchdog { apwdt_en = <1>; };
+b	/usr/bin/dconfig		ELF-string	&watchdog { rstmode = <0>; };
+b	/usr/bin/dconfig		ELF-string	&watchdog { rstmode = <1>; };
+b	/usr/bin/dconfig		ELF-string	Disable AP Watchdog
+b	/usr/bin/dconfig		ELF-string	Disable wdt cold reboot
+b	/usr/bin/dconfig		ELF-string	Enable AP Watchdog
+b	/usr/bin/dconfig		ELF-string	Enable wdt cold reboot
+b	/usr/bin/emdlogger1		ELF-string	%s:EMDLogger: colgin SIGTERM need exit for reboot
+b	/usr/bin/emdlogger1		ELF-string	%s:No need upgradeCustomizeConfig for old version:%d
+b	/usr/bin/emdlogger1		ELF-string	%s:Upgrade for lastest version %d
+b	/usr/bin/emdlogger1		ELF-string	%s:Upgrade from old version 0 to version 1
+b	/usr/bin/emdlogger1		ELF-string	%s:Upgrade ignore old version %d
+b	/usr/bin/emdlogger1		ELF-string	%s:shutdown: m_nClientFd errno = %d
+b	/usr/bin/emdlogger1		ELF-string	%s:shutdown: m_nSockFd errno = %d
+b	/usr/bin/emdlogger1		ELF-string	MDL_OP_GET_MD_SILENT_REBOOT_MODE
+b	/usr/bin/emdlogger1		ELF-string	MDL_OP_SET_MD_SILENT_REBOOT_MODE
+b	/usr/bin/emdlogger1		ELF-string	getMdSilentRebootMode
+b	/usr/bin/emdlogger1		ELF-string	setMdSilentRebootMode
+b	/usr/bin/emdlogger1		ELF-string	shutdown
+b	/usr/bin/emdlogger1		ELF-string	upgradeCustomizeConfig
+b	/usr/bin/kn_fotad		ELF-string	/data/sysupgrade.tgz
+b	/usr/bin/kn_fotad		ELF-string	/sbin/upgrade-script -c
+b	/usr/bin/kn_fotad		ELF-string	/usr/bin/upgrade -l -i %s
+b	/usr/bin/kn_fotad		ELF-string	/var/knos/fota_profile
+b	/usr/bin/kn_fotad		ELF-string	/var/run/knos/kn_fotad
+b	/usr/bin/kn_fotad		ELF-string	Change fota mode, %d to %d
+b	/usr/bin/kn_fotad		ELF-string	Change fota server, %s to %s
+b	/usr/bin/kn_fotad		ELF-string	REASON_RST_UPGRADE
+b	/usr/bin/kn_fotad		ELF-string	Start tmr_mon_fota, Add timer : itv=%d
+b	/usr/bin/kn_fotad		ELF-string	Step 2 - Upgrade
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in backup mode
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in image HTTP transfer, Re-try after %d sec
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in image TFTP transfer, Re-try after %d sec
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in info file HTTP transfer, Re-try after %d sec
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in info file TFTP transfer, Re-try after %d sec
+b	/usr/bin/kn_fotad		ELF-string	[fota] Failed in network unavailable
+b	/usr/bin/kn_fotad		ELF-string	[fota] Reload config
+b	/usr/bin/kn_fotad		ELF-string	[fota] Result, ret=%d, restart=%0x
+b	/usr/bin/kn_fotad		ELF-string	[fota] Same version
+b	/usr/bin/kn_fotad		ELF-string	[fota] Start downloading image file (%s), Try %d
+b	/usr/bin/kn_fotad		ELF-string	[fota] Start downloading info file (%s), Try %d
+b	/usr/bin/kn_fotad		ELF-string	[fota] Start mode %d
+b	/usr/bin/kn_fotad		ELF-string	[fota] Success in image HTTP transfer
+b	/usr/bin/kn_fotad		ELF-string	[fota] Success in image TFTP transfer
+b	/usr/bin/kn_fotad		ELF-string	[fota] Success in info file HTTP transfer
+b	/usr/bin/kn_fotad		ELF-string	[fota] Success in info file TFTP transfer
+b	/usr/bin/kn_fotad		ELF-string	[fota] Upgrade Info: %s %s %u
+b	/usr/bin/kn_fotad		ELF-string	[fota] fota will start in %d sec.
+b	/usr/bin/kn_fotad		ELF-string	deinit_mon_fota
+b	/usr/bin/kn_fotad		ELF-string	do_mon_fota
+b	/usr/bin/kn_fotad		ELF-string	fota mode : %d
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[%d]
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].host=%s
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].result=%s
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].status=%s
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].time=%s
+b	/usr/bin/kn_fotad		ELF-string	fota.@history[-1].version=%s
+b	/usr/bin/kn_fotad		ELF-string	fota.config.debug_syslog
+b	/usr/bin/kn_fotad		ELF-string	fota.config.history
+b	/usr/bin/kn_fotad		ELF-string	fota.config.mode
+b	/usr/bin/kn_fotad		ELF-string	fota.http.interval
+b	/usr/bin/kn_fotad		ELF-string	fota.http.retry
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.cycle
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.enabled
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.enabled=%d
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.interval
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.profile
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.retry
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.retry=%d
+b	/usr/bin/kn_fotad		ELF-string	fota.provision.server
+b	/usr/bin/kn_fotad		ELF-string	fota.status.next
+b	/usr/bin/kn_fotad		ELF-string	fota.status.next=%u
+b	/usr/bin/kn_fotad		ELF-string	fota.status.next=0
+b	/usr/bin/kn_fotad		ELF-string	fota.status.running
+b	/usr/bin/kn_fotad		ELF-string	fota.status.running=1
+b	/usr/bin/kn_fotad		ELF-string	fota.tftp.interval
+b	/usr/bin/kn_fotad		ELF-string	fota.tftp.retry
+b	/usr/bin/kn_fotad		ELF-string	fota.upgrade.enable_time
+b	/usr/bin/kn_fotad		ELF-string	fota.upgrade.server
+b	/usr/bin/kn_fotad		ELF-string	fota_set_mode
+b	/usr/bin/kn_fotad		ELF-string	init_mon_fota
+b	/usr/bin/kn_fotad		ELF-string	ipc_sig,reboot,active,%d,%d
+b	/usr/bin/kn_fotad		ELF-string	"iptables -t filter -A input_accept_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+b	/usr/bin/kn_fotad		ELF-string	"iptables -t filter -D input_accept_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+b	/usr/bin/kn_fotad		ELF-string	kn_fotad.log
+b	/usr/bin/kn_fotad		ELF-string	knos.fota.def_fota_server
+b	/usr/bin/kn_fotad		ELF-string	knsh fota mode set  %s
+b	/usr/bin/kn_fotad		ELF-string	knsh fota server set %s
+b	/usr/bin/kn_fotad		ELF-string	knsh random reboot time set %d %d
+b	/usr/bin/kn_fotad		ELF-string	knsh set upgrade_cycle %s
+b	/usr/bin/kn_fotad		ELF-string	knsh set upgrade_enable_time %s
+b	/usr/bin/kn_fotad		ELF-string	knsts.modeswitch.signal_to_fota=1
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host=%s
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_host=0
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=0
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in different image size
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in image %s transfer
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in info file %s transfer
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in info file format error
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Failed in network unavailable
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Same version
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Start downloading image file
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_result=Start downloading info file
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=0
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=1
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_status=2
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time=%u
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_time=0
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version=%s
+b	/usr/bin/kn_fotad		ELF-string	knsts.status.upgrade_version=0
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_Bluetooth_flag
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_GPS_syslog_flag
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement_expire
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ran_measurement_time
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_reset_timer
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_rsrp_process_rate_thr
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_rsrp_process_thr
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_selection
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp_ca
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_rsrp_rsrp_search
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_set_sinr
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_sinr_process_rate_thr
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_sinr_process_thr
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_tac
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_tftp_server
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput_range
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_throughput_time
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_count
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_expire
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_range
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_conf_ul_ran_thp_time
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_fota_mode
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_fota_server
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_initial_search
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_mask_NRFDD
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitch_syslog_flag
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_5g
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_backup
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_common
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_modeswitchd_set_lte
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_network_detect
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_network_detect_domain
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_qoe_ontraffic_th
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_qoe_sample_timer
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_random_reboot_etime
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_random_reboot_stime
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_regular_syslog_interval
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_set_provision
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_syslog_mesh_send
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_syslog_server
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_telnet_acl
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_option
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_retry
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_server
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tftp_server_option
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_tr069
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_upgrade_cycle
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_upgrade_enable_time
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_usb_supply
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_144channeluse
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_auto_channel_optimization
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_beacon
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_bs
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_dtim
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_fragment
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_mesh
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_mesh_11r
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_ssid1to2
+b	/usr/bin/kn_fotad		ELF-string	mon_fota_cli_wlan_zerowaitdfs
+b	/usr/bin/kn_fotad		ELF-string	monitor.reboot.etime
+b	/usr/bin/kn_fotad		ELF-string	monitor.reboot.stime
+b	/usr/bin/kn_fotad		ELF-string	ms_RebootCountThreshold
+b	/usr/bin/kn_fotad		ELF-string	ms_reboot_counter
+b	/usr/bin/kn_fotad		ELF-string	process_upgrade
+b	/usr/bin/kn_fotad		ELF-string	random_reboot_time_set_end_time
+b	/usr/bin/kn_fotad		ELF-string	random_reboot_time_set_start_time
+b	/usr/bin/kn_fotad		ELF-string	tmr_mon_fota
+b	/usr/bin/kn_fotad		ELF-string	tmr_mon_fota_start
+b	/usr/bin/kn_fotad		ELF-string	uci delete fota.@history[0] && uci commit fota
+b	/usr/bin/kn_fotad		ELF-string	uci revert fota
+b	/usr/bin/kn_fotad		ELF-string	upgrade result : ret=%d
+b	/usr/bin/kn_fotad		ELF-string	upgrade serve : %s
+b	/usr/bin/kn_fotad		ELF-string	upgrade_cycle
+b	/usr/bin/kn_fotad		ELF-string	upgrade_enable_time
+b	/usr/bin/kn_htchkd		ELF-string	/etc/init.d/kn_fotad
+b	/usr/bin/kn_htchkd		ELF-string	/var/run/knos/kn_fotad
+b	/usr/bin/kn_htchkd		ELF-string	Clear caches, upgrade=%d, needReboot=%x
+b	/usr/bin/kn_htchkd		ELF-string	Performing recovery due to unassigned IP issue on the WAN interface.
+b	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_CPU
+b	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_MODEM
+b	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_RAM
+b	/usr/bin/kn_htchkd		ELF-string	REASON_WATCHDOG_WIFI
+b	/usr/bin/kn_htchkd		ELF-string	Recovery due to DNS detection failure is enabled.
+b	/usr/bin/kn_htchkd		ELF-string	[htchkd] Rebooting the system in 3sec due to 'CPU'.
+b	/usr/bin/kn_htchkd		ELF-string	[htchkd] Rebooting the system in 3sec due to 'meomry'.
+b	/usr/bin/kn_htchkd		ELF-string	knos.knsh.needReboot
+b	/usr/bin/kn_htchkd		ELF-string	knsts.status.upgrade_status
+b	/usr/bin/kn_htchkd		ELF-string	monitor.modem.recovery
+b	/usr/bin/kn_htchkd		ELF-string	monitor.modem.threshold_recovery
+b	/usr/bin/kn_htchkd		ELF-string	monitor.network.recovery
+b	/usr/bin/kn_htchkd		ELF-string	monitor.wireless.reboot
+b	/usr/bin/kn_htchkd		ELF-string	monitor.wireless.recovery
+b	/usr/bin/kn_led_controller		ELF-string	LED, Status Upgrade Done
+b	/usr/bin/kn_led_controller		ELF-string	LED, Status Upgrade Start
+b	/usr/bin/kn_led_controller		ELF-string	LED_SCENARIO_UPGRADE_DONE
+b	/usr/bin/kn_led_controller		ELF-string	LED_SCENARIO_UPGRADE_START
+b	/usr/bin/kn_led_controller		ELF-string	knsts.status.led_status=Upgrade
+b	/usr/bin/kn_led_controller		ELF-string	upgrade-start
+b	/usr/bin/kn_led_controller		ELF-string	upgrade-stop
+b	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:Reboot %d
+b	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:reboot_counter=<%d>,<%d>
+b	/usr/bin/kn_modeswitchd		ELF-string	Mode Switch:reboot_wait_time=<%d>
+b	/usr/bin/kn_modeswitchd		ELF-string	System Reboot %d
+b	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.interval
+b	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.profile
+b	/usr/bin/kn_modeswitchd		ELF-string	fota.provision.retry
+b	/usr/bin/kn_modeswitchd		ELF-string	"iptables -t filter -A input_accept_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+b	/usr/bin/kn_modeswitchd		ELF-string	"iptables -t filter -D input_accept_rule -s %s/32 -m comment --comment ""!fw3: FOTA-Server"" -j ACCEPT"
+b	/usr/bin/kn_modeswitchd		ELF-string	knsts.modeswitch.signal_to_fota
+b	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_RebootCountThreshold
+b	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter
+b	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter=%d
+b	/usr/bin/kn_modeswitchd		ELF-string	modeswitch.backup.ms_reboot_counter=0
+b	/usr/bin/kn_syslogd		ELF-string	/data/knos/knos-boot-reason
+b	/usr/bin/kn_syslogd		ELF-string	/data/knos/knos-recovery-overlay
+b	/usr/bin/kn_syslogd		ELF-string	A recovery operation for the overlay area occurred during the system startup process.
+b	/usr/bin/kn_syslogd		ELF-string	REASON_RST_UPGRADE
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_CPU
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_ETH
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_FLASH
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_LTE
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_MODEM
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_RAM
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_USB
+b	/usr/bin/kn_syslogd		ELF-string	REASON_WATCHDOG_WIFI
+b	/usr/bin/kn_syslogd		ELF-string	Reboot reason: %s
+b	/usr/bin/kn_syslogd		ELF-string	System Reboot %d
+b	/usr/bin/kn_syslogd		ELF-string	System Watchdog %d
+b	/usr/bin/kn_syslogd		ELF-string	fota.provision.enabled
+b	/usr/bin/kn_syslogd		ELF-string	fota.provision.server
+b	/usr/bin/kn_sysmond		ELF-string	Clear random-reboot
+b	/usr/bin/kn_sysmond		ELF-string	RANDOM-REBOOT
+b	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_CPU
+b	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_ETH
+b	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_USB
+b	/usr/bin/kn_sysmond		ELF-string	REASON_WATCHDOG_WIFI
+b	/usr/bin/kn_sysmond		ELF-string	Random reboot : %d/%d/%d %d:%d:%d
+b	/usr/bin/kn_sysmond		ELF-string	Set random-reboot : %d/%d/%d %d:%d:%d
+b	/usr/bin/kn_sysmond		ELF-string	System F-Reboot : %s
+b	/usr/bin/kn_sysmond		ELF-string	System Reboot : %s
+b	/usr/bin/kn_sysmond		ELF-string	do_mon_random_reboot
+b	/usr/bin/kn_sysmond		ELF-string	init_mon_random_reboot
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.etime=
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next=%lu
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.next=0
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.running
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.running=0
+b	/usr/bin/kn_sysmond		ELF-string	monitor.reboot.stime=
+b	/usr/bin/kn_sysmond		ELF-string	thread_random_reboot_level
+b	/usr/bin/knsh		ELF-string	%supgrade -a -r -t %s -i %s > /dev/null &
+b	/usr/bin/knsh		ELF-string	%supgrade -a -r -w %s -i %s > /dev/null &
+b	/usr/bin/knsh		ELF-string	/sbin/reboot
+b	/usr/bin/knsh		ELF-string	/var/run/knos/kn_fotad
+b	/usr/bin/knsh		ELF-string	/var/tmp/image_upgrade.sh
+b	/usr/bin/knsh		ELF-string	CPE reboot at %dh
+b	/usr/bin/knsh		ELF-string	CPE reboot at random time. (between %d~%dh)
+b	/usr/bin/knsh		ELF-string	Clear reboot time.
+b	/usr/bin/knsh		ELF-string	Do manual upgrade
+b	/usr/bin/knsh		ELF-string	FOTA information
+b	/usr/bin/knsh		ELF-string	Immediate reboot when except the following.
+b	/usr/bin/knsh		ELF-string	Random reboot
+b	/usr/bin/knsh		ELF-string	Select wlan channel without reboot.
+b	/usr/bin/knsh		ELF-string	Set (start/and) time for reboot
+b	/usr/bin/knsh		ELF-string	Show / Set retry times of auto-upgrade.
+b	/usr/bin/knsh		ELF-string	Show Upgrade history
+b	/usr/bin/knsh		ELF-string	Show upgrade_cycle
+b	/usr/bin/knsh		ELF-string	Show upgrade_enable_time
+b	/usr/bin/knsh		ELF-string	TFTP + HTTP(FOTA)
+b	/usr/bin/knsh		ELF-string	The system is going down for reboot NOW!
+b	/usr/bin/knsh		ELF-string	The system is going down for reboot in %d sec!
+b	/usr/bin/knsh		ELF-string	The system is going down for reboot now!
+b	/usr/bin/knsh		ELF-string	Upgrade
+b	/usr/bin/knsh		ELF-string	fota history <show|clear>
+b	/usr/bin/knsh		ELF-string	fota mode clear
+b	/usr/bin/knsh		ELF-string	fota mode set <0..3>
+b	/usr/bin/knsh		ELF-string	fota mode show
+b	/usr/bin/knsh		ELF-string	fota provision cycle <show|clear|set> [<1..65535>]
+b	/usr/bin/knsh		ELF-string	fota provision mode <show|clear|set> [<0|1>]
+b	/usr/bin/knsh		ELF-string	fota provision retry <show|set> [<1..99>]
+b	/usr/bin/knsh		ELF-string	fota provision server <show|clear|set> [<ip>]
+b	/usr/bin/knsh		ELF-string	fota server clear
+b	/usr/bin/knsh		ELF-string	fota server set ip <ip|fqdn>
+b	/usr/bin/knsh		ELF-string	fota server show
+b	/usr/bin/knsh		ELF-string	fota.@history[%d]
+b	/usr/bin/knsh		ELF-string	fota.@history[%d].host
+b	/usr/bin/knsh		ELF-string	fota.@history[%d].result
+b	/usr/bin/knsh		ELF-string	fota.@history[%d].status
+b	/usr/bin/knsh		ELF-string	fota.@history[%d].time
+b	/usr/bin/knsh		ELF-string	fota.@history[%d].version
+b	/usr/bin/knsh		ELF-string	fota.config.history
+b	/usr/bin/knsh		ELF-string	fota.config.mode
+b	/usr/bin/knsh		ELF-string	fota.config.mode=%d
+b	/usr/bin/knsh		ELF-string	fota.mirror.server
+b	/usr/bin/knsh		ELF-string	fota.mirror.server=
+b	/usr/bin/knsh		ELF-string	fota.mirror.server=%s
+b	/usr/bin/knsh		ELF-string	fota.provision.cycle
+b	/usr/bin/knsh		ELF-string	fota.provision.cycle=%d
+b	/usr/bin/knsh		ELF-string	fota.provision.enabled
+b	/usr/bin/knsh		ELF-string	fota.provision.enabled=%d
+b	/usr/bin/knsh		ELF-string	fota.provision.retry
+b	/usr/bin/knsh		ELF-string	fota.provision.retry=%d
+b	/usr/bin/knsh		ELF-string	fota.provision.server
+b	/usr/bin/knsh		ELF-string	fota.provision.server=%s
+b	/usr/bin/knsh		ELF-string	fota.upgrade.enable_time
+b	/usr/bin/knsh		ELF-string	fota.upgrade.enable_time=%s
+b	/usr/bin/knsh		ELF-string	fota.upgrade.server
+b	/usr/bin/knsh		ELF-string	fota.upgrade.server=%s
+b	/usr/bin/knsh		ELF-string	ipc_sig,reboot,active,%d,%d
+b	/usr/bin/knsh		ELF-string	ipc_sig,reboot,clear
+b	/usr/bin/knsh		ELF-string	knos.fota.def_fota_server
+b	/usr/bin/knsh		ELF-string	knos.fota.def_provision_server
+b	/usr/bin/knsh		ELF-string	knos.knsh.needReboot
+b	/usr/bin/knsh		ELF-string	knos.knsh.needReboot=%d
+b	/usr/bin/knsh		ELF-string	knsts.modeswitch.signal_to_fota=0
+b	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_RebootCountThreshold
+b	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_RebootCountThreshold=%s
+b	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_reboot_counter
+b	/usr/bin/knsh		ELF-string	modeswitch.backup.ms_reboot_counter=%s
+b	/usr/bin/knsh		ELF-string	monitor.reboot.etime
+b	/usr/bin/knsh		ELF-string	monitor.reboot.etime=
+b	/usr/bin/knsh		ELF-string	monitor.reboot.etime=%d
+b	/usr/bin/knsh		ELF-string	monitor.reboot.next=0
+b	/usr/bin/knsh		ELF-string	monitor.reboot.running
+b	/usr/bin/knsh		ELF-string	monitor.reboot.running=0
+b	/usr/bin/knsh		ELF-string	monitor.reboot.running=1
+b	/usr/bin/knsh		ELF-string	monitor.reboot.stime
+b	/usr/bin/knsh		ELF-string	monitor.reboot.stime=
+b	/usr/bin/knsh		ELF-string	monitor.reboot.stime=%d
+b	/usr/bin/knsh		ELF-string	ms_RebootCountThreshold:%s
+b	/usr/bin/knsh		ELF-string	ms_reboot_counter:%s
+b	/usr/bin/knsh		ELF-string	random reboot clear
+b	/usr/bin/knsh		ELF-string	random reboot get
+b	/usr/bin/knsh		ELF-string	random reboot time set <start time> <end time>
+b	/usr/bin/knsh		ELF-string	reboot -d 3
+b	/usr/bin/knsh		ELF-string	select_bootpart %s
+b	/usr/bin/knsh		ELF-string	set upgrade_cycle <1..65535>
+b	/usr/bin/knsh		ELF-string	set upgrade_enable_time <000000-235959>
+b	/usr/bin/knsh		ELF-string	show upgrade_cycle
+b	/usr/bin/knsh		ELF-string	show upgrade_enable_time
+b	/usr/bin/knsh		ELF-string	upgrade history
+b	/usr/bin/lbs_em		ELF-string	4:  Host Reboot Notify
+b	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_client_connect() failed
+b	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+b	/usr/bin/lbs_em		ELF-string	Agps2DebugInterface_receiver_decode() Agps2DebugInterface_agpsUpdateReboot_handler() is NULL
+b	/usr/bin/lbs_em		ELF-string	Host Reboot Notify Sent
+b	/usr/bin/mapd		ELF-string	 force_roam_rssi_th=%d
+b	/usr/bin/mapd		ELF-string	[0mNon-HT and PhyBased Selection -- cannot upgrade
+b	/usr/bin/mapd		ELF-string	[Steer] Non-HT and PhyBased Selection -- cannot upgrade
+b	/usr/bin/mapd		ELF-string	force_roam_rssi_th
+b	/usr/bin/mapd		ELF-string	is_CAC_Success_by_bw
+b	/usr/bin/meta_tst		ELF-string	11FtModReboot
+b	/usr/bin/meta_tst		ELF-string	13FtModPowerOff
+b	/usr/bin/meta_tst		ELF-string	AT+REBOOTMD
+b	/usr/bin/meta_tst		ELF-string	[Meta] Enter rebootModem
+b	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_PowerOff
+b	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_Reboot
+b	/usr/bin/meta_tst		ELF-string	[Meta][FT] FT_SHUTDOWN_OP_WAITUSB = yes
+b	/usr/bin/meta_tst		ELF-string	[Meta][FT] reboot by delay = %d
+b	/usr/bin/meta_tst		ELF-string	[Meta][FT][DEBUG] Query modem reboot result %d times
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] command is %s
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] enter rebootToRecovery
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] open misc partition fail, errno = %d
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online off and to power off 
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] usb online status= %d
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition failed, errno = %d
+b	/usr/bin/meta_tst		ELF-string	[Meta][PowerOff] write %s to misc partition success
+b	/usr/bin/meta_tst		ELF-string	boot-recovery
+b	/usr/bin/meta_tst		ELF-string	reboot
+b	/usr/bin/mipc_submonitor		ELF-string	./etc/auto_recovery.sh
+b	/usr/bin/mipc_submonitor		ELF-string	reboot
+b	/usr/bin/mipc_submonitor		ELF-string	reboot -f
+b	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff
+b	/usr/bin/mipc_wan_cli		ELF-string	modem_poweroff_with_cause
+b	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[DEBUG]: %s %d mnl2agps_mnl_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld MNL2AGPS[ERROR]: %s %d agps_reboot is NULL
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2agps_mnl_reboot failed because of send2agps fail ,strerror:%s 
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[ERROR]: %s %d mnl2hal_mnld_reboot failed because of safe_sendto fail ,strerror:%s 
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d agps_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d hal_reboot, fd:[%d], used:%d
+b	/usr/bin/mnld		ELF-string	%ld %ld MNLD[WARNING]: %s %d mpvt_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld MPVT[DEBUG]: %s %d mpvt_mnl_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld MPVT[ERROR]: %s %d mpvt2mnl_hdlr() mpvt_gnss_reboot is NULL
+b	/usr/bin/mnld		ELF-string	%ld %ld MPVT[ERROR]: %s %d mpvt_scp_reboot() mpvt_scp_reboot is NULL
+b	/usr/bin/mnld		ELF-string	%ld %ld agps[DEBUG]: %s %d write  agps_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld agps[ERROR]: %s %d mnl_reboot is NULL
+b	/usr/bin/mnld		ELF-string	%ld %ld mnl2hal[DEBUG]: %s %d mnl2hal_mnld_reboot
+b	/usr/bin/mnld		ELF-string	%ld %ld mnl2hal[ERROR]: %s %d hal2mnl_hdlr() hal_reboot is NULL
+b	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot
+b	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot() mtk_socket_client_connect() failed
+b	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_mnldUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+b	/usr/bin/mnld		ELF-string	%ld %ld mnld[ERROR]: %s %d Mnld2DebugInterface_receiver_decode() Mnld2DebugInterface_mnldUpdateReboot_handler() is NULL
+b	/usr/bin/mnld		ELF-string	AGPS_REBOOT
+b	/usr/bin/mnld		ELF-string	MNL_REBOOT
+b	/usr/bin/mnld		ELF-string	Mnld2DebugInterface_mnldUpdateReboot
+b	/usr/bin/mnld		ELF-string	agps2mnl_agps_reboot
+b	/usr/bin/mnld		ELF-string	agps_reboot
+b	/usr/bin/mnld		ELF-string	hal_reboot
+b	/usr/bin/mnld		ELF-string	mnl2agps_mnl_reboot
+b	/usr/bin/mnld		ELF-string	mnl2hal_mnld_reboot
+b	/usr/bin/mnld		ELF-string	mnl2mpvt_reboot
+b	/usr/bin/mnld		ELF-string	mpvt_mnl_reboot
+b	/usr/bin/mnld		ELF-string	mpvt_reboot
+b	/usr/bin/mnld		ELF-string	retry_alarm_timeout_handler
+b	/usr/bin/mnld		ELF-string	shutdown
+b	/usr/bin/mrdump_tool		ELF-string	%s: failed to reboot into LK for partition resize.
+b	/usr/bin/mrdump_tool		ELF-string	/system/bin/reboot
+b	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_mdt_with_md_reboot_test =============
+b	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_modem_reboot_ind_test [%d] =============
+b	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_nilr_mnl_reboot_test [%d] =============
+b	/usr/bin/mtk_agpsd		ELF-string	 ============= cp_nilr_with_md_reboot_test [%d] =============
+b	/usr/bin/mtk_agpsd		ELF-string	 ============= up_ni_supl_2_mnl_reboot_test =============
+b	/usr/bin/mtk_agpsd		ELF-string	AGPS_REBOOT
+b	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_client_connect() failed
+b	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_agpsUpdateReboot() mtk_socket_write() failed, fd=%d err=[%s]%d
+b	/usr/bin/mtk_agpsd		ELF-string	Agps2DebugInterface_receiver_decode() Agps2DebugInterface_agpsUpdateReboot_handler() is NULL
+b	/usr/bin/mtk_agpsd		ELF-string	MD is reboot and GPS is started, send a mock GPS CLOSE IND to AGPSD to terminate this CP session
+b	/usr/bin/mtk_agpsd		ELF-string	MNL  read mnl_reboot
+b	/usr/bin/mtk_agpsd		ELF-string	MNL_REBOOT
+b	/usr/bin/mtk_agpsd		ELF-string	MODEM_REBOOT_IND
+b	/usr/bin/mtk_agpsd		ELF-string	NULL pointer to sec_ssl_shutdown()
+b	/usr/bin/mtk_agpsd		ELF-string	NULL ssl->conn in sec_ssl_shutdown()
+b	/usr/bin/mtk_agpsd		ELF-string	SSL_shutdown
+b	/usr/bin/mtk_agpsd		ELF-string	SSL_shutdown() error: 0x%x
+b	/usr/bin/mtk_agpsd		ELF-string	TLS_ERR_SHUTDOWNED
+b	/usr/bin/mtk_agpsd		ELF-string	[MD_%d] read  md_modem_reboot_ind_hdlr
+b	/usr/bin/mtk_agpsd		ELF-string	[MNL] read  mnl_reboot
+b	/usr/bin/mtk_agpsd		ELF-string	agps2_mgr_close_gps_req when mnl_reboot ==> trigger a fake close_gps_done
+b	/usr/bin/mtk_agpsd		ELF-string	agps_reboot is NULL
+b	/usr/bin/mtk_agpsd		ELF-string	callbacks->slp_reboot() is NULL
+b	/usr/bin/mtk_agpsd		ELF-string	close_gps_done  do not send GPS close rsp to MD due to MD is already reboot
+b	/usr/bin/mtk_agpsd		ELF-string	do_socket_shutdown  failure [%s] fd=%d
+b	/usr/bin/mtk_agpsd		ELF-string	mnl2agps_mnl_reboot
+b	/usr/bin/mtk_agpsd		ELF-string	mnl_reboot is NULL
+b	/usr/bin/mtk_agpsd		ELF-string	tls_shutdown(sock_id=%d)
+b	/usr/bin/mtk_agpsd		ELF-string	write  agps_reboot
+b	/usr/bin/mtk_monitor_hang		ELF-string	%s:%s kick:%d watchdog:%d
+b	/usr/bin/mtk_monitor_hang		ELF-string	%s:HANG_SET_REBOOT, ioctl ret =%d, errno=%d 
+b	/usr/bin/mtk_monitor_hang		ELF-string	%s:Notify monitor hang to enter reboot state:%d
+b	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_init
+b	/usr/bin/mtk_monitor_hang		ELF-string	watchdog_timeout_cb
+b	/usr/bin/nvram_daemon		ELF-string	FileOp_RecoveryData
+b	/usr/bin/openssl		ELF-string	SSL_CTX_set_quiet_shutdown
+b	/usr/bin/openssl		ELF-string	SSL_set_shutdown
+b	/usr/bin/openssl		ELF-string	SSL_shutdown
+b	/usr/bin/openssl		ELF-string	shutdown
+b	/usr/bin/openssl		ELF-string	shutdown accept socket
+b	/usr/bin/php8-cgi		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-cgi		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-cgi		ELF-string	PHP Request Shutdown
+b	/usr/bin/php8-cgi		ELF-string	PHP Shutdown
+b	/usr/bin/php8-cgi		ELF-string	Upgrade Required
+b	/usr/bin/php8-cgi		ELF-string	append_user_shutdown_function
+b	/usr/bin/php8-cgi		ELF-string	php_call_shutdown_functions
+b	/usr/bin/php8-cgi		ELF-string	php_during_module_shutdown
+b	/usr/bin/php8-cgi		ELF-string	php_free_shutdown_functions
+b	/usr/bin/php8-cgi		ELF-string	php_libxml_shutdown
+b	/usr/bin/php8-cgi		ELF-string	php_module_shutdown
+b	/usr/bin/php8-cgi		ELF-string	php_module_shutdown_wrapper
+b	/usr/bin/php8-cgi		ELF-string	php_output_shutdown
+b	/usr/bin/php8-cgi		ELF-string	php_request_shutdown
+b	/usr/bin/php8-cgi		ELF-string	php_stream_xport_shutdown
+b	/usr/bin/php8-cgi		ELF-string	register_shutdown_function
+b	/usr/bin/php8-cgi		ELF-string	register_user_shutdown_function
+b	/usr/bin/php8-cgi		ELF-string	remove_user_shutdown_function
+b	/usr/bin/php8-cgi		ELF-string	sapi_shutdown
+b	/usr/bin/php8-cgi		ELF-string	shutdown_memory_manager
+b	/usr/bin/php8-cgi		ELF-string	stream_socket_shutdown
+b	/usr/bin/php8-cgi		ELF-string	virtual_cwd_shutdown
+b	/usr/bin/php8-cgi		ELF-string	zend_ini_global_shutdown
+b	/usr/bin/php8-cgi		ELF-string	zend_ini_shutdown
+b	/usr/bin/php8-cgi		ELF-string	zend_mm_shutdown
+b	/usr/bin/php8-cgi		ELF-string	zend_observer_shutdown
+b	/usr/bin/php8-cgi		ELF-string	zend_post_shutdown_cb
+b	/usr/bin/php8-cgi		ELF-string	zend_shutdown_executor_values
+b	/usr/bin/php8-cgi		ELF-string	zend_shutdown_fpu
+b	/usr/bin/php8-cgi		ELF-string	zend_shutdown_strtod
+b	/usr/bin/php8-cgi		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+b	/usr/bin/php8-cli		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-cli		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-cli		ELF-string	PHP Request Shutdown
+b	/usr/bin/php8-cli		ELF-string	PHP Shutdown
+b	/usr/bin/php8-cli		ELF-string	Upgrade Required
+b	/usr/bin/php8-cli		ELF-string	append_user_shutdown_function
+b	/usr/bin/php8-cli		ELF-string	php_call_shutdown_functions
+b	/usr/bin/php8-cli		ELF-string	php_during_module_shutdown
+b	/usr/bin/php8-cli		ELF-string	php_free_shutdown_functions
+b	/usr/bin/php8-cli		ELF-string	php_libxml_shutdown
+b	/usr/bin/php8-cli		ELF-string	php_module_shutdown
+b	/usr/bin/php8-cli		ELF-string	php_module_shutdown_wrapper
+b	/usr/bin/php8-cli		ELF-string	php_output_shutdown
+b	/usr/bin/php8-cli		ELF-string	php_request_shutdown
+b	/usr/bin/php8-cli		ELF-string	php_stream_xport_shutdown
+b	/usr/bin/php8-cli		ELF-string	register_shutdown_function
+b	/usr/bin/php8-cli		ELF-string	register_user_shutdown_function
+b	/usr/bin/php8-cli		ELF-string	remove_user_shutdown_function
+b	/usr/bin/php8-cli		ELF-string	sapi_shutdown
+b	/usr/bin/php8-cli		ELF-string	shutdown_memory_manager
+b	/usr/bin/php8-cli		ELF-string	stream_socket_shutdown
+b	/usr/bin/php8-cli		ELF-string	upgrade
+b	/usr/bin/php8-cli		ELF-string	virtual_cwd_shutdown
+b	/usr/bin/php8-cli		ELF-string	zend_ini_global_shutdown
+b	/usr/bin/php8-cli		ELF-string	zend_ini_shutdown
+b	/usr/bin/php8-cli		ELF-string	zend_mm_shutdown
+b	/usr/bin/php8-cli		ELF-string	zend_observer_shutdown
+b	/usr/bin/php8-cli		ELF-string	zend_post_shutdown_cb
+b	/usr/bin/php8-cli		ELF-string	zend_shutdown_executor_values
+b	/usr/bin/php8-cli		ELF-string	zend_shutdown_fpu
+b	/usr/bin/php8-cli		ELF-string	zend_shutdown_strtod
+b	/usr/bin/php8-cli		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+b	/usr/bin/php8-fpm		ELF-string	Call to private %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-fpm		ELF-string	Call to protected %s::__destruct() from global scope during shutdown ignored
+b	/usr/bin/php8-fpm		ELF-string	PHP Request Shutdown
+b	/usr/bin/php8-fpm		ELF-string	PHP Shutdown
+b	/usr/bin/php8-fpm		ELF-string	Upgrade Required
+b	/usr/bin/php8-fpm		ELF-string	append_user_shutdown_function
+b	/usr/bin/php8-fpm		ELF-string	php_call_shutdown_functions
+b	/usr/bin/php8-fpm		ELF-string	php_during_module_shutdown
+b	/usr/bin/php8-fpm		ELF-string	php_free_shutdown_functions
+b	/usr/bin/php8-fpm		ELF-string	php_libxml_shutdown
+b	/usr/bin/php8-fpm		ELF-string	php_module_shutdown
+b	/usr/bin/php8-fpm		ELF-string	php_module_shutdown_wrapper
+b	/usr/bin/php8-fpm		ELF-string	php_output_shutdown
+b	/usr/bin/php8-fpm		ELF-string	php_request_shutdown
+b	/usr/bin/php8-fpm		ELF-string	php_stream_xport_shutdown
+b	/usr/bin/php8-fpm		ELF-string	register_shutdown_function
+b	/usr/bin/php8-fpm		ELF-string	register_user_shutdown_function
+b	/usr/bin/php8-fpm		ELF-string	remove_user_shutdown_function
+b	/usr/bin/php8-fpm		ELF-string	sapi_shutdown
+b	/usr/bin/php8-fpm		ELF-string	shutdown_memory_manager
+b	/usr/bin/php8-fpm		ELF-string	stream_socket_shutdown
+b	/usr/bin/php8-fpm		ELF-string	virtual_cwd_shutdown
+b	/usr/bin/php8-fpm		ELF-string	zend_ini_global_shutdown
+b	/usr/bin/php8-fpm		ELF-string	zend_ini_shutdown
+b	/usr/bin/php8-fpm		ELF-string	zend_mm_shutdown
+b	/usr/bin/php8-fpm		ELF-string	zend_observer_shutdown
+b	/usr/bin/php8-fpm		ELF-string	zend_post_shutdown_cb
+b	/usr/bin/php8-fpm		ELF-string	zend_shutdown_executor_values
+b	/usr/bin/php8-fpm		ELF-string	zend_shutdown_fpu
+b	/usr/bin/php8-fpm		ELF-string	zend_shutdown_strtod
+b	/usr/bin/php8-fpm		ELF-string	zend_signal: shutdown with non-zero blocking depth (%d)
+b	/usr/bin/scd		ELF-string	MIPC_SYS_REBOOT_CMD Registered
+b	/usr/bin/scd		ELF-string	[SCD %s] Modem reboot AP function disabled
+b	/usr/bin/scd		ELF-string	[SCD %s] NORMAL REBOOT CMD
+b	/usr/bin/scd		ELF-string	[SCD %s] POWEROFF CMD
+b	/usr/bin/scd		ELF-string	[SCD %s] PRESHUTDOWN CMD
+b	/usr/bin/scd		ELF-string	md_reboot_ap: %s
+b	/usr/bin/scd		ELF-string	poweroff
+b	/usr/bin/scd		ELF-string	reboot
+b	/usr/bin/scd		ELF-string	reboot_cmd_cb
+b	/usr/bin/strace		ELF-string	1<<(INET_DIAG_SHUTDOWN-1)
+b	/usr/bin/strace		ELF-string	???_SHUTDOWN
+b	/usr/bin/strace		ELF-string	ESHUTDOWN
+b	/usr/bin/strace		ELF-string	IFLA_EVENT_REBOOT
+b	/usr/bin/strace		ELF-string	INET_DIAG_SHUTDOWN
+b	/usr/bin/strace		ELF-string	KERN_NMI_WATCHDOG
+b	/usr/bin/strace		ELF-string	KERN_SPARC_REBOOT
+b	/usr/bin/strace		ELF-string	KVM_CAP_PPC_BOOKE_WATCHDOG
+b	/usr/bin/strace		ELF-string	KVM_EXIT_SHUTDOWN
+b	/usr/bin/strace		ELF-string	KVM_EXIT_WATCHDOG
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_???
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_CAD_OFF
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_CAD_ON
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_HALT
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_KEXEC
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_POWER_OFF
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_RESTART
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_RESTART2
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_CMD_SW_SUSPEND
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC1
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2A
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2B
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC2C
+b	/usr/bin/strace		ELF-string	LINUX_REBOOT_MAGIC_???
+b	/usr/bin/strace		ELF-string	RCV_SHUTDOWN
+b	/usr/bin/strace		ELF-string	RPROC_GET_SHUTDOWN_ON_RELEASE
+b	/usr/bin/strace		ELF-string	RPROC_SET_SHUTDOWN_ON_RELEASE
+b	/usr/bin/strace		ELF-string	RXRPC_UPGRADEABLE_SERVICE
+b	/usr/bin/strace		ELF-string	SEND_SHUTDOWN
+b	/usr/bin/strace		ELF-string	SMC_DIAG_SHUTDOWN
+b	/usr/bin/strace		ELF-string	SYS_SHUTDOWN
+b	/usr/bin/strace		ELF-string	UNIX_DIAG_SHUTDOWN
+b	/usr/bin/strace		ELF-string	diag_shutdown
+b	/usr/bin/strace		ELF-string	reboot
+b	/usr/bin/thermal_core		ELF-string	/sys/kernel/lvts/lvts_reboot
+b	/usr/bin/thermal_core		ELF-string	Failed to disable HW reboot
+b	/usr/bin/thermal_core		ELF-string	md_sw_shutdown_cooler
+b	/usr/bin/thermal_core		ELF-string	soc_hw_reboot
+b	/usr/bin/upgrade		ELF-string	       -f [server ip]      remote download(ftp) and upgrade
+b	/usr/bin/upgrade		ELF-string	       -l                  local file upgrade
+b	/usr/bin/upgrade		ELF-string	       -r                  restart after upgrade
+b	/usr/bin/upgrade		ELF-string	       -t [server ip]      remote download(tftp) and upgrade
+b	/usr/bin/upgrade		ELF-string	       -w [server ip]      remote download(http) and upgrade
+b	/usr/bin/upgrade		ELF-string	       upgrade -l -i image.bin
+b	/usr/bin/upgrade		ELF-string	       upgrade -r -f 192.168.0.1 -u user -p pass -i image.bin
+b	/usr/bin/upgrade		ELF-string	       upgrade -r -w 192.168.0.1 -i image.bin
+b	/usr/bin/upgrade		ELF-string	       upgrade -rt 192.168.0.1 -i image.bin
+b	/usr/bin/upgrade		ELF-string	 Start upgrade
+b	/usr/bin/upgrade		ELF-string	REASON_RST_UPGRADE
+b	/usr/bin/upgrade		ELF-string	Upgrade Tools v%s (%s)
+b	/usr/bin/upgrade		ELF-string	Usage: upgrade [options]
+b	/usr/bin/upgrade		ELF-string	fota.@history[%d].status
+b	/usr/bin/upgrade		ELF-string	fota.@history[-1].host=%s
+b	/usr/bin/upgrade		ELF-string	fota.@history[-1].result=%s
+b	/usr/bin/upgrade		ELF-string	fota.@history[-1].status=%s
+b	/usr/bin/upgrade		ELF-string	fota.@history[-1].time=%s
+b	/usr/bin/upgrade		ELF-string	fota.@history[-1].version=%s
+b	/usr/bin/upgrade		ELF-string	fota.config.history
+b	/usr/bin/upgrade		ELF-string	"iptables -t filter -A input_accept_rule -s %s/32 -m tcp -p tcp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+b	/usr/bin/upgrade		ELF-string	"iptables -t filter -A input_accept_rule -s %s/32 -m udp -p udp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+b	/usr/bin/upgrade		ELF-string	"iptables -t filter -D input_accept_rule -s %s/32 -m tcp -p tcp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+b	/usr/bin/upgrade		ELF-string	"iptables -t filter -D input_accept_rule -s %s/32 -m udp -p udp -m comment --comment ""!fw3: Upgrade-Server"" -j ACCEPT"
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_file=%s
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_host
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in check CRC
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image FTP transfer
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image HTTP transfer
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image Local transfer
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image TFTP transfer
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image Unknown transfer
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in image write
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Failed in wrong board id
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Passed
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_result=Start downloading image file
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_status
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_status=2
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_time
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_time=%u
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_version
+b	/usr/bin/upgrade		ELF-string	knsts.status.upgrade_version=%s
+b	/usr/bin/upgrade		ELF-string	sync && sync && upgrade-script -u %s
+b	/usr/bin/upgrade		ELF-string	uci delete fota.@history[0] && uci commit fota
+b	/usr/bin/upgrade		ELF-string	upgrade
+b	/usr/bin/upgrade		ELF-string	upgrade-script -c
+b	/usr/bin/upgrade		ELF-string	upgrade-start
+b	/usr/bin/upgrade		ELF-string	upgrade-stop
+b	/usr/bin/vnstat		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+b	/usr/bin/vnstat		ELF-string	ROLLBACK
+b	/usr/bin/vnstat		ELF-string	Transaction rollback failed (%d): %s
+b	/usr/bin/vnstat		ELF-string	db: rollback transaction
+b	/usr/bin/vnstati		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+b	/usr/bin/vnstati		ELF-string	ROLLBACK
+b	/usr/bin/vnstati		ELF-string	Transaction rollback failed (%d): %s
+b	/usr/bin/vnstati		ELF-string	db: rollback transaction
+b	/usr/bin/wapp		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+b	/usr/bin/wapp		ELF-string	set how long before bss shutdown (tsf) (runtime)
+b	/usr/sbin/collectd		ELF-string	Error: one or more plugin shutdown callbacks failed.
+b	/usr/sbin/collectd		ELF-string	plugin_register_shutdown
+b	/usr/sbin/collectd		ELF-string	plugin_shutdown_all
+b	/usr/sbin/collectd		ELF-string	plugin_unregister_shutdown
+b	/usr/sbin/conntrack		ELF-string	SHUTDOWN_ACK_SENT
+b	/usr/sbin/conntrack		ELF-string	SHUTDOWN_RECD
+b	/usr/sbin/conntrack		ELF-string	SHUTDOWN_SENT
+b	/usr/sbin/dnsmasq		ELF-string	shutdown
+b	/usr/sbin/dropbear		ELF-string	shutdown
+b	/usr/sbin/e2fsck		ELF-string	%s: ***** REBOOT SYSTEM *****
+b	/usr/sbin/e2fsck		ELF-string	%s: won't do journal recovery while read-only
+b	/usr/sbin/e2fsck		ELF-string	@S needs_recovery flag is clear, but @j has data.
+b	/usr/sbin/e2fsck		ELF-string	@S needs_recovery flag is set, but no @j is present.
+b	/usr/sbin/e2fsck		ELF-string	JBD2: Out of memory during recovery.
+b	/usr/sbin/e2fsck		ELF-string	JBD2: recovery pass %d ended at transaction %u, expected %u
+b	/usr/sbin/e2fsck		ELF-string	Recovery flag not set in backup @S, so running @j anyway.
+b	/usr/sbin/e2fsck		ELF-string	Warning: skipping journal recovery because doing a read-only filesystem check.
+b	/usr/sbin/e2fsck		ELF-string	journal_skip_recovery
+b	/usr/sbin/e2fsck		ELF-string	recovery.c
+b	/usr/sbin/easycwmpd		ELF-string	FactoryReset
+b	/usr/sbin/easycwmpd		ELF-string	M Reboot
+b	/usr/sbin/easycwmpd		ELF-string	cwmp:FactoryResetResponse
+b	/usr/sbin/easycwmpd		ELF-string	cwmp:RebootResponse
+b	/usr/sbin/easycwmpd		ELF-string	end session: factory reset
+b	/usr/sbin/easycwmpd		ELF-string	end session: reboot
+b	/usr/sbin/easycwmpd		ELF-string	factory_reset
+b	/usr/sbin/easycwmpd		ELF-string	reboot
+b	/usr/sbin/easycwmpd		ELF-string	send FactoryResetResponse to the ACS
+b	/usr/sbin/easycwmpd		ELF-string	send RebootResponse to the ACS
+b	/usr/sbin/hostapd_cli		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+b	/usr/sbin/iw		ELF-string	unknown source (upgrade this utility)
+b	/usr/sbin/lighttpd		ELF-string	 -i <secs>  graceful shutdown after <secs> of inactivity
+b	/usr/sbin/lighttpd		ELF-string	426 Upgrade Required
+b	/usr/sbin/lighttpd		ELF-string	Connection: Upgrade
+b	/usr/sbin/lighttpd		ELF-string	Upgrade
+b	/usr/sbin/lighttpd		ELF-string	Upgrade: h2c
+b	/usr/sbin/lighttpd		ELF-string	[note] graceful shutdown started
+b	/usr/sbin/lighttpd		ELF-string	[note] idle timeout %ds exceeded, initiating graceful shutdown
+b	/usr/sbin/lighttpd		ELF-string	connection_graceful_shutdown_maint
+b	/usr/sbin/lighttpd		ELF-string	h2_check_con_upgrade_h2c
+b	/usr/sbin/lighttpd		ELF-string	http_response_upgrade_read_body_unknown
+b	/usr/sbin/lighttpd		ELF-string	server.graceful-shutdown-timeout
+b	/usr/sbin/lighttpd		ELF-string	shutdown
+b	/usr/sbin/lighttpd		ELF-string	shutdown for fd %d
+b	/usr/sbin/lighttpd		ELF-string	upgrade
+b	/usr/sbin/lighttpd		ELF-string	upgrade-insecure-requests
+b	/usr/sbin/miniupnpd		ELF-string	sendto(udp_shutdown=%d): %m
+b	/usr/sbin/mke2fs		ELF-string	"	a modified partition being busy and in use.  You may need to reboot"
+b	/usr/sbin/tcpdump		ELF-string	%s  Restart  Time: %ums, Recovery Time: %ums
+b	/usr/sbin/tcpdump		ELF-string	:Stop-Local-Shutdown
+b	/usr/sbin/tcpdump		ELF-string	Admin Reboot
+b	/usr/sbin/tcpdump		ELF-string	Admin Shutdown
+b	/usr/sbin/tcpdump		ELF-string	Administratively Shutdown
+b	/usr/sbin/tcpdump		ELF-string	NAS Reboot
+b	/usr/sbin/tcpdump		ELF-string	Recovery Label
+b	/usr/sbin/tcpdump		ELF-string	SHUTDOWN
+b	/usr/sbin/tcpdump		ELF-string	SHUTDOWN ACK
+b	/usr/sbin/tcpdump		ELF-string	SHUTDOWN COMPLETE
+b	/usr/sbin/tcpdump		ELF-string	Shutdown port
+b	/usr/sbin/tcpdump		ELF-string	Software Reload/Upgrade
+b	/usr/sbin/tcpdump		ELF-string	shutdown-all
+b	/usr/sbin/vnstatd		ELF-string	"Error: Unable to upgrade read-only database from version ""%d"" to ""%d"", exiting."
+b	/usr/sbin/vnstatd		ELF-string	ROLLBACK
+b	/usr/sbin/vnstatd		ELF-string	Transaction rollback failed (%d): %s
+b	/usr/sbin/vnstatd		ELF-string	db: rollback transaction
+b	/usr/sbin/wpa_cli		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+b	/usr/sbin/wpad		ELF-string	SSL_CTX_set_quiet_shutdown
+b	/usr/sbin/wpad		ELF-string	SSL_set_quiet_shutdown
+b	/usr/sbin/wpad		ELF-string	SSL_shutdown
+b	/usr/sbin/wpad		ELF-string	WPS: Upgrade auth_type WPAPSK -> WPA3PSK
+b	/usr/sbin/wpad		ELF-string	WPS: Upgrade auth_type WPAPSK -> WPAPSK+WPA2PSK
+b	/usr/sbin/wpad		ELF-string	WPS: Upgrade encr_type TKIP -> TKIP+AES
+b	/usr/sbin/wpad		ELF-string	is a bug that ends up in a busy loop that prevents clean shutdown.
+b	/usr/sbin/wpad		ELF-string	retry_auth=1
+b	/usr/sbin/xtables-legacy-multi		ELF-string	Perhaps ip6tables or your kernel needs to be upgraded.
+b	/usr/sbin/xtables-legacy-multi		ELF-string	Perhaps iptables or your kernel needs to be upgraded.

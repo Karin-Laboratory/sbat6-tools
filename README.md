@@ -9,9 +9,22 @@ Recovery and diagnostics helpers for user-owned SoftBank Air Terminal 6 research
 - The recovery helper only runs while slot A is active and copies the documented A-only partition family to B.
 - It verifies every copied partition with SHA-256 before reporting success.
 
-## Included tool
+## Included tools
 
 `scripts/rebuild-b-from-live-a.sh` rebuilds the inactive B slot from a currently booted, known-good A slot. It is deliberately device-local and must be run as root on the terminal. It does not select B or reboot; validate the evidence and use the vendor slot-control interface separately.
+
+`scripts/analyze-vendor-rootfs.py` performs a read-only static inventory of two
+extracted SBAT6 root filesystems. It records init services, ELF executables,
+package ownership, hashes, and strings related to reboot, rollback, watchdog,
+upgrade, and recovery behavior.
+
+## Static audit snapshot
+
+[`audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md`](audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md)
+contains the vendor-daemon, reboot, and A/B rollback audit of the 2026-09-25
+backup. The accompanying `generated/*.tsv` files are the complete
+machine-readable inventories. Raw firmware, persistent-data images, runtime
+logs, and credentials are not included.
 
 ## Network reconstruction notes
 

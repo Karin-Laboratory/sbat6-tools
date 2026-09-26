@@ -1,0 +1,195 @@
+slot	service	enabled_links	start	stop	commands	package	vendor_related	sha256	path
+a	0mount_all	S000mount_all	00			base-files	0	b18a42ac1e5fef74a0cad4b2d1489920f823e977b5aec9869913c799a6be71da	/etc/init.d/0mount_all
+a	1nvram_daemon	S001nvram_daemon	00		/usr/bin/nvram_daemon	mtk_nvram	1	a7ed05524feba23f316ea0139f4d3bf6404d43b6b4da93e177b404e213abaf8d	/etc/init.d/1nvram_daemon
+a	1restore	S001restore	00			base-files	0	5edab46cab37590f8dadc1e3e740bcbcb57def8e7b05679c31ccb0d6c6b495fc	/etc/init.d/1restore
+a	2ccci_fsd	K482ccci_fsd S002ccci_fsd	00	48	/usr/bin/ccci_fsd | /usr/bin/ccci_fsd 0 0 100	ccci_fsd	1	f0a2b2964071b4e6839091485ce4fbcaaab3d6afb7c93f017a92e8fa13d7345c	/etc/init.d/2ccci_fsd
+a	3ccci_mdinit	K473ccci_mdinit S003ccci_mdinit	00	47	/usr/bin/ccci_mdinit | /usr/bin/ccci_mdinit 0	ccci_mdinit	1	a5655225882fa9f320bf02bbaa3ead92d282f30124d4b3a61f087ee165a69523	/etc/init.d/3ccci_mdinit
+a	3ccci_rpcd_com	K503ccci_rpcd_com S003ccci_rpcd_com	00	50	/usr/bin/ccci_rpcd_com | /usr/bin/ccci_rpcd_com 0	ccci_rpcd_com	1	b7ea6e253a9dec2b102ee37d3cacfaf483b556fc425d61e3025d7c58aeb8f3c5	/etc/init.d/3ccci_rpcd_com
+a	aee_aed	S95aee_aed	95		/sbin/aee_aed	aee	0	f2203c443fd78b090b5251f9ea181a05ccf0679a231333758b24c8d5b41b9d00	/etc/init.d/aee_aed
+a	apcli_detectd	S99apcli_detectd	99		/usr/bin/$SERVICE 3 1	apcli_detectd	0	4da912f9eef69c185098017bdcd94ce5ad7e3800f07075a3ccc0dfa0795e9371	/etc/init.d/apcli_detectd
+a	atci_service	S96atci_service	96		/usr/bin/atci_service	atci_service	1	ea97479d3e30c4c4fc732ec74399f5ff924fc44f35adb64682148f3a48cf97c2	/etc/init.d/atci_service
+a	atcid	S96atcid	96		/usr/bin/atcid	atcid	0	7fc5592f9ec3473b78422ccb12e4318c223d204e808ac28d06013c49aaef5986	/etc/init.d/atcid
+a	audio-ctrl-service	S57audio-ctrl-service	57		/usr/bin/audio-ctrl-service	audio-ctrl-service	0	26542ecb23f70291c681d6dbb5c7045ea04c70ec8050a66deda070a1c36df697	/etc/init.d/audio-ctrl-service
+a	auto_adapt	K15auto_adapt S85auto_adapt	85	15	/usr/bin/auto_adapt	auto_adapt	0	7f6ce06021a17e3170e7ea7a1a74d8eb0d4b5d59ab107a7dae854ac6a9c637c8	/etc/init.d/auto_adapt
+a	boot	K90boot S10boot	10	90		base-files	0	6f8e4b3a47bdce41de12840d8c4f3eae2e99a905b2f4057ea0984c41345aba84	/etc/init.d/boot
+a	collectd	K10collectd S80collectd	80	10	"-C ""$COLLECTD_CONF"" | -f # don't daemonize | /usr/sbin/collectd"	collectd	0	84806f43d8d951404479937383c42e06ba66dc2e125681c01597fc7dbbdd0c53	/etc/init.d/collectd
+a	connsyslogD	S98connsyslogD	98		/usr/bin/connsyslogD	connsyslogD	0	fa2534aff510bbff0d8eeb1ba49aa79d1f2ae4352e40f4bbc1ea161edea42f71	/etc/init.d/connsyslogD
+a	cron	S50cron	50		"""$PROG"" -f -c /etc/crontabs -l ""${loglevel:-5}"" | /usr/sbin/crond"	busybox	0	efd3ba0b38246cecc2d38b9604b86ee6bc2bc96eb83bd1b48c54de5d166e9094	/etc/init.d/cron
+a	ddns	K10ddns S95ddns	95	10		ddns-scripts	0	8899f88c42d8478863565f9975e7a3b60f8798937a7ab6ff30f5de09231a8fc6	/etc/init.d/ddns
+a	dnsmasq	S19dnsmasq	19		"$PROG -C $CONFIGFILE -k -x /var/run/dnsmasq/dnsmasq.""${cfg}"".pid | /usr/sbin/dnsmasq"	dnsmasq	0	aa91379d9d91474caf6b96c8172f24b514a79d1eaba967e54e5f088ab32132ea	/etc/init.d/dnsmasq
+a	done	S95done	95			base-files	0	a0ab74adcc109ffc4987c5b81fc55acbd656cde0ff9d4d8a048f0864e668556d	/etc/init.d/done
+a	dropbear	K50dropbear S19dropbear	19	50	"""$PROG"" -F -P ""$pid_file"" | -I ""${IdleTimeout}"" | -K ""${SSHKeepAlive}"" | -T ""${MaxAuthTries}"" | -W ""${RecvWindowSize}"" | -a | -b ""${BannerFile}"" | -g | -p ""$addr:$port"" | -p ""$port"" | -r ""$2"" | -s | -w | /usr/sbin/dropbear"	dropbear	0	d7989e8ac14e373e216ddd2db82c102a7d323fa9b46902b6a9e85dafeb69093e	/etc/init.d/dropbear
+a	easycwmpd	S90easycwmpd	90		"""$PROG"" -f | --boot | --getrpcmethod | /usr/sbin/easycwmpd"	easycwmp	0	8ef27f1dee241283097f4b5070a48d970209d8914b2553a08d0ad16a712324be	/etc/init.d/easycwmpd
+a	easymesh				/usr/bin/EasyMesh_openwrt.sh	mapd	0	14ca1664e59406ecde3f9f3ab5624a56fc58e4d65d04db4c7eb7b485a3d0e87c	/etc/init.d/easymesh
+a	easymesh_bridge				/usr/bin/EasyMesh_openwrt.sh 0 1	mapd	0	a61daa91693c8ceb6703340a2bd62c3cb8950b95e3c75f0852ce1e18313bbc8b	/etc/init.d/easymesh_bridge
+a	esp32_controllerd	S99esp32_controllerd	99			esp32_at_send	1	4f5d05ec93a48a6fc10b66592277fa6e732bff2d838cf9dbe2245b5d7017ed58	/etc/init.d/esp32_controllerd
+a	esp32_uart	K01esp32_uart S98esp32_uart	98	01	/usr/sbin/esp32_uart 6	esp32_uart	1	3ed5120a4d08155cedb0c5e1969625132150443c2ff02321b10f95e06f3ce4f4	/etc/init.d/esp32_uart
+a	firewall	S19firewall	19			firewall	0	dbc6e31653ba3d7e57534386cf1a83523318ed9dbb0d793f7947520e33b0e776	/etc/init.d/firewall
+a	gnss	S99gnss	99		$PROG | -a | -d | /usr/bin/gnss	gnss	0	fdfc9d7732a73e33c83e05afabaf83ebd0dd131cdaa7e078d288c522f0c43b3d	/etc/init.d/gnss
+a	gpio_switch	K10gpio_switch S94gpio_switch	94	10		base-files	0	02f382d7cc0b538a38d314be346c5d752bcdc9434c4c8481026ce3a991dd7ea4	/etc/init.d/gpio_switch
+a	ikt_config	S01ikt_config	01			base-files	0	470bef7f2bb6c456a717ebee259f1354d4a564e22c7220d012c63085facd2c8f	/etc/init.d/ikt_config
+a	kn_dcsd	K07kn_dcsd S99kn_dcsd	99	07	$PROG | -d | /usr/bin/kn_dcsd	monitor-tools	1	033f25e9218d206eb723874e4a6a08a19819b91a4d2b98f8ca49891edf644cee	/etc/init.d/kn_dcsd
+a	kn_fotad	K07kn_fotad S99kn_fotad	99	07	$PROG | -d | /usr/bin/kn_fotad	monitor-tools	1	a894015bfb2890e93a698677a05d4566618f82a66309042a6e5c2b22ff6d0dd6	/etc/init.d/kn_fotad
+a	kn_htchkd	K06kn_htchkd S95kn_htchkd	95	06	$PROG | -d | /usr/bin/kn_htchkd	monitor-tools	1	7eff20fce5144cc7e2d0110fe1d0d78114215b06a124f55cc625c18236a3de47	/etc/init.d/kn_htchkd
+a	kn_key_controller	K09kn_key_controller S96kn_key_controller	96	09	$PROG | -d | /usr/bin/kn_key_controller	monitor-tools	1	55062cc3849361c2c968623dbdd22c2dbfc782fe74b6d16f6111eb07d088c0e2	/etc/init.d/kn_key_controller
+a	kn_led_controller	K09kn_led_controller S94kn_led_controller	94	09	$PROG | -d | /usr/bin/kn_led_controller	monitor-tools	1	41e5cad02b01e5f44d1d97eeebe106d7f4e61ab3cbdf24e0f1a3094016c261d7	/etc/init.d/kn_led_controller
+a	kn_ledmond	K07kn_ledmond S95kn_ledmond	95	07	$PROG | -d | /usr/bin/kn_ledmond	monitor-tools	1	8feea7fd531608e841c59c62495b7bf9e57ff5a28e3389a5032141032299ac48	/etc/init.d/kn_ledmond
+a	kn_meshd	K07kn_meshd S99kn_meshd	99	07	$PROG | -d | /usr/bin/kn_meshd	monitor-tools	1	b900017be0fa1574809f15c1e2bd4501e4da010e5e0fce8b39fc688a785ea180	/etc/init.d/kn_meshd
+a	kn_modeswitchd	K07kn_modeswitchd S98kn_modeswitchd	98	07	$PROG | -d | /usr/bin/kn_modeswitchd	monitor-tools	1	85ce0ba49cd4462310c5f5076ff54487d8bdb1410d0f3628ad0bf35023ed1683	/etc/init.d/kn_modeswitchd
+a	kn_procd	K06kn_procd S99kn_procd	99	06	$PROG | -d | /usr/bin/kn_procd	monitor-tools	1	e5334f5742b8c4cc2a86e1961f46c2bc92e627c09fa25b11a380c248c8aff978	/etc/init.d/kn_procd
+a	kn_syslogd	K07kn_syslogd S99kn_syslogd	99	07	$PROG | -d | /usr/bin/kn_syslogd	monitor-tools	1	a31f55a2af74d26f86d41785e6a41f0ce18455c47e112cad379c73f68c4945a5	/etc/init.d/kn_syslogd
+a	kn_sysmond	K07kn_sysmond S95kn_sysmond	95	07	$PROG | -d | /usr/bin/kn_sysmond	monitor-tools	1	4a1806356b8572d496bb8d95b565f03fd3ff26dd6a8f487c31cb3fbce08923c3	/etc/init.d/kn_sysmond
+a	kn_telnetd	K07kn_telnetd S99kn_telnetd	99	07	$PROG | $PROG2 | $shell | -F | -d | -l | /usr/bin/kn_telnetd	monitor-tools	1	77f9c68173e6ff997973d8737b13f5d9c37816cf28d0d4255260043d0b68e8bc	/etc/init.d/kn_telnetd
+a	knos_config	S02knos_config	02			base-files	1	7d3a5ec718bfdad8d6a4ca28e507d55c609628aa1fe725712cac075553cd2760	/etc/init.d/knos_config
+a	led	S10led	10			base-files	0	af3272b109998eea119b90888113ea317b71252045c9cc3ce375ac703298b690	/etc/init.d/led
+a	libmodem_afe_service	S56libmodem_afe_service	56		/usr/bin/libmodem-afe-ctrl-server-bin	libmodemafectrl	0	ef51301a148e514bd81f445b4f873d38ddde951e8ab5dc6f14ab7b3f1a565dc5	/etc/init.d/libmodem_afe_service
+a	lighttpd	K50lighttpd S50lighttpd	50	50	$PROG -D -f $FILE_CONFIG | /usr/sbin/lighttpd	lighttpd	0	932b2460338369c2341bcd52dfab18982de62e3af399d5e1d901ffb176410e66	/etc/init.d/lighttpd
+a	log	K89log S12log	12	89	"""$PROG"" -F ""$log_store_path/bootlog/bootlog_$(date '+%Y-%m-%d-%H-%M-%S')/boot_log.txt"" | ""$PROG"" -f -F ""$log_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_debug_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_dns_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_flash_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_kernel_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_memory_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_swlookup_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_system_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -r ""$log_ip"" ""${log_port}"" -p ""$pid_file"" | ""/sbin/logd"" | -0 | -P ""${log_prefix}"" | -S ""$log_debug_size"" | -S ""$log_dns_size"" | -S ""$log_flash_size"" | -S ""$log_kernel_size"" | -S ""$log_memory_size"" | -S ""$log_size"" | -S ""$log_swlookup_size"" | -S ""$log_system_size"" | -S ""${log_buffer_size}"" | -Z ""${facility}"" | -m ""${log_debug_format}"" | -m ""${log_dns_format}"" | -m ""${log_flash_format}"" | -m ""${log_format}"" | -m ""${log_kernel_format}"" | -m ""${log_memory_format}"" | -m ""${log_swlookup_format}"" | -m ""${log_system_format}"" | -u | -w ""${wan_ip}"" ""${wan_mac}"" | -z ""${facility}"" | /sbin/logread"	logd	0	ee7e71c09514d306642ca54a6e153c388a85d8f21fc48427c8cb5441b6c63c11	/etc/init.d/log
+a	log_controld	S99log_controld	99		/usr/bin/log_controld	log_controld	0	e93d06a96c092e993507d7c087a30522a58c2e7e6e7e9001bea512ecb9a8df55	/etc/init.d/log_controld
+a	lppe_service	S53lppe_service	53		/usr/bin/lppe_service	lppe_service	0	080e508420fae45683d862d63360e442d2f33c6e045bdd9b9d9796b129ed2f06	/etc/init.d/lppe_service
+a	mdlogger	K1mdlogger S98mdlogger	98	1	/usr/bin/emdlogger1	mdlogger	1	3c6081f794885777a7f33c69bc9ae8e156c320da8060e0f35843465040138b5c	/etc/init.d/mdlogger
+a	meta_tst	S98meta_tst	98		/usr/bin/meta_tst	meta_tst	0	1f43eb1b7542df944f9629ac18fd9574e7806ac87d2dda65ac85cff6d637b969	/etc/init.d/meta_tst
+a	miniupnpd	K15miniupnpd S94miniupnpd	94	15	"""$PROG"" | -d | -f ""$conf"" | /usr/sbin/miniupnpd"	miniupnpd-iptables	0	a3bebeb70f517a9fa2e1ad9a58aaac556d07834782781bdff16115eaa9a92fb2	/etc/init.d/miniupnpd
+a	mipc_submonitor.init	K99mipc_submonitor.init S99mipc_submonitor.init	99	99	/usr/bin/mipc_submonitor	mipc_submonitor	1	6b69cd0186515363eddf70e93b25d07e4eb856136f712fc3ecf9f8b9f2316aec	/etc/init.d/mipc_submonitor.init
+a	mipc_wan.init	S99mipc_wan.init	99			mipc-wan	1	9103d01850c34d7e92cdcc2b303c44b71e1250c3f92e54b189e2b62526643d2b	/etc/init.d/mipc_wan.init
+a	mnld	K46mnld S53mnld	53	46	/usr/bin/mnld	mnld	0	793835b9f763fdac2af772444bab0496a735b54b51c7d962da2b74b0a71809e2	/etc/init.d/mnld
+a	mtk_agpsd	K47mtk_agpsd S54mtk_agpsd	54	47	/usr/bin/mtk_agpsd	mtk_agpsd	1	89c2c1255fdaef09016d154c163d8457df1442183257c7e6c6cc017379e373a4	/etc/init.d/mtk_agpsd
+a	mtk_bridge	S12mtk_bridge	12			mtk_netagent	1	aeec973c15d4ce1c3f6b6316bc2c7bf2bce341ae0cc1e5e66e660cd85afbaef0	/etc/init.d/mtk_bridge
+a	mtk_hang_detect	S95mtk_hang_detect	95		/usr/bin/mtk_monitor_hang 30000 120	monitor_hang	1	c01ac12f068ed2ef281a14ccd7288bb2fe146cd8df7d26d6db1a6a9441e2083d	/etc/init.d/mtk_hang_detect
+a	mtk_mem	S13mtk_mem	13			base-files	1	71ee09f9b8008d3b43825796e2c5f47e1fe06305746e63e87c0ac6a2d3b59993	/etc/init.d/mtk_mem
+a	mtk_netagent	S22mtk_netagent	22		/usr/bin/mtk_netagent	mtk_netagent	1	9f649c5cecc1ac808424801b86e6a277c4cf4f1d4008500b9fff8fe0ffe69321	/etc/init.d/mtk_netagent
+a	mtk_pre_wifi.init	S00mtk_pre_wifi.init	00			kmod-mt_wifi7	1	bfee8f79ccb2df2f3107e3a08c0f5d3a1c833cfc89a68adda6df058b79033633	/etc/init.d/mtk_pre_wifi.init
+a	network	K90network S20network	20	90	/sbin/netifd	base-files	0	bdb7546440f20803c2084caca903fb54614172d98501280f0533fa9ab32c319d	/etc/init.d/network
+a	odhcpd	K85odhcpd S35odhcpd	35	85	/usr/sbin/odhcpd	odhcpd-ipv6only	0	742e623745b64d81702af46859bdca4be7196fa0294a2ec01c26031b5da67601	/etc/init.d/odhcpd
+a	openvpn	K10openvpn S90openvpn	90	10	"""$PROG""	\ | /usr/sbin/openvpn"	openvpn-openssl	0	6fc135759e106ec9d36f0af06ab12872398163d06afc9128b5ab92b1ade49f67	/etc/init.d/openvpn
+a	php8-fastcgi	S50php8-fastcgi	50		/usr/bin/php8-fcgi ${port:+-b $port}	php8-fastcgi	0	5a33cb3bda8979852817fc3d5b4d3a999e2ff445cef0f3067b8b5f6b5cec2baa	/etc/init.d/php8-fastcgi
+a	php8-fpm	S50php8-fpm	50		$PROG -R -y $CONFIG -g $SERVICE_PID_FILE | /usr/bin/php8-fpm	php8-fpm	0	d90cad22b6dd2a7a61dc503b6fd1f27c2dc004cbded5a24dfcc1f5b4bcc98505	/etc/init.d/php8-fpm
+a	phy_register	S99phy_register	99			base-files	0	99acf3b6c2d4b12f083f31bc66dd5ccf433fd54914db83d2e2ebb4710120e83c	/etc/init.d/phy_register
+a	ql_ippt	K15ql_ippt S85ql_ippt	85	15	/usr/bin/ql_ippt	ql-ippt	1	0b5259e62c65a5227e68b82dccd81a0d813593580e5d7bf69bbd7dc1ace0b8d2	/etc/init.d/ql_ippt
+a	ql_netd	K15ql_netd S85ql_netd	85	15	/usr/bin/ql_netd	ql-netd	1	45fd4a70acb77cf6692cbe15f9a3e60c7273597241f229f33ca10d17496f08bd	/etc/init.d/ql_netd
+a	ql_powerd.init	K01ql_powerd.init S13ql_powerd.init	13	01	/usr/bin/ql_powerd	ql_powerd	1	e920c4a50da672b7f807ff424d7a18c6d79d6b677c712202e2687797d92bcbaa	/etc/init.d/ql_powerd.init
+a	ql_ril_service	K15ql_ril_service S85ql_ril_service	85	15	/usr/bin/ql_ril_service	ql-ril-service	1	c9e2062b3276f988a9a1b5b813217c6df02285c143bff410ca87432ca0774c54	/etc/init.d/ql_ril_service
+a	ql_update_rawdata.sh					base-files	1	36f2af507a70864280bec5ac788d268c3483ea069602e29747b2850ce34db6fe	/etc/init.d/ql_update_rawdata.sh
+a	qos	S50qos	50			qos-scripts	0	6924fa108c24dfeab7b5f7dd3c329cb0d2e9d8097352f4d6103dd35121d5c6b1	/etc/init.d/qos
+a	rpcd	S12rpcd	12		"""$PROG"" ${socket:+-s ""$socket""} ${timeout:+-t ""$timeout""} | /sbin/rpcd"	rpcd	0	2a71c360ab2c42cb8e0dd99dd779b72c171a708d943da529f2d1d2a411d093e3	/etc/init.d/rpcd
+a	scd	K46scd S53scd	53	46	/usr/bin/scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap	scd	1	87fd2b85a76ca0d097648816d8b59c9119cfe54b21abec1e32882cfad1f1ef2c	/etc/init.d/scd
+a	slt2_test	K1slt2_test S99slt2_test	99	1	/usr/bin/dvfs_300m_sh | /usr/bin/slt_print_time_sh | /usr/bin/slt_sh	base-files	0	b2ed4577412856676700bdf831a387a45aa73d99b5a5e35d60eb25f962d03ef2	/etc/init.d/slt2_test
+a	speech_daemon	S55speech_daemon	55		/usr/bin/speech_daemon	libspeech_drv	0	0fbd622271dacc6075610b1a334a0616eb6e177b14c2f8d6127f5adac4380028	/etc/init.d/speech_daemon
+a	sudo	S99sudo	99			sudo	0	2e4587884f7d822beff1506d99187ff03ca7967deba77c0b7efc4e842ec0d42f	/etc/init.d/sudo
+a	switch_otg_daemon	K01switch_otg_daemon S13switch_otg_daemon	13	01	/usr/bin/switch_otg_daemon	switch_otg_daemon	0	06a49494a6e2c83e36e2a88a91e0e6d408d0ca15608c375654f17664436cfd64	/etc/init.d/switch_otg_daemon
+a	sysctl	S11sysctl	11			base-files	0	4cf88ade47f2fb71c8ad5db9f605e20a8d1cf64d28e1934da75c8b19a17d7584	/etc/init.d/sysctl
+a	sysfixtime	K90sysfixtime S00sysfixtime	00	90		base-files	0	24c27a5d451e15e560c2b1bfa8c4b736467b5509251b72d6f5bb00f563698433	/etc/init.d/sysfixtime
+a	sysntpd	S98sysntpd	98		"""$PROG"" -n -N | -I ""$ifname"" | -S ""$HOTPLUG_SCRIPT"" | -l | -p $peer | /usr/sbin/ntpd"	busybox	0	f4ae98536711bbaf5cd1e8de5154d1e654ebf88af6cc07d003119b0571745c0d	/etc/init.d/sysntpd
+a	sysstat	K10sysstat S90sysstat	90	10	$PROG -S DISK -F -L - | /usr/lib/sysstat/sadc	sysstat	0	3ba27758c5e4135bee15f149b9803ec2f8d2a34aebcdd65cc4696bc8e6c1d143	/etc/init.d/sysstat
+a	system	S10system	10			base-files	0	55a16f8e7940740d3370a2c4f80ccaeea905082fba5f358096c27401bf7ab82a	/etc/init.d/system
+a	thermal_core	S50thermal_core	50		$PROG | /usr/bin/thermal_core	thermal_core	0	d04d06c32c89d33774c9314ee8ac4ffe9aa24c06ed1f98c92c55b8d67c635d16	/etc/init.d/thermal_core
+a	umount	K90umount		90		base-files	0	35f1dacc3869a5d4dc303433441f4f284e2411977a199a148e4fe64694b6c62c	/etc/init.d/umount
+a	urandom_seed	S99urandom_seed	99		"""/sbin/urandom_seed"""	urandom-seed	0	9954389574f10d45d2f8f8d4f736cce55eae506c6ef2803c249bd864b734af05	/etc/init.d/urandom_seed
+a	urngd	S00urngd	00		"""$PROG"" | /sbin/urngd"	urngd	0	acf65a0a31973b594dd4b717a10e0ea06e220af71ec3250f14468919dc6792e3	/etc/init.d/urngd
+a	usb.init	K99usb.init S30usb.init	30	99	/etc/restart_usb.sh | /sbin/adbd_usb	usb_init	0	6369a3ccea24061da637c541de89d404d6c07aa061210012c50e59124a8ca398	/etc/init.d/usb.init
+a	vnstat	K50vnstat S60vnstat	60	50	/usr/sbin/vnstatd --nodaemon $options	vnstat2	0	a43e37e09aa53e549d50998c39ec7969fbc7914806a4a7ec585def4e40156766	/etc/init.d/vnstat
+a	vpnbypass	S94vpnbypass	94		/bin/true	vpnbypass	0	2c7363d42802e9397f6b352d278a360a199cb7eb416f126206868f6edd7f8885	/etc/init.d/vpnbypass
+a	wapp	K90wapp S80wapp	80	90	/usr/bin/wapp_openwrt.sh	wapp	0	e585e54e16296f02f81cbcc267fbc390b1de93eaa08877917fa05e9357b0a6e5	/etc/init.d/wapp
+a	wifi_start	S96wifi_start	96			base-files	0	ef20bedce701dd1c376a2fa3f54b77f222eb706565bd892447f0a3a5467592a9	/etc/init.d/wifi_start
+a	wpad	K91wpad S10wpad	10	91	$debug | $extra_options | -K | -f $log_file_path | -s | -t | /usr/sbin/hostapd -g /var/run/hostapd/global | /usr/sbin/wpa_supplicant -n -g /var/run/wpa_supplicant/global	hostapd-common	0	21a58630428e7884b4a0e5d3f97a69e065271f27218a3d124ad502cbd67b6fd7	/etc/init.d/wpad
+a	z2sbk_spec_config	S99z2sbk_spec_config	99			base-files	0	5b6f4b3be3392addce73e5ffd12894a8d5642837c0604379c780c36390a77e42	/etc/init.d/z2sbk_spec_config
+a	z3thermal_config	S99z3thermal_config	99			base-files	0	6065fb53450dfc6b97803caae9583aad176ca90d826def00c450b2544046531a	/etc/init.d/z3thermal_config
+a	zmtk_boot_done	S99zmtk_boot_done	99			base-files	0	ffc8493e42326aceb5d9c9491f87fadfcc367b836f95608f72011732fa155181	/etc/init.d/zmtk_boot_done
+a	zzknos_boot_done	S99zzknos_boot_done	99			base-files	0	5b9b29cd2b901aa365ae87d4c5a0b1ed505cfd8a573201bfa718fc4edd06924c	/etc/init.d/zzknos_boot_done
+b	0mount_all	S000mount_all	00			base-files	0	b18a42ac1e5fef74a0cad4b2d1489920f823e977b5aec9869913c799a6be71da	/etc/init.d/0mount_all
+b	1nvram_daemon	S001nvram_daemon	00		/usr/bin/nvram_daemon	mtk_nvram	1	a7ed05524feba23f316ea0139f4d3bf6404d43b6b4da93e177b404e213abaf8d	/etc/init.d/1nvram_daemon
+b	1restore	S001restore	00			base-files	0	5edab46cab37590f8dadc1e3e740bcbcb57def8e7b05679c31ccb0d6c6b495fc	/etc/init.d/1restore
+b	2ccci_fsd	K482ccci_fsd S002ccci_fsd	00	48	/usr/bin/ccci_fsd | /usr/bin/ccci_fsd 0 0 100	ccci_fsd	1	f0a2b2964071b4e6839091485ce4fbcaaab3d6afb7c93f017a92e8fa13d7345c	/etc/init.d/2ccci_fsd
+b	3ccci_mdinit	K473ccci_mdinit S003ccci_mdinit	00	47	/usr/bin/ccci_mdinit | /usr/bin/ccci_mdinit 0	ccci_mdinit	1	a5655225882fa9f320bf02bbaa3ead92d282f30124d4b3a61f087ee165a69523	/etc/init.d/3ccci_mdinit
+b	3ccci_rpcd_com	K503ccci_rpcd_com S003ccci_rpcd_com	00	50	/usr/bin/ccci_rpcd_com | /usr/bin/ccci_rpcd_com 0	ccci_rpcd_com	1	b7ea6e253a9dec2b102ee37d3cacfaf483b556fc425d61e3025d7c58aeb8f3c5	/etc/init.d/3ccci_rpcd_com
+b	aee_aed	S95aee_aed	95		/sbin/aee_aed	aee	0	f2203c443fd78b090b5251f9ea181a05ccf0679a231333758b24c8d5b41b9d00	/etc/init.d/aee_aed
+b	apcli_detectd	S99apcli_detectd	99		/usr/bin/$SERVICE 3 1	apcli_detectd	0	4da912f9eef69c185098017bdcd94ce5ad7e3800f07075a3ccc0dfa0795e9371	/etc/init.d/apcli_detectd
+b	atci_service	S96atci_service	96		/usr/bin/atci_service	atci_service	1	ea97479d3e30c4c4fc732ec74399f5ff924fc44f35adb64682148f3a48cf97c2	/etc/init.d/atci_service
+b	atcid	S96atcid	96		/usr/bin/atcid	atcid	0	7fc5592f9ec3473b78422ccb12e4318c223d204e808ac28d06013c49aaef5986	/etc/init.d/atcid
+b	audio-ctrl-service	S57audio-ctrl-service	57		/usr/bin/audio-ctrl-service	audio-ctrl-service	0	26542ecb23f70291c681d6dbb5c7045ea04c70ec8050a66deda070a1c36df697	/etc/init.d/audio-ctrl-service
+b	auto_adapt	K15auto_adapt S85auto_adapt	85	15	/usr/bin/auto_adapt	auto_adapt	0	7f6ce06021a17e3170e7ea7a1a74d8eb0d4b5d59ab107a7dae854ac6a9c637c8	/etc/init.d/auto_adapt
+b	boot	K90boot S10boot	10	90		base-files	0	6f8e4b3a47bdce41de12840d8c4f3eae2e99a905b2f4057ea0984c41345aba84	/etc/init.d/boot
+b	collectd	K10collectd S80collectd	80	10	"-C ""$COLLECTD_CONF"" | -f # don't daemonize | /usr/sbin/collectd"	collectd	0	84806f43d8d951404479937383c42e06ba66dc2e125681c01597fc7dbbdd0c53	/etc/init.d/collectd
+b	connsyslogD	S98connsyslogD	98		/usr/bin/connsyslogD	connsyslogD	0	fa2534aff510bbff0d8eeb1ba49aa79d1f2ae4352e40f4bbc1ea161edea42f71	/etc/init.d/connsyslogD
+b	cron	S50cron	50		"""$PROG"" -f -c /etc/crontabs -l ""${loglevel:-5}"" | /usr/sbin/crond"	busybox	0	efd3ba0b38246cecc2d38b9604b86ee6bc2bc96eb83bd1b48c54de5d166e9094	/etc/init.d/cron
+b	ddns	K10ddns S95ddns	95	10		ddns-scripts	0	8899f88c42d8478863565f9975e7a3b60f8798937a7ab6ff30f5de09231a8fc6	/etc/init.d/ddns
+b	dnsmasq	S19dnsmasq	19		"$PROG -C $CONFIGFILE -k -x /var/run/dnsmasq/dnsmasq.""${cfg}"".pid | /usr/sbin/dnsmasq"	dnsmasq	0	aa91379d9d91474caf6b96c8172f24b514a79d1eaba967e54e5f088ab32132ea	/etc/init.d/dnsmasq
+b	done	S95done	95			base-files	0	a0ab74adcc109ffc4987c5b81fc55acbd656cde0ff9d4d8a048f0864e668556d	/etc/init.d/done
+b	dropbear	K50dropbear S19dropbear	19	50	"""$PROG"" -F -P ""$pid_file"" | -I ""${IdleTimeout}"" | -K ""${SSHKeepAlive}"" | -T ""${MaxAuthTries}"" | -W ""${RecvWindowSize}"" | -a | -b ""${BannerFile}"" | -g | -p ""$addr:$port"" | -p ""$port"" | -r ""$2"" | -s | -w | /usr/sbin/dropbear"	dropbear	0	d7989e8ac14e373e216ddd2db82c102a7d323fa9b46902b6a9e85dafeb69093e	/etc/init.d/dropbear
+b	easycwmpd	S90easycwmpd	90		"""$PROG"" -f | --boot | --getrpcmethod | /usr/sbin/easycwmpd"	easycwmp	0	8ef27f1dee241283097f4b5070a48d970209d8914b2553a08d0ad16a712324be	/etc/init.d/easycwmpd
+b	easymesh				/usr/bin/EasyMesh_openwrt.sh	mapd	0	14ca1664e59406ecde3f9f3ab5624a56fc58e4d65d04db4c7eb7b485a3d0e87c	/etc/init.d/easymesh
+b	easymesh_bridge				/usr/bin/EasyMesh_openwrt.sh 0 1	mapd	0	a61daa91693c8ceb6703340a2bd62c3cb8950b95e3c75f0852ce1e18313bbc8b	/etc/init.d/easymesh_bridge
+b	esp32_controllerd	S99esp32_controllerd	99			esp32_at_send	1	4f5d05ec93a48a6fc10b66592277fa6e732bff2d838cf9dbe2245b5d7017ed58	/etc/init.d/esp32_controllerd
+b	esp32_uart	K01esp32_uart S98esp32_uart	98	01	/usr/sbin/esp32_uart 6	esp32_uart	1	3ed5120a4d08155cedb0c5e1969625132150443c2ff02321b10f95e06f3ce4f4	/etc/init.d/esp32_uart
+b	firewall	S19firewall	19			firewall	0	dbc6e31653ba3d7e57534386cf1a83523318ed9dbb0d793f7947520e33b0e776	/etc/init.d/firewall
+b	gnss	S99gnss	99		$PROG | -a | -d | /usr/bin/gnss	gnss	0	fdfc9d7732a73e33c83e05afabaf83ebd0dd131cdaa7e078d288c522f0c43b3d	/etc/init.d/gnss
+b	gpio_switch	K10gpio_switch S94gpio_switch	94	10		base-files	0	02f382d7cc0b538a38d314be346c5d752bcdc9434c4c8481026ce3a991dd7ea4	/etc/init.d/gpio_switch
+b	ikt_config	S01ikt_config	01			base-files	0	470bef7f2bb6c456a717ebee259f1354d4a564e22c7220d012c63085facd2c8f	/etc/init.d/ikt_config
+b	kn_dcsd	K07kn_dcsd S99kn_dcsd	99	07	$PROG | -d | /usr/bin/kn_dcsd	monitor-tools	1	033f25e9218d206eb723874e4a6a08a19819b91a4d2b98f8ca49891edf644cee	/etc/init.d/kn_dcsd
+b	kn_fotad	K07kn_fotad S99kn_fotad	99	07	$PROG | -d | /usr/bin/kn_fotad	monitor-tools	1	a894015bfb2890e93a698677a05d4566618f82a66309042a6e5c2b22ff6d0dd6	/etc/init.d/kn_fotad
+b	kn_htchkd	K06kn_htchkd S95kn_htchkd	95	06	$PROG | -d | /usr/bin/kn_htchkd	monitor-tools	1	7eff20fce5144cc7e2d0110fe1d0d78114215b06a124f55cc625c18236a3de47	/etc/init.d/kn_htchkd
+b	kn_key_controller	K09kn_key_controller S96kn_key_controller	96	09	$PROG | -d | /usr/bin/kn_key_controller	monitor-tools	1	55062cc3849361c2c968623dbdd22c2dbfc782fe74b6d16f6111eb07d088c0e2	/etc/init.d/kn_key_controller
+b	kn_led_controller	K09kn_led_controller S94kn_led_controller	94	09	$PROG | -d | /usr/bin/kn_led_controller	monitor-tools	1	41e5cad02b01e5f44d1d97eeebe106d7f4e61ab3cbdf24e0f1a3094016c261d7	/etc/init.d/kn_led_controller
+b	kn_ledmond	K07kn_ledmond S95kn_ledmond	95	07	$PROG | -d | /usr/bin/kn_ledmond	monitor-tools	1	8feea7fd531608e841c59c62495b7bf9e57ff5a28e3389a5032141032299ac48	/etc/init.d/kn_ledmond
+b	kn_meshd	K07kn_meshd S99kn_meshd	99	07	$PROG | -d | /usr/bin/kn_meshd	monitor-tools	1	b900017be0fa1574809f15c1e2bd4501e4da010e5e0fce8b39fc688a785ea180	/etc/init.d/kn_meshd
+b	kn_modeswitchd	K07kn_modeswitchd S98kn_modeswitchd	98	07	$PROG | -d | /usr/bin/kn_modeswitchd	monitor-tools	1	85ce0ba49cd4462310c5f5076ff54487d8bdb1410d0f3628ad0bf35023ed1683	/etc/init.d/kn_modeswitchd
+b	kn_procd	K06kn_procd S99kn_procd	99	06	$PROG | -d | /usr/bin/kn_procd	monitor-tools	1	e5334f5742b8c4cc2a86e1961f46c2bc92e627c09fa25b11a380c248c8aff978	/etc/init.d/kn_procd
+b	kn_syslogd	K07kn_syslogd S99kn_syslogd	99	07	$PROG | -d | /usr/bin/kn_syslogd	monitor-tools	1	a31f55a2af74d26f86d41785e6a41f0ce18455c47e112cad379c73f68c4945a5	/etc/init.d/kn_syslogd
+b	kn_sysmond	K07kn_sysmond S95kn_sysmond	95	07	$PROG | -d | /usr/bin/kn_sysmond	monitor-tools	1	4a1806356b8572d496bb8d95b565f03fd3ff26dd6a8f487c31cb3fbce08923c3	/etc/init.d/kn_sysmond
+b	kn_telnetd	K07kn_telnetd S99kn_telnetd	99	07	$PROG | $PROG2 | $shell | -F | -d | -l | /usr/bin/kn_telnetd	monitor-tools	1	77f9c68173e6ff997973d8737b13f5d9c37816cf28d0d4255260043d0b68e8bc	/etc/init.d/kn_telnetd
+b	knos_config	S02knos_config	02			base-files	1	911de952958d8bff7245bb9a203525dfd2d9715d5cd751efddd0b1d700a89a6f	/etc/init.d/knos_config
+b	led	S10led	10			base-files	0	af3272b109998eea119b90888113ea317b71252045c9cc3ce375ac703298b690	/etc/init.d/led
+b	libmodem_afe_service	S56libmodem_afe_service	56		/usr/bin/libmodem-afe-ctrl-server-bin	libmodemafectrl	0	ef51301a148e514bd81f445b4f873d38ddde951e8ab5dc6f14ab7b3f1a565dc5	/etc/init.d/libmodem_afe_service
+b	lighttpd	K50lighttpd S50lighttpd	50	50	$PROG -D -f $FILE_CONFIG | /usr/sbin/lighttpd	lighttpd	0	932b2460338369c2341bcd52dfab18982de62e3af399d5e1d901ffb176410e66	/etc/init.d/lighttpd
+b	log	K89log S12log	12	89	"""$PROG"" -F ""$log_store_path/bootlog/bootlog_$(date '+%Y-%m-%d-%H-%M-%S')/boot_log.txt"" | ""$PROG"" -f -F ""$log_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_debug_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_dns_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_flash_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_kernel_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_memory_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_modeswitch_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_swlookup_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -F ""$log_system_file"" -p ""$pid_file"" | ""$PROG"" -f -h ""$log_hostname"" -r ""$log_ip"" ""${log_port}"" -p ""$pid_file"" | ""/sbin/logd"" | -0 | -P ""${log_prefix}"" | -S ""$log_debug_size"" | -S ""$log_dns_size"" | -S ""$log_flash_size"" | -S ""$log_kernel_size"" | -S ""$log_memory_size"" | -S ""$log_modeswitch_size"" | -S ""$log_size"" | -S ""$log_swlookup_size"" | -S ""$log_system_size"" | -S ""${log_buffer_size}"" | -Z ""${facility}"" | -m ""${log_debug_format}"" | -m ""${log_dns_format}"" | -m ""${log_flash_format}"" | -m ""${log_format}"" | -m ""${log_kernel_format}"" | -m ""${log_memory_format}"" | -m ""${log_modeswitch_format}"" | -m ""${log_swlookup_format}"" | -m ""${log_system_format}"" | -n ""$log_modeswitch_max_file"" | -u | -w ""${wan_ip}"" ""${wan_mac}"" | -z ""${facility}"" | /sbin/logread"	logd	0	1d4b965ae58fe495192bc9d01d51fec1585dcb3e831109f6d3eb34629ba86865	/etc/init.d/log
+b	log_controld	S99log_controld	99		/usr/bin/log_controld	log_controld	0	e93d06a96c092e993507d7c087a30522a58c2e7e6e7e9001bea512ecb9a8df55	/etc/init.d/log_controld
+b	lppe_service	S53lppe_service	53		/usr/bin/lppe_service	lppe_service	0	080e508420fae45683d862d63360e442d2f33c6e045bdd9b9d9796b129ed2f06	/etc/init.d/lppe_service
+b	mdlogger	K1mdlogger S98mdlogger	98	1	/usr/bin/emdlogger1	mdlogger	1	3c6081f794885777a7f33c69bc9ae8e156c320da8060e0f35843465040138b5c	/etc/init.d/mdlogger
+b	meta_tst	S98meta_tst	98		/usr/bin/meta_tst	meta_tst	0	1f43eb1b7542df944f9629ac18fd9574e7806ac87d2dda65ac85cff6d637b969	/etc/init.d/meta_tst
+b	miniupnpd	K15miniupnpd S94miniupnpd	94	15	"""$PROG"" | -d | -f ""$conf"" | /usr/sbin/miniupnpd"	miniupnpd-iptables	0	a3bebeb70f517a9fa2e1ad9a58aaac556d07834782781bdff16115eaa9a92fb2	/etc/init.d/miniupnpd
+b	mipc_submonitor.init	K99mipc_submonitor.init S99mipc_submonitor.init	99	99	/usr/bin/mipc_submonitor	mipc_submonitor	1	6b69cd0186515363eddf70e93b25d07e4eb856136f712fc3ecf9f8b9f2316aec	/etc/init.d/mipc_submonitor.init
+b	mipc_wan.init	S99mipc_wan.init	99			mipc-wan	1	7cd21cb7f261fd111e3926db17216af4b366a66ecf1760618aebf9fb68e623aa	/etc/init.d/mipc_wan.init
+b	mnld	K46mnld S53mnld	53	46	/usr/bin/mnld	mnld	0	793835b9f763fdac2af772444bab0496a735b54b51c7d962da2b74b0a71809e2	/etc/init.d/mnld
+b	mtk_agpsd	K47mtk_agpsd S54mtk_agpsd	54	47	/usr/bin/mtk_agpsd	mtk_agpsd	1	89c2c1255fdaef09016d154c163d8457df1442183257c7e6c6cc017379e373a4	/etc/init.d/mtk_agpsd
+b	mtk_bridge	S12mtk_bridge	12			mtk_netagent	1	aeec973c15d4ce1c3f6b6316bc2c7bf2bce341ae0cc1e5e66e660cd85afbaef0	/etc/init.d/mtk_bridge
+b	mtk_hang_detect	S95mtk_hang_detect	95		/usr/bin/mtk_monitor_hang 30000 120	monitor_hang	1	c01ac12f068ed2ef281a14ccd7288bb2fe146cd8df7d26d6db1a6a9441e2083d	/etc/init.d/mtk_hang_detect
+b	mtk_mem	S13mtk_mem	13			base-files	1	71ee09f9b8008d3b43825796e2c5f47e1fe06305746e63e87c0ac6a2d3b59993	/etc/init.d/mtk_mem
+b	mtk_netagent	S22mtk_netagent	22		/usr/bin/mtk_netagent	mtk_netagent	1	9f649c5cecc1ac808424801b86e6a277c4cf4f1d4008500b9fff8fe0ffe69321	/etc/init.d/mtk_netagent
+b	mtk_pre_wifi.init	S00mtk_pre_wifi.init	00			kmod-mt_wifi7	1	bfee8f79ccb2df2f3107e3a08c0f5d3a1c833cfc89a68adda6df058b79033633	/etc/init.d/mtk_pre_wifi.init
+b	network	K90network S20network	20	90	/sbin/netifd	base-files	0	bdb7546440f20803c2084caca903fb54614172d98501280f0533fa9ab32c319d	/etc/init.d/network
+b	odhcpd	K85odhcpd S35odhcpd	35	85	/usr/sbin/odhcpd	odhcpd-ipv6only	0	742e623745b64d81702af46859bdca4be7196fa0294a2ec01c26031b5da67601	/etc/init.d/odhcpd
+b	openvpn	K10openvpn S90openvpn	90	10	"""$PROG""	\ | /usr/sbin/openvpn"	openvpn-openssl	0	6fc135759e106ec9d36f0af06ab12872398163d06afc9128b5ab92b1ade49f67	/etc/init.d/openvpn
+b	php8-fastcgi	S50php8-fastcgi	50		/usr/bin/php8-fcgi ${port:+-b $port}	php8-fastcgi	0	5a33cb3bda8979852817fc3d5b4d3a999e2ff445cef0f3067b8b5f6b5cec2baa	/etc/init.d/php8-fastcgi
+b	php8-fpm	S50php8-fpm	50		$PROG -R -y $CONFIG -g $SERVICE_PID_FILE | /usr/bin/php8-fpm	php8-fpm	0	d90cad22b6dd2a7a61dc503b6fd1f27c2dc004cbded5a24dfcc1f5b4bcc98505	/etc/init.d/php8-fpm
+b	phy_register	S99phy_register	99			base-files	0	99acf3b6c2d4b12f083f31bc66dd5ccf433fd54914db83d2e2ebb4710120e83c	/etc/init.d/phy_register
+b	ql_ippt	K15ql_ippt S85ql_ippt	85	15	/usr/bin/ql_ippt	ql-ippt	1	0b5259e62c65a5227e68b82dccd81a0d813593580e5d7bf69bbd7dc1ace0b8d2	/etc/init.d/ql_ippt
+b	ql_netd	K15ql_netd S85ql_netd	85	15	/usr/bin/ql_netd	ql-netd	1	45fd4a70acb77cf6692cbe15f9a3e60c7273597241f229f33ca10d17496f08bd	/etc/init.d/ql_netd
+b	ql_powerd.init	K01ql_powerd.init S13ql_powerd.init	13	01	/usr/bin/ql_powerd	ql_powerd	1	e920c4a50da672b7f807ff424d7a18c6d79d6b677c712202e2687797d92bcbaa	/etc/init.d/ql_powerd.init
+b	ql_ril_service	K15ql_ril_service S85ql_ril_service	85	15	/usr/bin/ql_ril_service	ql-ril-service	1	c9e2062b3276f988a9a1b5b813217c6df02285c143bff410ca87432ca0774c54	/etc/init.d/ql_ril_service
+b	ql_update_rawdata.sh					base-files	1	36f2af507a70864280bec5ac788d268c3483ea069602e29747b2850ce34db6fe	/etc/init.d/ql_update_rawdata.sh
+b	qos	S50qos	50			qos-scripts	0	6924fa108c24dfeab7b5f7dd3c329cb0d2e9d8097352f4d6103dd35121d5c6b1	/etc/init.d/qos
+b	rpcd	S12rpcd	12		"""$PROG"" ${socket:+-s ""$socket""} ${timeout:+-t ""$timeout""} | /sbin/rpcd"	rpcd	0	2a71c360ab2c42cb8e0dd99dd779b72c171a708d943da529f2d1d2a411d093e3	/etc/init.d/rpcd
+b	scd	K46scd S53scd	53	46	/usr/bin/scd $ap_time_to_modem $modem_time_to_ap $modem_reboot_ap	scd	1	87fd2b85a76ca0d097648816d8b59c9119cfe54b21abec1e32882cfad1f1ef2c	/etc/init.d/scd
+b	slt2_test	K1slt2_test S99slt2_test	99	1	/usr/bin/dvfs_300m_sh | /usr/bin/slt_print_time_sh | /usr/bin/slt_sh	base-files	0	b2ed4577412856676700bdf831a387a45aa73d99b5a5e35d60eb25f962d03ef2	/etc/init.d/slt2_test
+b	speech_daemon	S55speech_daemon	55		/usr/bin/speech_daemon	libspeech_drv	0	0fbd622271dacc6075610b1a334a0616eb6e177b14c2f8d6127f5adac4380028	/etc/init.d/speech_daemon
+b	sudo	S99sudo	99			sudo	0	2e4587884f7d822beff1506d99187ff03ca7967deba77c0b7efc4e842ec0d42f	/etc/init.d/sudo
+b	switch_otg_daemon	K01switch_otg_daemon S13switch_otg_daemon	13	01	/usr/bin/switch_otg_daemon	switch_otg_daemon	0	06a49494a6e2c83e36e2a88a91e0e6d408d0ca15608c375654f17664436cfd64	/etc/init.d/switch_otg_daemon
+b	sysctl	S11sysctl	11			base-files	0	4cf88ade47f2fb71c8ad5db9f605e20a8d1cf64d28e1934da75c8b19a17d7584	/etc/init.d/sysctl
+b	sysfixtime	K90sysfixtime S00sysfixtime	00	90		base-files	0	24c27a5d451e15e560c2b1bfa8c4b736467b5509251b72d6f5bb00f563698433	/etc/init.d/sysfixtime
+b	sysntpd	S98sysntpd	98		"""$PROG"" -n -N | -I ""$ifname"" | -S ""$HOTPLUG_SCRIPT"" | -T $interval | -l | -p $peer | /usr/sbin/ntpd"	busybox	0	8abab9e69ebd000fbb0a7353657626abdffc26246338e9664be8d901916f25c9	/etc/init.d/sysntpd
+b	sysstat	K10sysstat S90sysstat	90	10	$PROG -S DISK -F -L - | /usr/lib/sysstat/sadc	sysstat	0	3ba27758c5e4135bee15f149b9803ec2f8d2a34aebcdd65cc4696bc8e6c1d143	/etc/init.d/sysstat
+b	system	S10system	10			base-files	0	55a16f8e7940740d3370a2c4f80ccaeea905082fba5f358096c27401bf7ab82a	/etc/init.d/system
+b	thermal_core	S50thermal_core	50		$PROG | /usr/bin/thermal_core	thermal_core	0	d04d06c32c89d33774c9314ee8ac4ffe9aa24c06ed1f98c92c55b8d67c635d16	/etc/init.d/thermal_core
+b	umount	K90umount		90		base-files	0	35f1dacc3869a5d4dc303433441f4f284e2411977a199a148e4fe64694b6c62c	/etc/init.d/umount
+b	urandom_seed	S99urandom_seed	99		"""/sbin/urandom_seed"""	urandom-seed	0	9954389574f10d45d2f8f8d4f736cce55eae506c6ef2803c249bd864b734af05	/etc/init.d/urandom_seed
+b	urngd	S00urngd	00		"""$PROG"" | /sbin/urngd"	urngd	0	acf65a0a31973b594dd4b717a10e0ea06e220af71ec3250f14468919dc6792e3	/etc/init.d/urngd
+b	usb.init	K99usb.init S30usb.init	30	99	/etc/restart_usb.sh | /sbin/adbd_usb	usb_init	0	6369a3ccea24061da637c541de89d404d6c07aa061210012c50e59124a8ca398	/etc/init.d/usb.init
+b	vnstat	K50vnstat S60vnstat	60	50	/usr/sbin/vnstatd --nodaemon $options	vnstat2	0	a43e37e09aa53e549d50998c39ec7969fbc7914806a4a7ec585def4e40156766	/etc/init.d/vnstat
+b	vpnbypass	S94vpnbypass	94		/bin/true	vpnbypass	0	2c7363d42802e9397f6b352d278a360a199cb7eb416f126206868f6edd7f8885	/etc/init.d/vpnbypass
+b	wapp	K90wapp S80wapp	80	90	/usr/bin/wapp_openwrt.sh	wapp	0	e585e54e16296f02f81cbcc267fbc390b1de93eaa08877917fa05e9357b0a6e5	/etc/init.d/wapp
+b	wifi_start	S96wifi_start	96			base-files	0	ef20bedce701dd1c376a2fa3f54b77f222eb706565bd892447f0a3a5467592a9	/etc/init.d/wifi_start
+b	wpad	K91wpad S10wpad	10	91	$debug | $extra_options | -K | -f $log_file_path | -s | -t | /usr/sbin/hostapd -g /var/run/hostapd/global | /usr/sbin/wpa_supplicant -n -g /var/run/wpa_supplicant/global	hostapd-common	0	21a58630428e7884b4a0e5d3f97a69e065271f27218a3d124ad502cbd67b6fd7	/etc/init.d/wpad
+b	z2sbk_spec_config	S99z2sbk_spec_config	99			base-files	0	5b6f4b3be3392addce73e5ffd12894a8d5642837c0604379c780c36390a77e42	/etc/init.d/z2sbk_spec_config
+b	z3thermal_config	S99z3thermal_config	99			base-files	0	6065fb53450dfc6b97803caae9583aad176ca90d826def00c450b2544046531a	/etc/init.d/z3thermal_config
+b	zmtk_boot_done	S99zmtk_boot_done	99			base-files	0	ffc8493e42326aceb5d9c9491f87fadfcc367b836f95608f72011732fa155181	/etc/init.d/zmtk_boot_done
+b	zzknos_boot_done	S99zzknos_boot_done	99			base-files	0	5b9b29cd2b901aa365ae87d4c5a0b1ed505cfd8a573201bfa718fc4edd06924c	/etc/init.d/zzknos_boot_done
