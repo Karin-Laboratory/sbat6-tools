@@ -1,0 +1,37 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=10
+
+start() {
+	switch vlan set 0 1 11011100 0 0 00000000
+	switch vlan pvid 5 1
+	ip link set eth0 up 2>/dev/null || true
+	ip link set br-lan up 2>/dev/null || true
+	# Keep the management address on the bridge only.  A copy on the enslaved
+	# Ethernet port causes ARP flux, and /24 cannot return traffic to the
+	# household LAN's 192.168.0.0/22 clients when the Wi-Fi STA is down.
+	ip addr del 192.168.3.10/24 dev eth0 2>/dev/null || true
+	ip addr del 192.168.3.10/22 dev eth0 2>/dev/null || true
+	ip addr del 192.168.3.10/24 dev br-lan 2>/dev/null || true
+	ip addr replace 192.168.3.10/22 dev br-lan
+	# Source-specific tables keep both management addresses symmetric even
+	# though br-lan and apclii0 attach to the same /22.
+	ip rule del priority 100 2>/dev/null || true
+	ip rule del priority 101 2>/dev/null || true
+	ip route flush table 110 2>/dev/null || true
+	ip route flush table 113 2>/dev/null || true
+	ip route add table 110 192.168.0.0/22 dev br-lan src 192.168.3.10
+	ip rule add priority 100 from 192.168.3.10/32 lookup 110
+	if ip link show apclii0 >/dev/null 2>&1; then
+		ip route add table 113 192.168.0.0/22 dev apclii0 src 192.168.3.13
+		ip rule add priority 101 from 192.168.3.13/32 lookup 113
+	fi
+	uci set dropbear.@dropbear[0].enable='1'
+	uci delete dropbear.@dropbear[0].Interface 2>/dev/null || true
+	uci commit dropbear
+	/etc/init.d/dropbear enable
+	if ! netstat -lnt 2>/dev/null | grep -q ':22 '; then
+		/etc/init.d/dropbear restart
+	fi
+}

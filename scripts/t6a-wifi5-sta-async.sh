@@ -22,7 +22,7 @@ start_worker() {
     ip link set rai0 up
     # The STA and its parent radio share one channel. Keep the parent on the
     # non-DFS channel used by the selected home AP.
-    mwctl phy phy1 set channel num=36 bw=80 >/tmp/t6a-wifi5-channel.log 2>&1 || true
+    mwctl phy phy1 set channel num=48 bw=80 >/tmp/t6a-wifi5-channel.log 2>&1 || true
     tries=0
     while [ ! -e /sys/class/net/apclii0 ]; do
         tries=$((tries + 1))
@@ -41,7 +41,10 @@ start_worker() {
     wpa_cli -i apclii0 scan >/tmp/t6a-wifi5-scan.log 2>&1 || true
     sleep 8
     wpa_cli -i apclii0 reconnect >/dev/null 2>&1 || true
-    /sbin/udhcpc -i apclii0 -b -p /var/run/t6a-wifi5-udhcpc.pid >/tmp/t6a-wifi5-dhcp.log 2>&1
+    # This STA is a management-only path. The vendor default DHCP hook installs
+    # the offered router as the system default and deletes the WWAN default.
+    /sbin/udhcpc -i apclii0 -b -s /usr/sbin/t6a-management-udhcpc \
+        -p /var/run/t6a-wifi5-udhcpc.pid >/tmp/t6a-wifi5-dhcp.log 2>&1
     allow_management_host 192.168.0.26
     allow_management_host 192.168.0.169
 }

@@ -1,0 +1,118 @@
+#!/bin/sh
+
+# Persistent 24-hour rotating diagnostics for the T6A.  Keep the event stream
+# deliberately network-focused: the vendor GNSS daemons can emit enough data
+# to starve a shared FIFO and hide the event we are trying to diagnose.
+BASE=/data/t6diag24
+PIPE=/tmp/t6diag24.pipe
+MAX_BYTES=8388608
+
+mkdir -p "$BASE"
+rm -f "$PIPE"
+mkfifo "$PIPE" || exit 1
+
+cleanup() {
+	trap - EXIT INT TERM
+	for pid in $CHILDREN; do kill "$pid" 2>/dev/null || true; done
+	rm -f "$PIPE"
+	exit 0
+}
+trap cleanup EXIT INT TERM
+
+writer() {
+	key=
+	lines=0
+	while IFS= read -r line; do
+		new_key="$(date +%Y%m%d-%H)"
+		slot="$(date +%H)"
+		file="$BASE/hour-$slot.log"
+		if [ "$new_key" != "$key" ]; then
+			key="$new_key"
+			lines=0
+			if head -n 1 "$file" 2>/dev/null | grep -q "key=$key"; then
+				echo "T6DIAG24_RESUME $(date -Iseconds 2>/dev/null || date) key=$key" >>"$file"
+			else
+				{
+					echo "T6DIAG24_BEGIN $(date -Iseconds 2>/dev/null || date) key=$key"
+					echo "BOOT_ID=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null)"
+					echo "CMDLINE=$(cat /proc/cmdline 2>/dev/null)"
+				} >"$file"
+			fi
+		fi
+		printf '%s %s\n' "$(date -Iseconds 2>/dev/null || date)" "$line" >>"$file"
+		lines=$((lines + 1))
+		if [ $((lines % 200)) -eq 0 ]; then
+			size="$(wc -c <"$file" 2>/dev/null || echo 0)"
+			if [ "$size" -gt "$MAX_BYTES" ]; then
+				tail -c "$MAX_BYTES" "$file" >"$file.tmp" && mv "$file.tmp" "$file"
+				printf '%s %s\n' "$(date -Iseconds 2>/dev/null || date)" "T6DIAG24_TRIMMED_TO_${MAX_BYTES}_BYTES" >>"$file"
+			fi
+		fi
+	done <"$PIPE"
+}
+
+writer &
+CHILDREN="$!"
+
+{
+	echo "SNAPSHOT service-start"
+	dmesg 2>/dev/null | tail -1000 | grep -Ei 'wifi|wlan|apcli|rax|ethernet|bridge|carrier|netdev|oom|panic|reset|reboot|watchdog.*(fail|timeout|reset)' | sed 's/^/DMESG_INITIAL /'
+	logread 2>/dev/null | tail -1000 | grep -Ei 'wifi|wlan|apcli|rax|ethernet|bridge|carrier|netifd|udhcpc|wpa|hostapd|dropbear|procd:|oom|panic|reset|reboot|watchdog.*(fail|timeout|reset)' | sed 's/^/LOG_INITIAL /'
+	for f in /sys/fs/pstore/*; do
+		[ -f "$f" ] || continue
+		echo "PSTORE_FILE $f"
+		tail -400 "$f" | sed 's/^/PSTORE /'
+	done
+} >"$PIPE" &
+CHILDREN="$CHILDREN $!"
+
+logread -f 2>&1 | grep -Ei 'wifi|wlan|apcli|rax|ethernet|bridge|carrier|netifd|udhcpc|wpa|hostapd|dropbear|procd:|oom|panic|reset|reboot|watchdog.*(fail|timeout|reset)' | sed 's/^/LOG /' >"$PIPE" &
+CHILDREN="$CHILDREN $!"
+
+ip monitor link address route neigh 2>&1 | sed 's/^/IP_EVENT /' >"$PIPE" &
+CHILDREN="$CHILDREN $!"
+
+command -v bridge >/dev/null 2>&1 && {
+	bridge monitor all 2>&1 | sed 's/^/BRIDGE_EVENT /' >"$PIPE" &
+	CHILDREN="$CHILDREN $!"
+}
+
+(
+	n=0
+	while :; do
+		{
+			echo "SAMPLE_BEGIN"
+			echo "UPTIME $(cat /proc/uptime 2>/dev/null)"
+			ip -br link 2>/dev/null | grep -E '^(eth0|br-lan|rax0|apclii0)[[:space:]]' | sed 's/^/LINK /'
+			ip -br addr 2>/dev/null | grep -E '^(eth0|br-lan|rax0|apclii0|ccmni1)[[:space:]]' | sed 's/^/ADDR /'
+			ip route 2>/dev/null | sed 's/^/ROUTE /'
+			ip neigh 2>/dev/null | sed 's/^/NEIGH /'
+			wpa_cli -i apclii0 status 2>/dev/null | grep -E '^(bssid|freq|ssid|wpa_state|ip_address)=' | sed 's/^/WPA /'
+			iw dev apclii0 link 2>/dev/null | grep -E 'Connected|Not connected|SSID:|freq:|signal:|bitrate:' | sed 's/^/IW /'
+			for dev in eth0 br-lan rax0 apclii0; do
+				[ -d "/sys/class/net/$dev" ] || continue
+				echo "SYSNET $dev operstate=$(cat /sys/class/net/$dev/operstate 2>/dev/null) carrier=$(cat /sys/class/net/$dev/carrier 2>/dev/null) master=$(readlink /sys/class/net/$dev/master 2>/dev/null)"
+			done
+			if [ $((n % 4)) -eq 0 ]; then
+				brctl show 2>/dev/null | sed 's/^/BRCTL /'
+				bridge link 2>/dev/null | sed 's/^/BRLINK /'
+				bridge fdb show br br-lan 2>/dev/null | sed 's/^/FDB /'
+				hostapd_cli -i rax0 status 2>/dev/null | grep -E '^(state|freq|channel|num_sta|ssid)=' | sed 's/^/AP6 /'
+				netstat -lntp 2>/dev/null | grep -E '(:22 |:53 |:67 |:80 )' | sed 's/^/LISTEN /'
+				ps w 2>/dev/null | grep -E 'dropbear|udhcpc|wpa_supplicant|hostapd|t6ssh-watchdog|t6diag24' | grep -v grep | sed 's/^/PROC /'
+				ubus call network.interface.lan status 2>/dev/null | sed 's/^/UBUS_LAN /'
+				iptables -L INPUT -nvx 2>/dev/null | sed 's/^/IPT_INPUT /'
+			fi
+			if [ $((n % 40)) -eq 0 ]; then
+				/usr/bin/sbair-modem overview 2>&1 | sed 's/^/MODEM /'
+			fi
+			echo "SAMPLE_END"
+		} >"$PIPE"
+		n=$((n + 1))
+		[ $((n % 20)) -eq 0 ] && sync
+		sleep 15
+	done
+) &
+CHILDREN="$CHILDREN $!"
+
+wait

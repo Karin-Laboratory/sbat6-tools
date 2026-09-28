@@ -1,0 +1,34 @@
+#!/bin/sh
+# Preserve the vendor's raw-data update hook.
+if [ -f /etc/init.d/ql_update_rawdata.sh ]; then
+	/etc/init.d/ql_update_rawdata.sh
+fi
+
+# Recovery: keep the management address on br-lan only.  The LAN uses /22 so
+# wired replies do not depend on the independent 5 GHz management STA route.
+ip link set eth0 up
+ip link set br-lan up
+ip addr del 192.168.3.10/24 dev eth0 2>/dev/null || true
+ip addr del 192.168.3.10/22 dev eth0 2>/dev/null || true
+ip addr del 192.168.3.10/24 dev br-lan 2>/dev/null || true
+ip addr replace 192.168.3.10/22 dev br-lan
+
+{
+	date
+	ip -br link
+	ip -br addr
+} > /data/a-recovery-rc.local.log 2>&1
+
+# Dropbear and its monitor are procd-owned services.  Do not launch duplicate
+# daemons here; append a delayed state snapshot only.
+(
+	sleep 180
+	{
+		date
+		ps | grep '[d]ropbear'
+		ss -lnt 2>/dev/null || netstat -lnt 2>/dev/null
+		iptables -vnL INPUT
+	} >> /data/a-recovery-rc.local.log 2>&1
+) &
+
+exit 0

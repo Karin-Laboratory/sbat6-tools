@@ -23,6 +23,23 @@ the local 5 GHz management-STA init script. It delegates association and DHCP
 work to a background worker so vendor boot completion is not held against the
 120-second `procd` deadline.
 
+`scripts/t6a-management-udhcpc.sh` keeps the management STA from replacing the
+cellular default route and installs its source-specific reply path.
+
+`scripts/t6recover` and `scripts/rc.local` keep the wired management address on
+`br-lan` rather than its enslaved Ethernet port. The checked-in private-address
+defaults describe the laboratory topology and must be adapted before use on a
+different LAN.
+
+`scripts/t6diag24` records a bounded 24-hour rotation of network, Wi-Fi,
+bridge, firewall, modem, and selected system events under `/data/t6diag24`.
+
+Do not put long sleeps, association loops, or DHCP waits directly in a
+boot-critical synchronous init path. The original `home24fix` integration did
+so and produced a reproducible 106–107 second reset loop. See
+[`docs/BOOT-LOOP-107S-FAILURE.md`](docs/BOOT-LOOP-107S-FAILURE.md) and the
+[`known-non-working` index](known-non-working/README.md).
+
 ## Static audit snapshot
 
 [`audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md`](audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md)
@@ -48,10 +65,21 @@ collects the confirmed causes of reboot loops, apparent boot hangs, management
 loss, and configuration rollback. It separates proven reset causes from
 connectivity failures that only resemble a frozen or rebooting device.
 
+[`docs/CELLULAR_POVO_AND_JCI_RESULTS_20260927.md`](docs/CELLULAR_POVO_AND_JCI_RESULTS_20260927.md)
+records the successful povo/KDDI LTE baseline and the reproducible Japan
+Communications/docomo EPS-registration failure. It includes serving-cell and
+band conditions, controls already performed, SIM-file results, and the limits
+of the remaining modem-firmware/SBP hypothesis without publishing subscriber
+credentials or complete device identifiers.
+
 ## Not included
 
-Credentials, device-specific backups, SSH private keys, cookies, LAN configuration, and authenticated RCE code are intentionally excluded.
+Credentials, device-specific backups, SSH private keys, cookies, wireless
+secrets, subscriber identifiers, and authenticated RCE code are intentionally
+excluded.
 
 ## Status
 
 Validated against SBAT6 firmware 1.00.22 on a user-owned laboratory unit. Test only on equipment you own or are authorized to administer.
+
+Release-oriented changes are summarized in [`CHANGELOG.md`](CHANGELOG.md).

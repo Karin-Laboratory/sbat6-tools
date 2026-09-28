@@ -98,6 +98,41 @@ wireless files, a correct live change is replaced on the next boot.
 The complete data flow and atomic update procedure are documented in
 [`PERSISTENT_OVERLAY_RESTORE.md`](PERSISTENT_OVERLAY_RESTORE.md).
 
+## Management STA lost by vendor dynamic channel selection
+
+The vendor `kn_dcsd` daemon can control the 5 GHz and 6 GHz radios
+independently.  Enabling 5 GHz DCS is unsafe when `apclii0` is used as the
+management STA on the same MT7990 radio.  A channel or DFS transition
+reinitializes every interface on that radio, deliberately sends a deauth to
+the upstream AP, and does not always reconnect the STA.
+
+The captured failure on 2026-09-27 was unambiguous:
+
+```text
+DfsDedicatedInBandSetChannel: Channel(104)
+ap_phy_rrm_init_byRf: apclii0 Send DeAuth to <upstream-ap-bssid>
+cntl_disconnect_request: caller:ap_phy_rrm_init_byRf, reason=8
+apclii0: NO-CARRIER
+```
+
+The STA remained `DISCONNECTED` until power cycling.  DHCP was not involved;
+the link carrier disappeared first.  Preserve 6 GHz channel management while
+disabling DCS on the 5 GHz management radio and pinning it to the upstream AP's
+channel (48 in this deployment):
+
+```sh
+uci set dcsd.cbs.5g_enabled=0
+uci set wireless.MT7990_1_2.channel=48
+uci set wireless.MT7990_1_2.kn_channel=48
+uci commit dcsd
+uci commit wireless
+/etc/init.d/kn_dcsd restart
+```
+
+Keep `dcsd.cbs.6g_enabled=1` when 6 GHz automatic selection is still wanted.
+Copy both `/etc/config/dcsd` and `/etc/config/wireless` into the canonical
+overlay archive or the boot restore path will undo the fix.
+
 ## WPA3 works but DHCP does not
 
 An `AUTHORIZED` station proves authentication, not LAN service. With a raw
@@ -118,6 +153,32 @@ net.bridge.bridge-nf-call-arptables=0
 The helper itself must be included in the canonical seed archive because a
 vendor startup stage can restore the sysctl values later than `/etc/sysctl.conf`
 is processed.
+
+## Wired management replies lost with the Wi-Fi STA
+
+Do not assign the management address to both `eth0` and `br-lan`.  An address
+on an enslaved bridge port causes duplicate connected routes and ARP ambiguity.
+Also ensure the wired bridge prefix covers the actual management LAN.  In the
+verified deployment, clients use `192.168.0.0/22`; configuring the bridge as
+`192.168.3.10/24` made replies to `192.168.0.x` follow the more-specific route
+through `apclii0`.  When DCS disconnected that STA, Ethernet still answered
+ARP but ping and SSH replies were sent into the dead wireless interface.
+
+The stable layout is:
+
+```text
+br-lan   192.168.3.10/22
+eth0     no IP address; bridge port only
+apclii0  independent management address
+```
+
+Both the UCI `network.lan.netmask` and late recovery scripts must agree with
+this layout.  Otherwise a later boot stage can silently recreate the duplicate
+address.  Because both management interfaces reach the same `/22`, add
+source-specific routes as well: traffic sourced by `192.168.3.10` must use
+`br-lan`, while traffic sourced by `192.168.3.13` must use `apclii0`.  Without
+those rules, the main table can still return wired replies through a failed
+Wi-Fi STA.
 
 ## Completion criteria
 

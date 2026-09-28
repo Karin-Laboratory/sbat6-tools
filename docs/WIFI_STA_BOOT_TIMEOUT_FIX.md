@@ -12,6 +12,13 @@ the same STA procedure and management-host firewall rules but delegates them to
 a background worker. The init `start()` method returns immediately, while a PID
 file prevents duplicate workers and `stop()` terminates an unfinished worker.
 
+The management STA uses a dedicated `udhcpc` hook which deliberately ignores
+the offered default gateway and DNS servers. The vendor default DHCP hook
+replaces every existing default route; when the management STA finishes after
+WWAN setup, that behavior removes the cellular default route and sends carrier
+DNS traffic toward the management LAN. The dedicated hook installs only the
+address and connected management-LAN route, leaving WWAN as the Internet path.
+
 ## Verification on the laboratory unit
 
 The original script and recovery archive were backed up under
