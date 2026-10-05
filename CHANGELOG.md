@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-05
+
+- Documented the internal ESP32-C3 MINI-1, its UART1/115200/8N1 host link and
+  ESP-AT 3.1.0.0-dev firmware identification.
+- Added machine-readable ESP32 device and command metadata plus IPC design
+  notes for AI-assisted driver/SDK work.
+- Added a deliberately minimal `esp32ctl` query-only wrapper with an exclusive
+  lock, timeout and short-command allowlist.
+- Recorded the vendor `esp32_uart` response-buffer over-read near 256 bytes and
+  kept Wi-Fi/BLE scans and other long responses out of the initial API.
+- Defined the next architecture as a single-owner broker before LuCI, scan or
+  BLE gateway integration.
+
 ## 2026-09-29
 
 - Documented the non-working synchronous `home24fix` boot integration and its
