@@ -40,6 +40,20 @@ so and produced a reproducible 106–107 second reset loop. See
 [`docs/BOOT-LOOP-107S-FAILURE.md`](docs/BOOT-LOOP-107S-FAILURE.md) and the
 [`known-non-working` index](known-non-working/README.md).
 
+
+## Internal ESP32-C3
+
+The internal ESP32 is now documented as a first-class subsystem under
+[`esp32/`](esp32/README.md). The audited unit contains an ESP32-C3 MINI-1
+running ESP-AT 3.1.0.0-dev over UART1 at 115200 8N1, owned by the vendor
+`esp32_uart` process. The initial `esp32ctl` wrapper deliberately exposes
+only short query commands through the existing vendor frontend.
+
+Do not open `/dev/ttyS1` directly in normal operation. A 256-byte response
+buffer over-read was identified in the vendor UART bridge, so Wi-Fi/BLE scans
+and other long responses remain blocked until a single-owner broker with
+bounded response handling is implemented.
+
 ## Static audit snapshot
 
 [`audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md`](audits/sbat6a-20260925/VENDOR_DAEMON_AUDIT.md)
