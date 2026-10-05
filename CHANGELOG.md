@@ -10,8 +10,12 @@
   lock, timeout and short-command allowlist.
 - Recorded the vendor `esp32_uart` response-buffer over-read near 256 bytes and
   kept Wi-Fi/BLE scans and other long responses out of the initial API.
-- Defined the next architecture as a single-owner broker before LuCI, scan or
-  BLE gateway integration.
+- Added the phase-1 `esp32d` single-owner broker seed and Go companion client.
+  The broker serializes clients over a Unix socket, reuses the same inter-process
+  lock as the shell wrapper, and still permits only `AT` and `AT+GMR`.
+- Added policy tests and an arm64 static build helper for the broker.
+- Kept scan/GATT/LuCI expansion blocked until the vendor long-response defect is
+  fixed or safely bypassed.
 
 ## 2026-09-29
 
