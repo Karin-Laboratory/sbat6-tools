@@ -51,7 +51,7 @@ Unknown operations are rejected before `esp32_controller` is invoked.
 Go 1.22 or newer:
 
 ```sh
-./build.sh
+sh build.sh
 ```
 
 The helper defaults to Linux arm64 with CGO disabled and writes:
