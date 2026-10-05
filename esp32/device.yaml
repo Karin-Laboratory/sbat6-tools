@@ -1,0 +1,95 @@
+name: sbat6-internal-esp32
+device_class: coprocessor
+status: observed
+audit_date: 2026-10-05
+
+hardware:
+  module: ESP32-C3 MINI-1
+  vendor: Espressif
+  host_device: SoftBank Air Terminal 6
+
+firmware:
+  family: ESP-AT
+  classification: ESP_AT_UPSTREAM
+  classification_note: >
+    Version, module, baud, IDF revision and binary version match the upstream
+    ESP-AT 3.1.0.0 ESP32-C3 configuration. Flash-to-upstream binary comparison
+    was not performed, so unobserved vendor patches are not excluded.
+  esp_at_version: 3.1.0.0-dev
+  esp_idf_version: v5.0-541-g885e501d99
+  binary_version: "2.5.0"
+
+transport:
+  type: uart
+  uart: UART1
+  device_node: /dev/ttyS1
+  baud: 115200
+  data_bits: 8
+  parity: none
+  stop_bits: 1
+  linux_driver: mt6577-uart
+  device_tree_node: /serial@11003000
+  mmio: "0x11003000"
+  owner_process: /usr/sbin/esp32_uart
+  owner_argv:
+    - /usr/sbin/esp32_uart
+    - "6"
+  direct_open_allowed: false
+
+control:
+  frontend: /usr/sbin/esp32_controller
+  frontend_argument: --atcmd
+  policy: short-query-only
+  exclusive_access_required: true
+
+gpio:
+  observed_auxiliary_line:
+    linux_gpio: 382
+    soc_gpio: 106
+    role: reset-or-enable
+    confidence: strong
+    mutation_allowed: false
+
+capabilities:
+  softap: feasible
+  sta: partial
+  wifi_scan: partial
+  ble_gateway: partial
+  mqtt: present
+  http: unknown
+
+known_risks:
+  - id: vendor-response-buffer-overread
+    severity: high
+    component: /usr/sbin/esp32_uart
+    trigger: response length around 256 bytes
+    mitigation: >
+      Keep the initial public API to short query responses. Do not expose scan
+      or other long-list commands until a single-owner broker with bounded
+      response handling has been designed and validated.
+
+forbidden_operations:
+  - direct_open_/dev/ttyS1
+  - firmware_write
+  - flash_erase
+  - ota_write
+  - reset
+  - gpio_mutation
+  - uart_reconfiguration
+  - daemon_stop_or_restart
+  - factory_reset
+
+evidence_policy:
+  confidence_levels:
+    - confirmed
+    - strong
+    - partial
+    - unknown
+  secrets_excluded:
+    - ssid
+    - wifi_key
+    - mac_address
+    - sim_identifiers
+    - imei
+    - password
+    - token
