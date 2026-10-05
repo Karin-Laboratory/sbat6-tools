@@ -1,0 +1,81 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+#
+# Minimal, query-only wrapper for the SBAT6 internal ESP32-C3.
+# It deliberately exposes only commands with short responses because the
+# vendor esp32_uart process has a known response-buffer over-read near 256 B.
+
+set -eu
+
+FRONTEND=${ESP32CTL_FRONTEND:-/usr/sbin/esp32_controller}
+LOCKDIR=${ESP32CTL_LOCKDIR:-/tmp/esp32ctl.lock}
+TIMEOUT_BIN=${ESP32CTL_TIMEOUT_BIN:-timeout}
+TIMEOUT_SEC=${ESP32CTL_TIMEOUT_SEC:-5}
+
+usage() {
+    cat <<'EOF'
+usage:
+  esp32ctl ping
+  esp32ctl info
+  esp32ctl raw-short AT
+  esp32ctl raw-short AT+GMR
+
+Only allowlisted short, query-only commands are accepted.
+Wi-Fi/BLE scans, configuration changes, reset, flash/OTA and direct UART access
+are intentionally not supported.
+EOF
+}
+
+cleanup() {
+    rmdir "$LOCKDIR" 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM HUP
+
+[ -x "$FRONTEND" ] || {
+    echo "esp32ctl: vendor frontend not found: $FRONTEND" >&2
+    exit 69
+}
+
+if ! mkdir "$LOCKDIR" 2>/dev/null; then
+    echo "esp32ctl: another client holds the ESP32 control lock" >&2
+    exit 75
+fi
+
+case "${1:-}" in
+    ping)
+        cmd='AT'
+        ;;
+    info)
+        cmd='AT+GMR'
+        ;;
+    raw-short)
+        [ "$#" -eq 2 ] || {
+            usage >&2
+            exit 64
+        }
+        case "$2" in
+            AT|AT+GMR)
+                cmd=$2
+                ;;
+            *)
+                echo "esp32ctl: command is not in the short-query allowlist" >&2
+                exit 77
+                ;;
+        esac
+        ;;
+    -h|--help|help|'')
+        usage
+        exit 0
+        ;;
+    *)
+        usage >&2
+        exit 64
+        ;;
+esac
+
+if command -v "$TIMEOUT_BIN" >/dev/null 2>&1; then
+    "$TIMEOUT_BIN" "$TIMEOUT_SEC" "$FRONTEND" --atcmd "$cmd"
+else
+    echo "esp32ctl: timeout command unavailable; refusing unbounded vendor call" >&2
+    exit 69
+fi
