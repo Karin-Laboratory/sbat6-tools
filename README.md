@@ -43,16 +43,20 @@ so and produced a reproducible 106–107 second reset loop. See
 
 ## Internal ESP32-C3
 
-The internal ESP32 is now documented as a first-class subsystem under
+The internal ESP32 is documented as a first-class subsystem under
 [`esp32/`](esp32/README.md). The audited unit contains an ESP32-C3 MINI-1
 running ESP-AT 3.1.0.0-dev over UART1 at 115200 8N1, owned by the vendor
-`esp32_uart` process. The initial `esp32ctl` wrapper deliberately exposes
-only short query commands through the existing vendor frontend.
+`esp32_uart` process.
+
+The initial shell wrapper remains short-query-only, and
+[`esp32/broker/`](esp32/broker/README.md) now contains a phase-1 Go
+single-owner broker seed. It serializes `ping`/`info` requests over a Unix
+socket while continuing to use the vendor frontend.
 
 Do not open `/dev/ttyS1` directly in normal operation. A 256-byte response
-buffer over-read was identified in the vendor UART bridge, so Wi-Fi/BLE scans
-and other long responses remain blocked until a single-owner broker with
-bounded response handling is implemented.
+buffer over-read was identified in the vendor UART bridge. The broker fixes
+ownership/concurrency, not that defect, so Wi-Fi/BLE scans and other long
+responses remain disabled.
 
 ## Static audit snapshot
 
