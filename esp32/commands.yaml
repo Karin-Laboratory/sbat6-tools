@@ -1,0 +1,48 @@
+schema_version: 1
+policy: conservative
+notes:
+  - Only commands with short, query-only responses should be added to esp32ctl.
+  - Long/list responses remain blocked because of the vendor esp32_uart buffer defect.
+  - Presence in upstream ESP-AT documentation is not sufficient to mark a command as live-tested.
+
+commands:
+  - command: AT
+    category: general
+    operation: query
+    expected_response: short
+    risk: low
+    wrapper_status: allowed
+
+  - command: AT+GMR
+    category: general
+    operation: query
+    expected_response: short
+    risk: low
+    wrapper_status: allowed
+
+families:
+  wifi:
+    status: present
+    wrapper_status: not-yet-exposed
+  ble:
+    status: present
+    wrapper_status: not-yet-exposed
+  mqtt:
+    status: registered-on-device
+    wrapper_status: not-yet-exposed
+  http:
+    status: unknown
+    wrapper_status: not-yet-exposed
+
+blocked_classes:
+  - wifi_scan
+  - ble_scan
+  - gatt_discovery
+  - flash_write
+  - ota_write
+  - reset
+  - factory_reset
+  - gpio_control
+  - uart_reconfiguration
+  - wifi_configuration
+  - ble_configuration
