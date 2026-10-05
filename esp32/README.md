@@ -37,7 +37,7 @@ client
 | SoftAP | feasible | Vendor startup logic already uses ESP-AT SoftAP commands. |
 | STA | partial | Command family is present; not promoted to a production API yet. |
 | Wi-Fi scan | partial | Long responses are unsafe through the current vendor FIFO path. |
-| BLE gateway | partial | BLE AT support is present, but scan/GATT need a safer broker first. |
+| BLE gateway | partial | BLE AT support is present, but scan/GATT need a safer transport path. |
 | MQTT | present | AT command family was registered on the tested firmware. |
 | HTTP | unknown | Expected for the matching upstream build, but not fully recovered from the live command registry. |
 
@@ -47,16 +47,18 @@ The vendor `esp32_uart` process has a **256-byte response buffer over-read**
 condition. Long responses, especially scans and other list-style commands,
 must not be exposed through the current FIFO path as a general-purpose API.
 
-For that reason the first public tool, `esp32ctl`, is intentionally tiny:
+For that reason the public access layers remain intentionally tiny:
 
-- exclusive single-client lock;
-- short-query allowlist only;
-- timeout;
+- `esp32ctl`: legacy shell wrapper using the vendor frontend directly;
+- `broker/`: phase-1 single-owner broker seed that serializes clients over a
+  Unix socket but still permits only `AT` and `AT+GMR`;
+- exclusive locking and timeout;
 - no reset, flash, OTA, GPIO, Wi-Fi reconfiguration, BLE mutation, or direct
   UART access;
 - no scan support.
 
-This is a safety boundary, not a feature limitation to work around casually.
+The broker solves ownership and concurrency. It does **not** fix the vendor
+long-response defect.
 
 ## Files
 
@@ -64,14 +66,14 @@ This is a safety boundary, not a feature limitation to work around casually.
 - `protocol.md`: current host-side ownership and IPC design notes.
 - `commands.yaml`: conservative command classification.
 - `esp32ctl`: minimal query-only wrapper.
+- `broker/`: Go single-owner broker and companion client.
 - `tests/README.md`: validation requirements before adding commands.
 
 ## Roadmap
 
-The next architectural step is a **single-owner broker** between shell/LuCI/MQTT
-clients and the vendor IPC path. The broker should serialize requests, enforce
-an allowlist, bound responses, maintain transaction state, and reject unsafe
-commands. Only after that layer exists should scan, BLE discovery/GATT, or LuCI
+Phase 1 of the single-owner broker is now checked in. The next gate is not
+"more commands"; it is resolving or safely bypassing the vendor response-path
+defect. Only after that should scan, BLE discovery/GATT, MQTT actions or LuCI
 integration be enabled.
 
 This directory intentionally does not contain ESP32 firmware images, device
